@@ -24,6 +24,6 @@ export type LandingData = {
     acceptance: number;
     rank: string;
     url: string;
-  } | null;
+  };
   isSample: boolean;
 };

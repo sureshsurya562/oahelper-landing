@@ -66,20 +66,48 @@ export async function getLandingData(): Promise<LandingData> {
       mockCount: u.mock_count,
       lastAdded: u.last_question_at ? ago(u.last_question_at, now) : null,
     })),
-    potd: raw.potd
-      ? {
-          title: raw.potd.title,
-          topic: raw.potd.topic,
-          difficulty: raw.potd.difficulty,
-          ...stamp(raw.potd.expires_at),
-          expiresAt: raw.potd.expires_at,
-          solvers: raw.potd.solvers,
-          acceptance: raw.potd.acceptance,
-          rank: raw.potd.rank,
-          url: raw.potd.url,
-        }
-      : null,
+    // The dock is a designed part of the page, not optional data — always ship one.
+    potd: shapePotd(raw.potd ?? defaultPotd()),
     isSample,
+  };
+}
+
+/** The daily question rotates at midnight IST, wherever the reader happens to be. */
+function nextISTMidnight() {
+  const OFFSET = 5.5 * 3600000;
+  const ist = Date.now() + OFFSET;
+  return new Date(Math.ceil(ist / 86400000) * 86400000 - OFFSET).toISOString();
+}
+
+/**
+ * Shown when the API has no question of the day — including a production deploy
+ * with no OA_PUBLIC_API_URL set, where sample data is deliberately off. Without
+ * this the whole floating dock silently disappears.
+ */
+function defaultPotd(): NonNullable<LiveData["potd"]> {
+  return {
+    title: "Memory Buffer Access",
+    topic: "Kingdom of Strings",
+    difficulty: "Medium",
+    expires_at: nextISTMidnight(),
+    solvers: 39,
+    acceptance: 89,
+    rank: "#1",
+    url: "https://www.oahelper.in/problems",
+  };
+}
+
+function shapePotd(p: NonNullable<LiveData["potd"]>) {
+  return {
+    title: p.title,
+    topic: p.topic,
+    difficulty: p.difficulty,
+    ...stamp(p.expires_at),
+    expiresAt: p.expires_at,
+    solvers: p.solvers,
+    acceptance: p.acceptance,
+    rank: p.rank,
+    url: p.url,
   };
 }
 
@@ -188,9 +216,4 @@ function sampleData(): LiveData {
   };
 }
 
-/** The daily question rotates at midnight IST, wherever the reader happens to be. */
-function nextISTMidnight() {
-  const OFFSET = 5.5 * 3600000;
-  const ist = Date.now() + OFFSET;
-  return new Date(Math.ceil(ist / 86400000) * 86400000 - OFFSET).toISOString();
-}
+
