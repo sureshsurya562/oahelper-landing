@@ -10,5 +10,20 @@ export type LandingData = {
     mockCount: number;
     lastAdded: string | null;
   }[];
+  /** Today's featured question for the floating dock. */
+  potd: {
+    title: string;
+    topic: string;
+    difficulty: string;
+    /** Pre-split so the calendar glyph never re-derives a date on the client. */
+    month: string;
+    day: string;
+    /** ISO instant the question rotates; the dock counts down to it. */
+    expiresAt: string;
+    solvers: number;
+    acceptance: number;
+    rank: string;
+    url: string;
+  } | null;
   isSample: boolean;
 };

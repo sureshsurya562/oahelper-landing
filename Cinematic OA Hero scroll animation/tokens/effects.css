@@ -1,0 +1,30 @@
+:root {
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+  --radius-2xl: 22px;
+  --radius-3xl: 24px;
+  --radius-pill: 999px;
+  --radius-sticker: 21px 19px 22px 18px / 19px 22px 18px 21px;
+
+  --shadow-hard: 0 3px 0 #151515;
+  --shadow-hard-sm: 0 2px 0 #151515;
+  --shadow-hard-left: -4px 4px 0 #151515;
+  --shadow-sticker: 0 8px 18px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -2px 0 rgba(0, 0, 0, 0.07);
+  --shadow-card-dark: 0 20px 40px rgba(0, 0, 0, 0.45);
+  --shadow-card-hover: 0 22px 44px -22px rgba(21, 21, 21, 0.4);
+  --shadow-float: 0 40px 90px -20px rgba(0, 0, 0, 0.75);
+  --shadow-terminal: 0 50px 120px rgba(0, 0, 0, 0.55);
+  --shadow-well: inset 0 5px 12px rgba(0, 0, 0, 0.7);
+
+  --pattern-dots: radial-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1.3px);
+  --pattern-dots-size: 22px 22px;
+  --pattern-dots-fine: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1.3px);
+  --pattern-dots-fine-size: 18px 18px;
+  --glow-cool: radial-gradient(closest-side, rgba(225, 232, 255, 0.10), rgba(225, 232, 255, 0.03) 55%, transparent);
+  --glow-mint: radial-gradient(ellipse 60% 55% at 50% 55%, rgba(191, 231, 199, 0.14), rgba(191, 231, 199, 0));
+  --scrim-vignette: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+  --blur-glass: blur(8px);
+}

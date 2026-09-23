@@ -3,19 +3,16 @@
 import { RefObject, useEffect } from "react";
 
 /**
- * Scroll map (0 → 1 across the sticky section):
- * 0.00–0.30  headline + company stickers drifting, terminal waiting below
- * 0.30–0.76  stickers fly into the sync log, terminal rises and fills the frame
- * 0.76–0.93  log swaps to the live assessment, camera pushes into the screen
- * 0.93–1.00  closing line + CTA
+ * Scroll map (0 → 1 across the 320vh section), ported from the design's frame():
+ * 0.00–0.30  headline holds, stickers drift, terminal waits below
+ * 0.30–0.76  stickers arc into the sync log, terminal rises and fills the panel
+ * 0.77–0.93  log swaps to the live assessment, camera pushes into the screen
+ * 0.93–1.00  closing frame and CTA
  *
- * Positions are fractions of the panel box so the whole scene reflows at any size.
  * `cx`/`cy` are the bezier control points each sticker arcs through on its way
  * into the log row with the same index.
  */
-type Spot = { x: number; y: number; cx: number; cy: number; r: number };
-
-const DESKTOP: Spot[] = [
+const CO = [
   { x: 0.215, y: 0.245, cx: 0.62, cy: 0.3, r: -5 },
   { x: 0.787, y: 0.245, cx: 0.48, cy: 0.34, r: 4 },
   { x: 0.07, y: 0.465, cx: 0.3, cy: 0.6, r: -7 },
@@ -54,10 +51,7 @@ const MOBILE: [number, number][] = [
   [0.86, 0.64],
 ];
 
-const TERM_W = 1120;
-const TERM_H = 672;
-const OA_SECONDS = 2699;
-
+type Spot = { x: number; y: number; cx: number; cy: number; r: number };
 type Layout = {
   w: number;
   h: number;
@@ -65,7 +59,7 @@ type Layout = {
   n: number;
   s0: number;
   s1: number;
-  spots: Spot[];
+  P: Spot[];
   rowPts: [number, number][];
   stag: number;
   dur: number;
@@ -76,102 +70,105 @@ type Layout = {
   lastEnd: number;
 };
 
+const OA_SECONDS = 2699;
+
 export function useCinematicHero(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const el = root.current;
     if (!el) return;
 
-    // Markup is owned by Hero.tsx, so every hook below is guaranteed to exist.
     const q = (s: string) => el.querySelector(s) as HTMLElement;
     const qa = (s: string) => Array.from(el.querySelectorAll(s)) as HTMLElement[];
-
     const E = {
       panel: q(".cine-panel"),
-      grid: q(".cine-grid"),
+      bg: q(".cine-bg"),
+      noise: q(".cine-noise"),
       dim: q(".cine-dim"),
+      vig: q(".cine-vig"),
       head: q(".cine-head"),
+      st: qa(".cine-sticker"),
       term: q(".cine-term"),
       glow: q(".cine-glow"),
       rim: q(".cine-rim"),
       log: q(".cine-log"),
       wait: q(".cine-wait"),
       load: q(".cine-load"),
+      rows: qa(".cine-row"),
       loaded: q(".cine-loaded"),
       launch: q(".cine-launch"),
-      cur1: q(".cine-cur1"),
-      cur2: q(".cine-cur2"),
+      c1: q(".cine-cur1"),
+      c2: q(".cine-cur2"),
       ui: q(".cine-ui"),
       flash: q(".cine-flash"),
       scan: q(".cine-scan"),
-      vig: q(".cine-vig"),
-      final: q(".cine-final"),
-      howq: q(".cine-how-q"),
-      howm: qa(".cine-how-m"),
-      howa: q(".cine-how-a"),
+      hero: q(".cine-final"),
       timer: q(".cine-timer"),
       caret: q(".cine-caret"),
-      rows: qa(".cine-row"),
-      st: qa(".cine-sticker"),
     };
+    if (!E.panel || !E.term || !E.log) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const fine = window.matchMedia("(pointer: fine)").matches;
-    el.style.height = (reduced ? 200 : 320) + "vh";
+    el.style.height = reduced ? "220vh" : "320vh";
 
-    let L: Layout | null = null;
+    // Film grain, generated once rather than shipped as an asset.
+    const nc = document.createElement("canvas");
+    nc.width = nc.height = 140;
+    const nx = nc.getContext("2d");
+    if (nx) {
+      const d = nx.createImageData(140, 140);
+      for (let i = 0; i < d.data.length; i += 4) {
+        const v = Math.random() * 255;
+        d.data[i] = d.data[i + 1] = d.data[i + 2] = v;
+        d.data[i + 3] = 255;
+      }
+      nx.putImageData(d, 0, 0);
+      E.noise.style.backgroundImage = `url(${nc.toDataURL()})`;
+    }
+
     let mx = 0;
     let my = 0;
     let tmx = 0;
     let tmy = 0;
-    let cur: number | null = null;
-    let last = 0;
-    let navOp = -1;
-    let clock = "";
-    const t0 = performance.now();
+    const onMove = (e: MouseEvent) => {
+      const r = E.panel.getBoundingClientRect();
+      tmx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      tmy = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
 
+    let L: Layout | null = null;
     const layout = () => {
       const w = E.panel.clientWidth;
       const h = E.panel.clientHeight;
       if (!w || !h) return;
-
       const mode: Layout["mode"] = w < 640 ? "m" : w >= 1100 || (w >= 860 && w / h > 1.25) ? "d" : "t";
-      const set = mode === "d" ? DESKTOP.map((c) => [c.x, c.y] as [number, number]) : mode === "t" ? TABLET : MOBILE;
+      const set = mode === "d" ? CO.map((c) => [c.x, c.y] as [number, number]) : mode === "t" ? TABLET : MOBILE;
       const n = set.length;
-
-      // Wide enough to read, never wider than the panel can frame.
-      const width = mode === "d" ? Math.min(0.52 * w, 960) : mode === "t" ? 0.74 * w : 0.92 * w;
-      const s0 = width / TERM_W;
-      const s1 = Math.min(s0 * 1.32, (0.94 * w) / TERM_W, (0.74 * h) / TERM_H);
-
-      const spots: Spot[] = set.map((xy, i) => {
-        if (mode === "d") return DESKTOP[i];
-        // Bend the arc away from the straight line so tablet/mobile paths still curve.
-        const mid = [(xy[0] + 0.5) / 2, (xy[1] + 0.5) / 2];
+      const W = mode === "d" ? Math.min(0.52 * w, 960) : mode === "t" ? 0.74 * w : 0.92 * w;
+      const s0 = W / 1120;
+      const s1 = Math.min(s0 * 1.32, (0.94 * w) / 1120, (0.74 * h) / 672);
+      const P: Spot[] = set.map((xy, i) => {
+        if (mode === "d") return { x: xy[0], y: xy[1], cx: CO[i].cx, cy: CO[i].cy, r: CO[i].r };
+        // Off-desktop the control points are mirrored around the centre instead.
+        const mxp = (xy[0] + 0.5) / 2;
+        const myp = (xy[1] + 0.5) / 2;
         const dx = 0.5 - xy[0];
         const dy = 0.5 - xy[1];
         const sg = i % 2 ? 1 : -1;
-        return {
-          x: xy[0],
-          y: xy[1],
-          cx: mid[0] - (dy * h * 0.35 * sg) / w,
-          cy: mid[1] + (dx * w * 0.35 * sg) / h,
-          r: DESKTOP[i].r * 0.8,
-        };
+        return { x: xy[0], y: xy[1], cx: mxp - (dy * h * 0.35 * sg) / w, cy: myp + (dx * w * 0.35 * sg) / h, r: CO[i].r * 0.8 };
       });
-
       E.st.forEach((s, i) => {
+        s.style.left = "0";
+        s.style.top = "0";
         s.style.display = i < n ? "" : "none";
       });
-
-      // The log is authored at 1120px wide, then scaled up on smaller panels so it stays legible.
       const k = mode === "m" ? 1.55 : mode === "t" ? 1.2 : 1;
       E.log.style.transform = `scale(${k})`;
-      E.log.style.width = TERM_W / k + "px";
-
+      E.log.style.width = `${1120 / k}px`;
       const rowPts = E.rows.map((r) => [r.offsetLeft * k + 60 * k, 40 + (r.offsetTop + r.offsetHeight / 2) * k] as [number, number]);
       const stag = mode === "d" ? 0.028 : mode === "t" ? 0.032 : 0.04;
       const dur = mode === "d" ? 0.13 : mode === "t" ? 0.135 : 0.14;
-
       L = {
         w,
         h,
@@ -179,97 +176,80 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
         n,
         s0,
         s1,
-        spots,
+        P,
         rowPts,
         stag,
         dur,
         bs: mode === "m" ? 0.85 : mode === "t" ? 0.92 : 1,
-        cy0: (mode === "m" ? 0.73 : 0.7) * h + (TERM_H / 2) * s0,
+        cy0: (mode === "m" ? 0.73 : 0.7) * h + 336 * s0,
         cy1: (mode === "m" ? 0.52 : 0.55) * h,
-        sZ: Math.max(w / TERM_W, h / TERM_H) * 1.9,
+        sZ: Math.max(w / 1120, h / 672) * 1.9,
         lastEnd: 0.3 + (n - 1) * stag + dur,
       };
     };
+
+    layout();
+    if (document.fonts) document.fonts.ready.then(layout);
+    const ro = new ResizeObserver(layout);
+    ro.observe(E.panel);
 
     const cl = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
     const rp = (a: number, b: number, p: number) => cl((p - a) / (b - a));
     const sm = (t: number) => t * t * (3 - 2 * t);
     const lp = (a: number, b: number, t: number) => a + (b - a) * t;
     const io = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    const blur = (node: HTMLElement, amount: number) => {
-      node.style.filter = amount > 0.05 ? `blur(${amount}px)` : "none";
-    };
 
-    // The closing frame poses the question, marks it, then answers it — one beat each.
-    const paintHow = (frame: number, T: number, alive: number) => {
-      // Hold until the closing frame is sharp, then play the beats across what is left.
-      const v = rp(0.35, 1, frame);
-      const word = sm(rp(0.1, 0.5, v));
-      const answer = sm(rp(0.62, 1, v));
-      E.howq.style.setProperty("--hi", String(sm(rp(0.2, 0.66, v))));
-      E.howq.style.setProperty("--beat", String((0.5 + 0.5 * Math.sin(T * 2.1)) * v * alive));
-      E.howq.style.opacity = String(word);
-      E.howq.style.transform = `translate3d(0,${(1 - word) * 16}px,0) scale(${0.92 + 0.08 * word})`;
-      E.howm.forEach((m, i) => {
-        const t = sm(rp(0.46 + i * 0.16, 0.74 + i * 0.16, v));
-        // Once landed, the marks keep a small sway so the question stays asked.
-        const sway = t * alive;
-        const y = (1 - t) * -12 + Math.sin(T * 2.4 + i * 0.9) * 1.6 * sway;
-        const rot = (1 - t) * (i ? 16 : -16) + Math.sin(T * 1.9 + i * 1.3) * 3 * sway;
-        m.style.opacity = String(t);
-        m.style.transform = `translate3d(0,${y}px,0) rotate(${rot}deg) scale(${0.4 + 0.6 * t})`;
-      });
-      E.howa.style.opacity = String(answer);
-      E.howa.style.transform = `translate3d(0,${(1 - answer) * 12}px,0)`;
-    };
+    const t0 = performance.now();
+    let cur: number | null = null;
+    let last = 0;
+    let tstr = "";
+    let raf = 0;
 
     const frame = (now: number) => {
+      raf = requestAnimationFrame(frame);
       if (!L) return;
       const dt = Math.min(0.05, (now - (last || now)) / 1000);
       last = now;
       const T = now / 1000;
+      const rect = el.getBoundingClientRect();
+      const tot = rect.height - window.innerHeight;
+      const tg = tot > 0 ? cl(-rect.top / tot) : 0;
+      if (cur == null) cur = tg;
+      cur += (tg - cur) * (1 - Math.exp(-dt * 7));
+      if (Math.abs(tg - cur) < 1e-4) cur = tg;
+      const p = cur;
       const { w, h } = L;
 
-      const rect = el.getBoundingClientRect();
-      const span = rect.height - window.innerHeight;
-      // In dev, `window.__oaP = 0.9` pins one beat of the sequence for inspection.
-      const forced = process.env.NODE_ENV === "production" ? undefined : (window as { __oaP?: number }).__oaP;
-      const target = forced != null ? cl(forced) : span > 0 ? cl(-rect.top / span) : 0;
-      if (cur == null) cur = target;
-      cur += (target - cur) * (1 - Math.exp(-dt * 7));
-      if (Math.abs(target - cur) < 1e-4) cur = target;
-      const p = cur;
+      const mp = fine && L.mode !== "m";
+      const me = 1 - Math.exp(-dt * 4);
+      mx += ((mp ? tmx : 0) - mx) * me;
+      my += ((mp ? tmy : 0) - my) * me;
 
-      const parallax = fine && !reduced && L.mode !== "m";
-      const ease = 1 - Math.exp(-dt * 4);
-      mx += ((parallax ? tmx : 0) - mx) * ease;
-      my += ((parallax ? tmy : 0) - my) * ease;
-
-      const left = Math.max(0, OA_SECONDS - Math.floor((now - t0) / 1000));
-      const stamp = String(Math.floor(left / 60)).padStart(2, "0") + ":" + String(left % 60).padStart(2, "0");
-      if (stamp !== clock) {
-        clock = stamp;
-        E.timer.textContent = stamp;
+      const rem = Math.max(0, OA_SECONDS - Math.floor((now - t0) / 1000));
+      const nextT = `${String(Math.floor(rem / 60)).padStart(2, "0")}:${String(rem % 60).padStart(2, "0")}`;
+      if (nextT !== tstr) {
+        tstr = nextT;
+        if (E.timer) E.timer.textContent = nextT;
       }
-      const blink = reduced ? 1 : Math.floor(T * 1.8) % 2 ? 0 : 1;
-      E.caret.style.opacity = String(blink);
+      const blink = Math.floor(T * 1.8) % 2 ? 0 : 1;
+      if (E.caret) E.caret.style.opacity = String(blink);
 
       if (reduced) {
         const hr = sm(rp(0.35, 0.6, p));
-        E.term.style.transform = `translate3d(${w / 2 - TERM_W / 2}px,${L.cy0 - TERM_H / 2}px,0) scale(${L.s0})`;
+        E.term.style.transform = `translate3d(${w / 2 - 560}px,${L.cy0 - 336}px,0) scale(${L.s0 * (1 - 0.02 * hr)})`;
         E.term.style.opacity = String(1 - hr);
         E.head.style.opacity = String(1 - hr);
         E.log.style.opacity = "0";
         E.ui.style.opacity = "1";
         E.st.forEach((s, i) => {
           if (i >= L!.n) return;
-          const c = L!.spots[i];
+          const c = L!.P[i];
           s.style.opacity = String(1 - hr);
           s.style.transform = `translate3d(${c.x * w}px,${c.y * h}px,0) translate(-50%,-50%) rotate(${c.r}deg) scale(${L!.bs})`;
         });
-        E.final.style.opacity = String(hr);
-        E.final.style.pointerEvents = hr > 0.9 ? "auto" : "none";
-        paintHow(hr, T, 0);
+        E.hero.style.opacity = String(hr);
+        E.hero.style.transform = `scale(${0.98 + 0.02 * hr})`;
+        E.hero.style.pointerEvents = hr > 0.9 ? "auto" : "none";
         return;
       }
 
@@ -278,20 +258,14 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       const z = io(rp(0.77, 0.93, p));
       const mf = 1 - rp(0.1, 0.3, p);
 
-      E.grid.style.transform = `translate3d(${mx * 2 * mf}px,${my * 2 * mf - 40 * rp(0, 0.9, p)}px,0) scale(${1 + 0.05 * b + 0.1 * z})`;
+      E.bg.style.transform = `translate3d(${mx * 2 * mf}px,${my * 2 * mf - 40 * rp(0, 0.9, p)}px,0) scale(${1 + 0.05 * b + 0.1 * z})`;
       E.dim.style.opacity = String((0.55 * sm(rp(0.28, 0.76, p)) + 0.3 * z) * (1 - rp(0.93, 0.99, p)));
 
       const hf = sm(rp(0.3, 0.52, p));
       E.head.style.transform = `translate3d(${-mx * 1.5 * mf}px,${-22 * a - 80 * hf}px,0) scale(${1 - 0.04 * hf})`;
       E.head.style.opacity = String((1 - 0.25 * a) * (1 - sm(rp(0.3, 0.5, p))));
-      blur(E.head, 5 * rp(0.32, 0.52, p));
-
-      // The page nav steps aside while the camera is inside the screen.
-      const nav = cl(1 - sm(rp(0.8, 0.88, p)) + sm(rp(0.95, 1, p)));
-      if (Math.abs(nav - navOp) > 0.01) {
-        navOp = nav;
-        document.documentElement.style.setProperty("--nav-op", String(nav));
-      }
+      const hb = 5 * rp(0.32, 0.52, p);
+      E.head.style.filter = hb > 0.05 ? `blur(${hb}px)` : "none";
 
       const tv: number[] = [];
       let pulse = 0;
@@ -308,69 +282,68 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       const cx = w / 2 - 200 * s * z + mx * 5 * mf;
       const cy = lp(cyB, h / 2 + 53 * s, z) + my * 5 * mf;
       const rx = lp(10, 3, b) * (1 - z);
-      E.term.style.transform = `translate3d(${cx - TERM_W / 2}px,${cy - TERM_H / 2}px,0) perspective(1800px) rotateX(${rx}deg) scale(${s})`;
+      E.term.style.transform = `translate3d(${cx - 560}px,${cy - 336}px,0) perspective(1800px) rotateX(${rx}deg) scale(${s})`;
       E.term.style.opacity = String(1 - rp(0.955, 0.99, p));
       E.glow.style.opacity = String((0.35 + 0.45 * b + 0.3 * pulse) * (1 - z));
       E.rim.style.opacity = String(0.12 + 0.5 * pulse * (1 - z));
 
       E.wait.style.opacity = String(1 - rp(0.29, 0.31, p));
       E.load.style.opacity = String(rp(0.29, 0.31, p));
-      E.cur1.style.opacity = String(p < 0.3 ? blink : 0);
+      E.c1.style.opacity = String(p < 0.3 ? blink : 0);
       E.rows.forEach((row, i) => {
         const rv = sm(rp(0.86, 1, tv[Math.min(i, L!.n - 1)]));
         row.style.opacity = String(rv);
         row.style.transform = `translateX(${(rv - 1) * 10}px)`;
       });
-
       const le = L.lastEnd;
       E.loaded.style.opacity = String(rp(le + 0.002, le + 0.012, p));
       E.launch.style.opacity = String(rp(le + 0.01, le + 0.02, p));
-      E.cur2.style.opacity = String(p > le + 0.02 && p < 0.78 ? blink : 0);
+      E.c2.style.opacity = String(p > le + 0.02 && p < 0.78 ? blink : 0);
       E.log.style.opacity = String(1 - rp(0.755, 0.785, p));
       E.ui.style.opacity = String(rp(0.755, 0.8, p) * (1 - rp(0.905, 0.955, p)));
-      blur(E.ui, 1.6 * rp(0.88, 0.95, p));
-
+      const ub = 1.6 * rp(0.88, 0.95, p);
+      E.ui.style.filter = ub > 0.05 ? `blur(${ub}px)` : "none";
       const fl = sm(rp(0.87, 0.935, p)) * (1 - rp(0.95, 0.99, p));
       E.flash.style.opacity = String(fl * 0.9);
       E.scan.style.opacity = String(fl * 0.7);
       E.vig.style.opacity = String(sm(rp(0.8, 0.9, p)) * (1 - rp(0.955, 0.995, p)));
 
       const hr = sm(rp(0.935, 1, p));
-      E.final.style.opacity = String(hr);
-      E.final.style.transform = `translate3d(0,${(1 - hr) * 28}px,0) scale(${1.04 - 0.04 * hr})`;
-      blur(E.final, Math.max(0, 0.5 - hr) * 16);
-      E.final.style.pointerEvents = hr > 0.9 ? "auto" : "none";
-      paintHow(hr, T, 1);
+      E.hero.style.opacity = String(hr);
+      E.hero.style.transform = `translate3d(0,${(1 - hr) * 28}px,0) scale(${1.04 - 0.04 * hr})`;
+      const hbl = (1 - hr) * 8;
+      E.hero.style.filter = hr > 0 && hbl > 0.05 ? `blur(${hbl}px)` : "none";
+      E.hero.style.pointerEvents = hr > 0.9 ? "auto" : "none";
 
       for (let i = 0; i < L.n; i++) {
         const node = E.st[i];
-        const c = L.spots[i];
+        const c = L.P[i];
         const t = tv[i];
         const amp = 2 + ((i * 37) % 5);
         const sp = 0.55 + ((i * 53) % 7) * 0.06;
         const ph = i * 1.7;
         const x0 = c.x * w + mx * 4 * mf;
         const y0 = c.y * h - 14 * a + my * 4 * mf;
-
+        const sy = y0 + amp * Math.sin(T * sp * 2 + ph) * (1 - t);
         let x = x0;
-        let y = y0 + amp * Math.sin(T * sp * 2 + ph) * (1 - t);
+        let y = sy;
         let rot = c.r + 1.1 * Math.sin(T * sp * 1.3 + ph * 1.3) * (1 - t);
         let sc = L.bs;
         let op = 1;
         let bl = 0;
-
         if (t > 0) {
+          // Quadratic bezier from the drift spot, through the control point, into the row.
           const te = Math.pow(t, 2.2);
           const u = 1 - te;
-          const pt = L.rowPts[i];
-          const px = cx + (pt[0] - TERM_W / 2) * s;
-          const py = cy + (pt[1] - TERM_H / 2) * s;
+          const rpt = L.rowPts[i];
+          const px = cx + (rpt[0] - 560) * s;
+          const py = cy + (rpt[1] - 336) * s;
           const qx = c.cx * w;
           const qy = c.cy * h;
           x = u * u * x0 + 2 * u * te * qx + te * te * px;
-          y = u * u * y + 2 * u * te * qy + te * te * py;
+          y = u * u * sy + 2 * u * te * qy + te * te * py;
           const tx = 2 * u * (qx - x0) + 2 * te * (px - qx);
-          const ty = 2 * u * (qy - y0) + 2 * te * (py - qy);
+          const ty = 2 * u * (qy - sy) + 2 * te * (py - qy);
           let ang = (Math.atan2(ty, tx) * 180) / Math.PI;
           if (ang > 90) ang -= 180;
           if (ang < -90) ang += 180;
@@ -379,40 +352,17 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
           bl = 1.8 * sm(rp(0.45, 0.95, t));
           op = 1 - sm(rp(0.8, 1, t));
         }
-
         node.style.transform = `translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${sc})`;
         node.style.opacity = String(op);
-        blur(node, bl);
+        node.style.filter = bl > 0.05 ? `blur(${bl}px)` : "none";
       }
     };
 
-    const onMove = (e: MouseEvent) => {
-      const r = E.panel.getBoundingClientRect();
-      tmx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      tmy = ((e.clientY - r.top) / r.height - 0.5) * 2;
-    };
-    const onResize = () => layout();
-
-    layout();
-    frame(performance.now());
-    el.classList.add("is-live");
-    if (document.fonts) document.fonts.ready.then(layout);
-
-    window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("resize", onResize);
-
-    let raf = 0;
-    const loop = (now: number) => {
-      frame(now);
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-
+    raf = requestAnimationFrame(frame);
     return () => {
       cancelAnimationFrame(raf);
+      ro.disconnect();
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("resize", onResize);
-      document.documentElement.style.removeProperty("--nav-op");
     };
   }, [root]);
 }

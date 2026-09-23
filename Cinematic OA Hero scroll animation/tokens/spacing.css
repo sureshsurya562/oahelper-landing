@@ -1,0 +1,21 @@
+:root {
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 10px;
+  --space-5: 12px;
+  --space-6: 14px;
+  --space-7: 16px;
+  --space-8: 18px;
+  --space-9: 20px;
+  --space-10: 24px;
+  --space-11: 28px;
+  --space-12: 40px;
+  --space-13: 56px;
+  --space-14: 72px;
+
+  --frame-inset: 10px;
+  --content-max: 1120px;
+  --gutter: 20px;
+  --section-pad-y: clamp(100px, 14vh, 160px);
+}

@@ -1,0 +1,11 @@
+:root {
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --ease-back: cubic-bezier(.34, 1.56, .64, 1);
+  --dur-1: 0.22s;
+  --dur-2: 0.35s;
+  --dur-3: 0.5s;
+  --dur-reveal: 0.85s;
+  --reveal-distance: 36px;
+  --scroll-smoothing: 7; /* exp. damping factor used by scroll-scrubbed scenes */
+}

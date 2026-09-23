@@ -1,0 +1,103 @@
+:root {
+  /* Ink: dark neutrals (page → raised surfaces → lines) */
+  --ink-1000: #0b0b0b;
+  --ink-950: #0f0f10;
+  --ink-900: #151515;
+  --ink-850: #1c1c1e;
+  --ink-800: #202022;
+  --ink-750: #26262a;
+  --ink-700: #2a2a2c;
+  --ink-650: #2e2e32;
+  --ink-600: #3a3a3e;
+
+  /* Foreground on ink */
+  --fg-1: #f3f3f3;
+  --fg-2: #d8d8d8;
+  --fg-3: #a8a8ac;
+  --fg-4: #8a8a8e;
+  --fg-5: #6a6a6e;
+
+  /* Paper: warm light sections */
+  --paper-50: #f8f5ee;
+  --paper-100: #f3efe6;
+  --paper-150: #efebe1;
+  --paper-rim: #f4f1ea;
+  --paper-ink: #151515;
+  --paper-fg-2: #55534e;
+  --paper-fg-3: #7a776f;
+
+  /* Sticker pastels (fill + matching ink) */
+  --mint: #bfe7c7;
+  --mint-ink: #16201a;
+  --sky: #c6dbf3;
+  --sky-ink: #161b22;
+  --peach: #f7d3b5;
+  --peach-ink: #22190f;
+  --lilac: #d9cdf4;
+  --lilac-ink: #1b1622;
+  --coral: #f5baae;
+  --coral-ink: #241411;
+  --cyan: #b7dcf6;
+  --cyan-ink: #121b22;
+  --butter: #f3e9a8;
+  --butter-ink: #221f10;
+  --aqua: #b4eae8;
+  --aqua-ink: #102120;
+  --lime: #d7ee9f;
+  --lime-ink: #1a200f;
+  --periwinkle: #c4c9f5;
+  --periwinkle-ink: #15172a;
+  --mist: #d4e2f4;
+  --mist-ink: #141a22;
+  --orchid: #e3d7f0;
+  --orchid-ink: #1d1622;
+
+  /* Code syntax (terminal + editor) */
+  --syn-keyword: #c9b8f0;
+  --syn-type: #9ecbef;
+  --syn-fn: #a8dcb4;
+  --syn-num: #f2c5a0;
+  --syn-comment: #66666a;
+  --syn-gutter: #4a4a4e;
+
+  /* Difficulty */
+  --diff-easy-bg: rgba(191, 231, 199, 0.12);
+  --diff-easy-fg: #bfe7c7;
+  --diff-medium-bg: rgba(247, 211, 181, 0.12);
+  --diff-medium-fg: #f2c5a0;
+  --diff-hard-bg: rgba(245, 186, 174, 0.14);
+  --diff-hard-fg: #f5baae;
+
+  /* Semantic aliases */
+  --surface-page: var(--ink-1000);
+  --surface-sunken: var(--ink-950);
+  --surface-panel: var(--ink-900);
+  --surface-raised: var(--ink-850);
+  --surface-raised-2: var(--ink-800);
+  --surface-chip-dark: var(--ink-750);
+  --surface-paper: var(--paper-100);
+  --surface-paper-card: var(--paper-50);
+  --surface-paper-chip: var(--paper-150);
+
+  --text-primary: var(--fg-1);
+  --text-secondary: var(--fg-2);
+  --text-muted: var(--fg-3);
+  --text-subtle: var(--fg-4);
+  --text-faint: var(--fg-5);
+  --text-on-paper: var(--paper-ink);
+  --text-on-paper-muted: var(--paper-fg-2);
+  --text-on-paper-subtle: var(--paper-fg-3);
+
+  --border-dark: var(--ink-700);
+  --border-dark-strong: var(--ink-600);
+  --border-hairline: rgba(255, 255, 255, 0.07);
+  --border-dashed-dark: rgba(255, 255, 255, 0.16);
+  --border-dashed-paper: rgba(21, 21, 21, 0.28);
+
+  --accent: var(--mint);
+  --accent-ink: var(--mint-ink);
+  --success: #a8dcb4;
+  --btn-light-bg: #f3f3f3;
+  --btn-light-bg-hover: #ffffff;
+  --btn-light-fg: #111111;
+}

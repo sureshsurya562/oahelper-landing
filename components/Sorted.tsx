@@ -3,22 +3,22 @@
 import { useEffect, useRef } from "react";
 import type { LandingData } from "@/lib/types";
 
-const PILE_SIZE = 18;
-const STACK_SIZE = 10;
+const PILE = 18;
+const STACK = 10;
 
-/** Deterministic scatter, so the pile looks the same on every render and resize. */
-const noise = (i: number, k: number) => {
+/** Deterministic scatter, so the pile looks identical on every render and resize. */
+const nz = (i: number, k: number) => {
   const x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453;
   return x - Math.floor(x);
 };
-const between = (i: number, k: number, a: number, b: number) => a + (b - a) * noise(i, k);
 
 /**
- * Scroll map (0 → 1 across the sticky section):
- * 0.00–0.12  heading and the random-prep column arrive
- * 0.12–0.40  problems drop into a messy pile on the left
- * 0.40–0.85  the ones your company actually asks fly right and stack
- * 0.85–1.00  the top card shows how fresh it is
+ * Scroll map (0 → 1 across the 300vh track):
+ * 0.00–0.10  the heading arrives
+ * 0.04–0.44  both columns slide in
+ * 0.12–0.26  problems drop into a messy pile on the left
+ * 0.42–0.62  the ten your company actually asks fly right and stack
+ * 0.86–0.96  the freshness sticker lands on top
  */
 export default function Sorted({ data }: { data: LandingData }) {
   const root = useRef<HTMLElement>(null);
@@ -30,145 +30,170 @@ export default function Sorted({ data }: { data: LandingData }) {
 
     const q = (s: string) => el.querySelector(s) as HTMLElement;
     const qa = (s: string) => Array.from(el.querySelectorAll(s)) as HTMLElement[];
-    const stage = q(".blind-stage");
-    const pile = q(".pile");
-    const left = q('[data-slot="pile"]');
-    const right = q('[data-slot="stack"]');
-    const cards = qa(".qcard");
-    const head = q(".blind-head");
-    const colL = q(".blind-col.is-random");
-    const colR = q(".blind-col.is-oa");
-    const fresh = q(".qcard-fresh");
-    if (!stage || !pile || !cards.length) return;
+    const stage = q(".sb-stage");
+    const head = q(".sb-head");
+    const cols = qa(".sb-col");
+    const slots = qa(".sb-slot");
+    const cards = qa(".sb-card");
+    const badges = cards.map((c) => c.querySelector(".sb-badge") as HTMLElement | null);
+    const fresh = q(".sb-fresh");
+    if (!stage || !cards.length || cols.length < 2) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.style.height = reduced ? "100vh" : "";
+    if (reduced) el.style.height = "100vh";
 
     const cl = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
     const rp = (a: number, b: number, p: number) => cl((p - a) / (b - a));
     const sm = (t: number) => t * t * (3 - 2 * t);
-    const out = (t: number) => 1 - Math.pow(1 - t, 3);
     const lp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const out = (t: number) => 1 - Math.pow(1 - t, 3);
 
-    // Slots never move under a transform, so client rects are safe anchors here.
-    const centre = (slot: HTMLElement) => {
-      const s = slot.getBoundingClientRect();
-      const p = pile.getBoundingClientRect();
-      return { x: s.left + s.width / 2 - (p.left + p.width / 2), y: s.top + s.height / 2 - (p.top + p.height / 2) };
+    let cw = 160;
+    let ch = 96;
+    const layout = () => {
+      const vw = stage.clientWidth || window.innerWidth;
+      cw = Math.round(Math.max(116, Math.min(170, vw * 0.13)));
+      ch = Math.round(cw * 0.6);
+      cards.forEach((c) => {
+        c.style.width = `${cw}px`;
+        c.style.height = `${ch}px`;
+      });
     };
+    layout();
+    const ro = new ResizeObserver(layout);
+    ro.observe(stage);
 
     let cur: number | null = null;
-    let lastT = 0;
+    let last = 0;
     let raf = 0;
 
     const frame = (now: number) => {
-      const dt = Math.min(0.05, (now - (lastT || now)) / 1000);
-      lastT = now;
+      raf = requestAnimationFrame(frame);
+      const dt = Math.min(0.05, (now - (last || now)) / 1000);
+      last = now;
+      const vh = window.innerHeight;
+      const tr = el.getBoundingClientRect();
+      if (tr.bottom < -50 || tr.top > vh + 50) return;
 
-      const rect = el.getBoundingClientRect();
-      const span = rect.height - window.innerHeight;
-      const target = span > 0 ? cl(-rect.top / span) : reduced ? 1 : 0;
-      if (cur == null) cur = target;
-      cur += (target - cur) * (1 - Math.exp(-dt * 7));
+      const span = tr.height - vh;
+      const tg = reduced ? 1 : span > 0 ? cl(-tr.top / span) : 0;
+      if (cur == null) cur = tg;
+      cur += (tg - cur) * (1 - Math.exp(-dt * 7));
+      if (Math.abs(tg - cur) < 1e-4) cur = tg;
       const p = cur;
 
       const a = sm(rp(0, 0.1, p));
       head.style.opacity = String(a);
       head.style.transform = `translateY(${(1 - a) * 24}px)`;
       const lv = sm(rp(0.04, 0.16, p));
-      colL.style.opacity = String(lv);
-      colL.style.transform = `translateX(${(lv - 1) * 24}px)`;
-      const rv = sm(rp(0.3, 0.44, p));
-      colR.style.opacity = String(rv);
-      colR.style.transform = `translateX(${(1 - rv) * 24}px)`;
+      const rvv = sm(rp(0.3, 0.44, p));
+      cols[0].style.opacity = String(lv);
+      cols[0].style.transform = `translateX(${(lv - 1) * 24}px)`;
+      cols[1].style.opacity = String(rvv);
+      cols[1].style.transform = `translateX(${(1 - rvv) * 24}px)`;
 
-      const from = centre(left);
-      const to = centre(right);
+      // Slots never move under a transform, so their rects are safe anchors.
+      const sr = stage.getBoundingClientRect();
+      const cen = (node: HTMLElement) => {
+        const r = node.getBoundingClientRect();
+        return { x: r.left + r.width / 2 - sr.left, y: r.top + r.height / 2 - sr.top, w: r.width, h: r.height };
+      };
+      const A = cen(slots[0]);
+      const B = cen(slots[1]);
       let stacked = 0;
 
       cards.forEach((card, i) => {
         const drop = sm(rp(0.12 + i * 0.008, 0.26 + i * 0.008, p));
-        const sx = between(i, 1, -84, 84);
-        const sy = between(i, 2, -48, 48);
-        const rot = between(i, 3, -38, 38);
-
-        let x = from.x + sx;
-        let y = from.y + sy - (1 - drop) * 140;
+        const sx = nz(i, 1) * 2 - 1;
+        const sy = nz(i, 2) * 2 - 1;
+        const rot = (nz(i, 3) * 2 - 1) * 30;
+        let x = A.x + sx * Math.max(8, A.w / 2 - cw / 2 - 4);
+        let y = A.y + sy * Math.max(6, A.h / 2 - ch / 2 - 4) - (1 - drop) * 160;
         let r = lp(rot * 1.8, rot, drop);
-        let z = 0;
         let op = drop;
-        let blurPx = 0;
+        let bl = 0;
 
-        const inStack = i < STACK_SIZE;
-        if (inStack) {
-          // Ordered arrival: the paper your company actually asks lands squarely on the deck.
+        if (i < STACK) {
           const fly = out(rp(0.42 + i * 0.03, 0.62 + i * 0.03, p));
-          x = lp(x, to.x, fly);
-          y = lp(y, to.y + (STACK_SIZE / 2 - i) * 5, fly);
+          x = lp(x, B.x, fly);
+          y = lp(y, B.y + (STACK / 2 - i) * 5 + 10, fly);
           r = lp(r, 0, fly);
-          z = i * 6;
           if (fly > 0) stacked = i + 1;
-          const badge = card.querySelector(".qcard-on") as HTMLElement | null;
+          const badge = badges[i];
           if (badge) badge.style.opacity = String(sm(rp(0.7, 1, fly)));
         } else {
           const dim = sm(rp(0.5, 0.72, p));
-          op = drop * lp(1, 0.32, dim);
-          blurPx = 1.6 * dim;
+          op = drop * lp(1, 0.3, dim);
+          bl = 1.6 * dim;
         }
 
-        card.style.transform = `translate3d(${x}px,${y}px,${z}px) rotate(${r}deg)`;
+        card.style.transform = `translate3d(${x - cw / 2}px,${y - ch / 2}px,0) rotate(${r}deg)`;
         card.style.opacity = String(op);
-        card.style.filter = blurPx > 0.05 ? `blur(${blurPx}px)` : "none";
-        card.style.zIndex = String(inStack ? 20 + i : 10);
+        card.style.filter = bl > 0.05 ? `blur(${bl}px)` : "none";
+        card.style.zIndex = String(i < STACK ? 20 + i : 10);
       });
 
-      const fv = stacked >= STACK_SIZE ? sm(rp(0.86, 0.96, p)) : 0;
+      const fv = stacked >= STACK ? sm(rp(0.86, 0.96, p)) : 0;
+      const topY = B.y + (STACK / 2 - (STACK - 1)) * 5 + 10 - ch / 2;
+      fresh.style.maxWidth = `${Math.max(180, B.w - 16)}px`;
       fresh.style.opacity = String(fv);
-      // Sit at the same depth as the top card, or perspective offsets the two differently.
-      fresh.style.transform = `translate3d(${to.x}px,${to.y - 96 + (1 - fv) * 10}px,${(STACK_SIZE - 1) * 6}px) translate(-50%,-50%) scale(${0.92 + 0.08 * fv})`;
-
-      raf = requestAnimationFrame(frame);
+      fresh.style.transform = `translate3d(${B.x}px,${topY - 14 + (1 - fv) * 10}px,0) translate(-50%,-100%) scale(${0.94 + 0.06 * fv})`;
     };
 
     raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
   }, []);
 
   return (
-    <section className="blind" ref={root} aria-labelledby="blind-title">
-      <div className="blind-stage">
-        <h2 className="blind-head" id="blind-title">
-          Stop practising blind.
-        </h2>
+    <section className="sb" ref={root} aria-labelledby="sb-title">
+      <div className="sb-stage">
+        <div className="sb-inner">
+          <h2 className="sb-head display" id="sb-title">
+            Stop practising <em>blind.</em>
+          </h2>
 
-        <div className="blind-grid">
-          <div className="blind-col is-random">
-            <p className="blind-label">Random prep</p>
-            <pre className="blind-pre">{"3,000 problems\n→ pick whatever\n→ hope it shows up"}</pre>
-            <div className="blind-slot" data-slot="pile" />
-          </div>
-          <div className="blind-col is-oa">
-            <p className="blind-label accent">OA Helper</p>
-            <pre className="blind-pre">{"Your company\n→ what it asked this season\n→ the questions that matter"}</pre>
-            <div className="blind-slot" data-slot="stack" />
+          <div className="sb-grid">
+            <div className="sb-col">
+              <span className="sb-label">Random prep</span>
+              <div className="sb-lines">
+                3,000 problems
+                <br />→ pick whatever
+                <br />→ hope it shows up
+              </div>
+              <div className="sb-slot" />
+            </div>
+            <div className="sb-col is-oa">
+              <span className="sb-label">OA Helper</span>
+              <div className="sb-lines">
+                Your company
+                <br />→ what it asked this season
+                <br />→ the questions that matter
+              </div>
+              <div className="sb-slot" />
+            </div>
           </div>
         </div>
 
-        <div className="pile" aria-hidden>
-          {Array.from({ length: PILE_SIZE }, (_, i) => (
-            <div className="qcard" key={i}>
-              <span className="qcard-num">Problem #{(i * 173 + 211) % 2999}</span>
-              <span className="qcard-line" />
-              <span className="qcard-line short" />
-              {i < STACK_SIZE && (
-                <span className="qcard-on">
+        <div className="sb-field" aria-hidden>
+          {Array.from({ length: PILE }, (_, i) => (
+            <div className="sb-card" key={i}>
+              <div className="sb-card-face">
+                <span>Problem #{(i * 173 + 211) % 2999}</span>
+                <i />
+                <i />
+              </div>
+              {i < STACK && (
+                <div className="sb-badge">
                   <b>{company}</b>
                   <span>OA · this season</span>
-                </span>
+                </div>
               )}
             </div>
           ))}
-          <p className="qcard-fresh">Asked in last Tuesday&apos;s drive. Shared the same night.</p>
+          <p className="sb-fresh">Asked in last Tuesday&apos;s drive. Shared the same night.</p>
         </div>
       </div>
     </section>

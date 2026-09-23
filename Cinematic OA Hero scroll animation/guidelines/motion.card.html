@@ -1,0 +1,9 @@
+<!-- @dsCard group="Effects" viewport="700x150" subtitle="Eases, durations and reveal" name="Motion" -->
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>html,body{margin:0;}body{padding:20px;box-sizing:border-box;min-height:100vh;font-family:var(--font-sans);background:var(--surface-page);color:var(--text-primary);-webkit-font-smoothing:antialiased;}</style></head>
+<body><style>@keyframes m{0%,10%{transform:translateX(0)}60%,100%{transform:translateX(420px)}}@keyframes r{0%,10%{opacity:0;transform:translateY(36px)}50%,100%{opacity:1;transform:none}}</style>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:12px"><span style="width:110px;font:400 11px var(--font-mono);color:var(--text-subtle)">--ease-out</span><span style="width:14px;height:14px;border-radius:4px;background:var(--mint);animation:m 2.4s var(--ease-out) infinite alternate"></span></div>
+<div style="display:flex;align-items:center;gap:12px"><span style="width:110px;font:400 11px var(--font-mono);color:var(--text-subtle)">--ease-back</span><span style="width:14px;height:14px;border-radius:4px;background:var(--peach);animation:m 2.4s var(--ease-back) infinite alternate"></span></div>
+<div style="display:flex;align-items:center;gap:12px"><span style="width:110px;font:400 11px var(--font-mono);color:var(--text-subtle)">reveal .85s</span><span style="padding:6px 10px;border-radius:999px;background:var(--surface-raised);font:500 12px var(--font-sans);animation:r 2.4s var(--ease-out) infinite alternate">Fade up 36px</span></div></div></body></html>

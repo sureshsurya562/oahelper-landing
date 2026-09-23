@@ -1,0 +1,51 @@
+<!-- @dsCard group="Landing page" viewport="1440x900" name="OAHelper landing" subtitle="Static composition of the landing sections with a live QOTD tab" -->
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OAHelper · Landing UI kit</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_loader.js"></script>
+<style>html,body{margin:0;background:var(--surface-page);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}a{color:inherit;}</style></head>
+<body><div id="root"></div>
+<script type="text/babel" data-presets="react">
+(async () => {
+  const C = '../../components/';
+  const DS = await loadOADS([C + 'core/Wordmark.jsx', C + 'core/Logo.jsx', C + 'core/Button.jsx', C + 'core/Tag.jsx', C + 'core/Eyebrow.jsx', C + 'core/Callout.jsx', C + 'core/Sticker.jsx',
+    C + 'cards/StatTile.jsx', C + 'cards/BentoCard.jsx', C + 'cards/QuestionCard.jsx', C + 'cards/TestimonialCard.jsx', C + 'navigation/NavBar.jsx',
+    C + 'product/TerminalWindow.jsx', C + 'product/CompareTable.jsx', C + 'product/QotdTab.jsx', C + 'product/QotdBanner.jsx',
+    './Hero.jsx', './ValueSection.jsx', './CompareSection.jsx', './ProofSection.jsx', './CloseSection.jsx']);
+  const { Hero, ValueSection, CompareSection, ProofSection, CloseSection, QotdTab, QotdBanner } = DS;
+
+  function Qotd() {
+    const [open, setOpen] = React.useState(false);
+    const [now, setNow] = React.useState(new Date());
+    React.useEffect(() => { const t = setInterval(() => setNow(new Date()), 1000); const p = setTimeout(() => setOpen(true), 1500); return () => { clearInterval(t); clearTimeout(p); }; }, []);
+    const end = new Date(now); end.setHours(24, 0, 0, 0);
+    const r = Math.floor((end - now) / 1000), p = n => String(n).padStart(2, '0');
+    const hh = p(Math.floor(r / 3600)), mm = p(Math.floor(r / 60) % 60), ss = p(r % 60);
+    return (
+      <div onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} style={{ position: 'fixed', right: 0, top: '50%', transform: 'translateY(-50%)', zIndex: 50, display: 'flex', alignItems: 'center' }}>
+        <div style={{ position: 'absolute', right: '100%', top: '50%', paddingRight: 12, width: 'min(700px, calc(100vw - 72px))', opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none',
+          transform: open ? 'translate3d(0,-50%,0)' : 'translate3d(28px,-50%,0) scale(.97)', transition: 'opacity .35s ease, transform .5s var(--ease-out)' }}>
+          <QotdBanner title="Memory Buffer Access" subtitle="Kingdom of Strings" countdown={[hh, mm, ss]} expires={hh + 'h ' + mm + 'm ' + ss + 's'}
+            month={now.toLocaleString('en', { month: 'short' }).toUpperCase()} day={String(now.getDate())}
+            stats={[{ label: 'Solvers Today', value: '39' }, { label: 'Acceptance Rate', value: '89%' }, { label: 'Your Rank If You Solve', value: '#1', accent: true }]} />
+        </div>
+        <QotdTab time={hh + ':' + mm + ':' + ss} open={open} onClick={() => setOpen(o => !o)} />
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <>
+      <Hero {...DS} />
+      <ValueSection {...DS} />
+      <CompareSection {...DS} />
+      <ProofSection {...DS} />
+      <CloseSection {...DS} />
+      <Qotd />
+    </>
+  );
+})();
+</script></body></html>

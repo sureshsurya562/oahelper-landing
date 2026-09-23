@@ -16,9 +16,19 @@ export type LiveData = {
     mock_count: number;
     last_question_at: string | null;
   }[];
+  potd: {
+    title: string;
+    topic: string;
+    difficulty: string;
+    expires_at: string;
+    solvers: number;
+    acceptance: number;
+    rank: string;
+    url: string;
+  } | null;
 };
 
-const EMPTY: LiveData = { ticker: [], stats: null, hero: null, upcoming: [] };
+const EMPTY: LiveData = { ticker: [], stats: null, hero: null, upcoming: [], potd: null };
 
 export async function getLandingData(): Promise<LandingData> {
   const url = process.env.OA_PUBLIC_API_URL;
@@ -56,6 +66,19 @@ export async function getLandingData(): Promise<LandingData> {
       mockCount: u.mock_count,
       lastAdded: u.last_question_at ? ago(u.last_question_at, now) : null,
     })),
+    potd: raw.potd
+      ? {
+          title: raw.potd.title,
+          topic: raw.potd.topic,
+          difficulty: raw.potd.difficulty,
+          ...stamp(raw.potd.expires_at),
+          expiresAt: raw.potd.expires_at,
+          solvers: raw.potd.solvers,
+          acceptance: raw.potd.acceptance,
+          rank: raw.potd.rank,
+          url: raw.potd.url,
+        }
+      : null,
     isSample,
   };
 }
@@ -82,6 +105,31 @@ function sanitize(input: any): LiveData {
       mock_count: Number(u.mock_count) || 0,
       last_question_at: u.last_question_at ? String(u.last_question_at) : null,
     })),
+    potd: input?.potd
+      ? {
+          title: String(input.potd.title),
+          topic: String(input.potd.topic),
+          difficulty: String(input.potd.difficulty),
+          expires_at: String(input.potd.expires_at),
+          solvers: Number(input.potd.solvers) || 0,
+          acceptance: Number(input.potd.acceptance) || 0,
+          rank: String(input.potd.rank),
+          url: String(input.potd.url),
+        }
+      : null,
+  };
+}
+
+/**
+ * The calendar glyph's month and day, fixed on the server. Deriving them in the
+ * browser would render a different date for anyone west of the drive's timezone.
+ */
+function stamp(iso: string) {
+  // The badge names the day the question belongs to, not the midnight it rotates on.
+  const d = new Date(new Date(iso).getTime() - 1000);
+  return {
+    month: d.toLocaleString("en-US", { month: "short", timeZone: "Asia/Kolkata" }).toUpperCase(),
+    day: d.toLocaleString("en-US", { day: "numeric", timeZone: "Asia/Kolkata" }),
   };
 }
 
@@ -127,5 +175,22 @@ function sampleData(): LiveData {
       { company: "Microsoft", oa_date: d(18), question_count: 27, mock_count: 2, last_question_at: h(40) },
       { company: "Deloitte", oa_date: d(24), question_count: 19, mock_count: 1, last_question_at: h(70) },
     ],
+    potd: {
+      title: "Memory Buffer Access",
+      topic: "Kingdom of Strings",
+      difficulty: "Medium",
+      expires_at: nextISTMidnight(),
+      solvers: 39,
+      acceptance: 89,
+      rank: "#1",
+      url: "https://oahelper.in/question-of-the-day",
+    },
   };
+}
+
+/** The daily question rotates at midnight IST, wherever the reader happens to be. */
+function nextISTMidnight() {
+  const OFFSET = 5.5 * 3600000;
+  const ist = Date.now() + OFFSET;
+  return new Date(Math.ceil(ist / 86400000) * 86400000 - OFFSET).toISOString();
 }

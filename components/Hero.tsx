@@ -2,9 +2,14 @@
 
 import { useRef } from "react";
 import type { LandingData } from "@/lib/types";
-import { COMPANY_NAMES, LINKS, VOICE } from "@/lib/config";
-import Ticker from "./Ticker";
+import { COMPANIES, LINKS, STICKER_INK, STICKER_RADII, VOICE } from "@/lib/config";
 import { useCinematicHero } from "./useCinematicHero";
+
+const CASES = [
+  { n: 1, ms: "11 ms", io: "stock = [1, 0, 5]", got: "4" },
+  { n: 2, ms: "9 ms", io: "stock = [0, 3, 0]", got: "2" },
+  { n: 3, ms: "12 ms", io: "stock = [4, 1, 1, 2]", got: "3" },
+];
 
 export default function Hero({ data }: { data: LandingData }) {
   const root = useRef<HTMLElement>(null);
@@ -12,25 +17,29 @@ export default function Hero({ data }: { data: LandingData }) {
 
   const company = data.hero?.company ?? "Amazon";
   const counts = new Map(data.upcoming.map((u) => [u.company, u.questionCount]));
-  // The student's own company leads, so the orange sticker is the one they came for.
-  const names = [company, ...COMPANY_NAMES.filter((c) => c !== company)].slice(0, 12);
-  const synced = data.stats
-    ? `${data.stats.companies} companies · ${data.stats.questions} questions`
-    : `${names.length} companies · this season's papers`;
+  // The student's own company leads the sticker drift and the sync log.
+  const names = [company, ...COMPANIES.map(([n]) => n).filter((c) => c !== company)].slice(0, 12);
+  const tint = new Map(COMPANIES);
+  const synced = data.stats ? `${data.stats.companies} companies · ${data.stats.questions} questions` : "12 companies · this season's papers";
 
   return (
     <section className="cine" ref={root} aria-label="How OA Helper works">
       <div className="cine-sticky">
         <div className="cine-panel">
-          <div className="cine-grid" aria-hidden />
+          <div className="cine-bg" aria-hidden />
+          <div className="cine-noise" aria-hidden />
 
           <div className="cine-head">
-            <h1>Your next OA is closer than you think.</h1>
+            <h1 className="display">
+              Your next OA is
+              <br />
+              <em>closer</em> than you think.
+            </h1>
           </div>
 
           <div className="cine-dim" aria-hidden />
 
-          {/* Terminal that syncs the companies, then becomes the assessment itself. */}
+          {/* Terminal syncs the companies, then becomes the assessment itself. */}
           <div className="cine-term">
             <div className="cine-glow" aria-hidden />
             <div className="cine-frame">
@@ -54,9 +63,9 @@ export default function Hero({ data }: { data: LandingData }) {
                   <span className="cine-load">&gt; loading company questions…</span>
                 </span>
                 <div className="cine-rows">
-                  {names.map((name, i) => (
+                  {names.map((name) => (
                     <div className="cine-row" key={name}>
-                      <span className={`cine-chip c${i}`} aria-hidden />
+                      <span className="cine-chip" style={{ background: tint.get(name) ?? "#bfe7c7" }} aria-hidden />
                       <span className="cine-co">{name}</span>
                       {counts.has(name) && <span className="cine-qs">{counts.get(name)} Qs</span>}
                       <span className="cine-ok">✓</span>
@@ -74,6 +83,7 @@ export default function Hero({ data }: { data: LandingData }) {
               <div className="cine-ui">
                 <div className="cine-top">
                   <span className="cine-brand">
+                    <span className="cine-mark">A</span>
                     <span className="cine-brand-name">
                       <b>OA</b>Helper
                     </span>
@@ -205,7 +215,7 @@ export default function Hero({ data }: { data: LandingData }) {
                           <i>13</i>
                           <em>{"            carry += units - target"}</em>
                         </span>
-                        <span className="ln is-here">
+                        <span className="ln">
                           <i>14</i>
                           <em>
                             {"            ops += "}
@@ -236,11 +246,7 @@ export default function Hero({ data }: { data: LandingData }) {
                         <span className="cine-pass">3 / 3 passed</span>
                       </div>
                       <div className="cine-cases">
-                        {[
-                          { n: 1, ms: "11 ms", io: "stock = [1, 0, 5]", got: "4" },
-                          { n: 2, ms: "9 ms", io: "stock = [0, 3, 0]", got: "2" },
-                          { n: 3, ms: "12 ms", io: "stock = [4, 1, 1, 2]", got: "3" },
-                        ].map((c) => (
+                        {CASES.map((c) => (
                           <div className="cine-case" key={c.n}>
                             <span>
                               <b>Case {c.n}</b>
@@ -264,29 +270,37 @@ export default function Hero({ data }: { data: LandingData }) {
             <div className="cine-rim" aria-hidden />
           </div>
 
-          {names.map((name, i) => (
-            <div className={`cine-sticker c${i}`} key={name} aria-hidden>
-              <span>{name}</span>
-            </div>
-          ))}
+          {names.map((name, i) => {
+            const bg = tint.get(name) ?? "#bfe7c7";
+            return (
+              <div className="cine-sticker" key={name} aria-hidden>
+                <div
+                  className="sticker"
+                  style={{ background: bg, color: STICKER_INK[bg] ?? "#151515", borderRadius: STICKER_RADII[i % STICKER_RADII.length] }}
+                >
+                  {name}
+                </div>
+              </div>
+            );
+          })}
 
           <div className="cine-vig" aria-hidden />
 
           <div className="cine-final">
-            <h2>OA Helper makes your life easier in your next OA.</h2>
+            <h2 className="display">
+              OA Helper makes your life easier
+              <br />
+              in your <em>next OA.</em>
+            </h2>
             <p className="cine-how">
-              <span className="cine-how-q">
-                <span className="cine-how-w">How</span>
-                <i className="cine-how-m">?</i>
-                <i className="cine-how-m">?</i>
-              </span>
-              <span className="cine-how-a">Practice the questions, patterns companies actually ask</span>
+              <b>How??</b>
+              <span>Practice the questions, patterns companies actually ask</span>
             </p>
-            <a className="btn btn-primary" href={LINKS.browse}>
+            <a className="btn" href={LINKS.browse}>
               {VOICE.cta} <span aria-hidden>→</span>
             </a>
-            <Ticker items={data.ticker} />
           </div>
+
         </div>
       </div>
     </section>

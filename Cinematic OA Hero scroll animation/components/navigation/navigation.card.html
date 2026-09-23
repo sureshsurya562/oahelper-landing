@@ -1,0 +1,17 @@
+<!-- @dsCard group="Components" viewport="700x120" name="Navigation" -->
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_loader.js"></script>
+<style>html,body{margin:0;}body{padding:20px;box-sizing:border-box;min-height:100vh;background:var(--surface-panel);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}</style></head>
+<body><div id="root"></div>
+<script type="text/babel" data-presets="react">
+(async () => {
+  const { Wordmark, Button, NavBar } = await loadOADS(['../core/Logo.jsx', '../core/Button.jsx', './NavBar.jsx']);
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <div style={{ margin: -20 }}><NavBar links={['Placements', 'Questions', 'For Campus', 'Contribute', 'OA Store']} active="Placements" /></div>
+  );
+})();
+</script></body></html>
