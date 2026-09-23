@@ -105,6 +105,9 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       scan: q(".cine-scan"),
       vig: q(".cine-vig"),
       final: q(".cine-final"),
+      howq: q(".cine-how-q"),
+      howm: qa(".cine-how-m"),
+      howa: q(".cine-how-a"),
       timer: q(".cine-timer"),
       caret: q(".cine-caret"),
       rows: qa(".cine-row"),
@@ -197,6 +200,29 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       node.style.filter = amount > 0.05 ? `blur(${amount}px)` : "none";
     };
 
+    // The closing frame poses the question, marks it, then answers it — one beat each.
+    const paintHow = (frame: number, T: number, alive: number) => {
+      // Hold until the closing frame is sharp, then play the beats across what is left.
+      const v = rp(0.35, 1, frame);
+      const word = sm(rp(0.1, 0.5, v));
+      const answer = sm(rp(0.62, 1, v));
+      E.howq.style.setProperty("--hi", String(sm(rp(0.2, 0.66, v))));
+      E.howq.style.setProperty("--beat", String((0.5 + 0.5 * Math.sin(T * 2.1)) * v * alive));
+      E.howq.style.opacity = String(word);
+      E.howq.style.transform = `translate3d(0,${(1 - word) * 16}px,0) scale(${0.92 + 0.08 * word})`;
+      E.howm.forEach((m, i) => {
+        const t = sm(rp(0.46 + i * 0.16, 0.74 + i * 0.16, v));
+        // Once landed, the marks keep a small sway so the question stays asked.
+        const sway = t * alive;
+        const y = (1 - t) * -12 + Math.sin(T * 2.4 + i * 0.9) * 1.6 * sway;
+        const rot = (1 - t) * (i ? 16 : -16) + Math.sin(T * 1.9 + i * 1.3) * 3 * sway;
+        m.style.opacity = String(t);
+        m.style.transform = `translate3d(0,${y}px,0) rotate(${rot}deg) scale(${0.4 + 0.6 * t})`;
+      });
+      E.howa.style.opacity = String(answer);
+      E.howa.style.transform = `translate3d(0,${(1 - answer) * 12}px,0)`;
+    };
+
     const frame = (now: number) => {
       if (!L) return;
       const dt = Math.min(0.05, (now - (last || now)) / 1000);
@@ -243,6 +269,7 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
         });
         E.final.style.opacity = String(hr);
         E.final.style.pointerEvents = hr > 0.9 ? "auto" : "none";
+        paintHow(hr, T, 0);
         return;
       }
 
@@ -311,8 +338,9 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       const hr = sm(rp(0.935, 1, p));
       E.final.style.opacity = String(hr);
       E.final.style.transform = `translate3d(0,${(1 - hr) * 28}px,0) scale(${1.04 - 0.04 * hr})`;
-      blur(E.final, (1 - hr) * 8);
+      blur(E.final, Math.max(0, 0.5 - hr) * 16);
       E.final.style.pointerEvents = hr > 0.9 ? "auto" : "none";
+      paintHow(hr, T, 1);
 
       for (let i = 0; i < L.n; i++) {
         const node = E.st[i];

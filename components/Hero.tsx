@@ -26,7 +26,6 @@ export default function Hero({ data }: { data: LandingData }) {
 
           <div className="cine-head">
             <h1>Your next OA is closer than you think.</h1>
-            <p className="cine-sub">Practice the questions, patterns companies actually ask</p>
           </div>
 
           <div className="cine-dim" aria-hidden />
@@ -275,6 +274,14 @@ export default function Hero({ data }: { data: LandingData }) {
 
           <div className="cine-final">
             <h2>OA Helper makes your life easier in your next OA.</h2>
+            <p className="cine-how">
+              <span className="cine-how-q">
+                <span className="cine-how-w">How</span>
+                <i className="cine-how-m">?</i>
+                <i className="cine-how-m">?</i>
+              </span>
+              <span className="cine-how-a">Practice the questions, patterns companies actually ask</span>
+            </p>
             <a className="btn btn-primary" href={LINKS.browse}>
               {VOICE.cta} <span aria-hidden>→</span>
             </a>

@@ -22,11 +22,17 @@
 html,
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+}
+
+/* The whole page sits on the same dotted surface as the hero panel. */
+body {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1.3px);
+  background-size: 22px 22px;
 }
 
 a {
@@ -210,13 +216,6 @@ pre {
   letter-spacing: -0.035em;
   font-weight: 800;
   max-width: 16ch;
-  text-wrap: balance;
-}
-.cine-sub {
-  color: var(--muted);
-  font-size: clamp(14px, 1.5vw, 17px);
-  line-height: 1.55;
-  max-width: 44ch;
   text-wrap: balance;
 }
 
@@ -845,6 +844,59 @@ pre {
   line-height: 1.55;
   text-wrap: balance;
 }
+/* The question the rest of the page answers. */
+.cine-how {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: none;
+  margin-top: 4px;
+}
+.cine-how-q {
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: baseline;
+  padding: 2px 14px 4px;
+  font-size: clamp(26px, 3.4vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--orange);
+  text-shadow: 0 0 calc(26px * var(--beat, 0)) rgba(255, 106, 26, 0.45);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+/* A highlighter swipe, not a button — organic radius and a slight tilt. */
+.cine-how-q::before {
+  content: "";
+  position: absolute;
+  inset: 4px -2px 2px;
+  z-index: -1;
+  border-radius: 10px 4px 9px 5px;
+  transform: rotate(-0.8deg) scaleX(var(--hi, 0));
+  transform-origin: left center;
+  opacity: var(--hi, 0);
+  background: linear-gradient(100deg, rgba(255, 106, 26, 0.34), rgba(255, 106, 26, 0.12));
+  box-shadow: 0 10px 40px rgba(255, 106, 26, calc(0.06 + 0.16 * var(--beat, 0)));
+}
+.cine-how-m {
+  font-style: normal;
+  display: inline-block;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.cine-how-a {
+  color: var(--muted);
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.55;
+  max-width: 42ch;
+  text-wrap: balance;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
 .cine-final .btn {
   margin-top: 8px;
 }
@@ -945,6 +997,9 @@ pre {
   .cine-sticker span {
     padding: 6px 12px;
     font-size: 12px;
+  }
+  .cine-how-q {
+    padding: 5px 15px;
   }
   .cine-final .ticker {
     display: none;
@@ -1150,7 +1205,6 @@ pre {
   z-index: 1;
   max-width: 1120px;
   margin: 0 auto;
-  background: var(--bg);
   border-top: 1px solid var(--line);
   padding: clamp(56px, 9vh, 104px) 0 clamp(44px, 7vh, 80px);
   --pad: clamp(16px, 4vw, 40px);
