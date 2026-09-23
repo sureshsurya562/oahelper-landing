@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav";
-import Story from "@/components/Story";
+import Hero from "@/components/Hero";
+import Sorted from "@/components/Sorted";
 import Value from "@/components/Value";
 import Compare from "@/components/Compare";
 import Proof from "@/components/Proof";
@@ -17,7 +18,8 @@ export default async function Home() {
     <>
       <Nav />
       <main>
-        <Story data={data} />
+        <Hero data={data} />
+        <Sorted data={data} />
         <Value data={data} />
         <Compare />
         <Proof />
