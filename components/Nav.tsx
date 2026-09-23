@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LINKS, NAV_CTA, NAV_LINKS } from "@/lib/config";
+import { CTA, LINKS, NAV_LINKS } from "@/lib/config";
 
 /**
  * Fixed glass capsule. The page alternates dark and paper sections, so the bar
@@ -45,8 +45,12 @@ export default function Nav() {
         </nav>
 
         <div className="nav-end">
-          <a className="nav-cta" href={NAV_CTA.href}>
-            {NAV_CTA.label}
+          {/* Log in serves returning users; Start free is the one new visitors need. */}
+          <a className="nav-login" href={CTA.navLogin.href}>
+            {CTA.navLogin.label}
+          </a>
+          <a className="nav-cta" href={CTA.navStart.href} data-cursor="Free">
+            {CTA.navStart.label}
             <span aria-hidden>→</span>
           </a>
           <button
@@ -69,8 +73,11 @@ export default function Nav() {
             {l.label}
           </a>
         ))}
-        <a className="nav-cta is-wide" href={NAV_CTA.href}>
-          {NAV_CTA.label}
+        <a className="nav-sheet-login" href={CTA.navLogin.href}>
+          {CTA.navLogin.label}
+        </a>
+        <a className="nav-cta is-wide" href={CTA.navStart.href}>
+          {CTA.navStart.label}
           <span aria-hidden>→</span>
         </a>
       </div>

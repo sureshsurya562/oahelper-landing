@@ -1,6 +1,6 @@
 import AskAI from "./AskAI";
 import ClosingFx from "./ClosingFx";
-import { LINKS, VOICE } from "@/lib/config";
+import { CTA, LINKS } from "@/lib/config";
 
 const PRODUCT = [
   { label: "Company OAs", href: "https://www.oahelper.in/companies" },
@@ -44,8 +44,15 @@ export default function Close() {
             <span className="pr-caret" aria-hidden />
           </h2>
           <p>Stop Guessing. Start Preparing Smart.</p>
-          <a className="btn" href={LINKS.browse} data-cursor="Let's go">
-            {VOICE.cta} <span aria-hidden>→</span>
+          {/* Only now, with the whole argument read, does the page ask for an account. */}
+          <a className="btn" href={CTA.closeSignup.href} data-cursor="30 seconds">
+            {CTA.closeSignup.label} <span aria-hidden>→</span>
+          </a>
+          <p className="pr-note">
+            Free forever. An account saves your progress, bookmarks questions and warns you before your next drive.
+          </p>
+          <a className="pr-alt" href={CTA.closeAlt.href}>
+            {CTA.closeAlt.label}
           </a>
         </div>
       </div>

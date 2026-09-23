@@ -1,5 +1,5 @@
 import type { LandingData } from "@/lib/types";
-import { COMPANIES, LINKS, VOICE } from "@/lib/config";
+import { COMPANIES, CTA } from "@/lib/config";
 
 const VOICES = [
   {
@@ -59,8 +59,8 @@ export default function Proof({ data }: { data: LandingData }) {
             </h2>
             <p>Recent, verified, and added within hours of each drive.</p>
           </div>
-          <a className="btn" href={LINKS.browse} data-cursor="Let's go">
-            {VOICE.cta} <span aria-hidden>→</span>
+          <a className="btn" href={CTA.proofBrowse.href} data-cursor="It's free">
+            {CTA.proofBrowse.label} <span aria-hidden>→</span>
           </a>
         </div>
 

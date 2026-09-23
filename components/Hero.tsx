@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import type { LandingData } from "@/lib/types";
-import { COMPANIES, LINKS, STICKER_INK, STICKER_RADII, VOICE } from "@/lib/config";
+import { COMPANIES, CTA, STICKER_INK, STICKER_RADII } from "@/lib/config";
 import { useCinematicHero } from "./useCinematicHero";
 
 const CASES = [
@@ -296,8 +296,8 @@ export default function Hero({ data }: { data: LandingData }) {
               <b>How??</b>
               <span>Practice the questions, patterns companies actually ask</span>
             </p>
-            <a className="btn" href={LINKS.browse} data-cursor="Let's go">
-              {VOICE.cta} <span aria-hidden>→</span>
+            <a className="btn" href={CTA.heroBrowse.href} data-cursor="It's free">
+              {CTA.heroBrowse.label} <span aria-hidden>→</span>
             </a>
           </div>
 

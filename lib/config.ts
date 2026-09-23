@@ -1,8 +1,25 @@
 export const LINKS = {
-  browse: "https://oahelper.in/questions",
-  share: "https://oahelper.in/share",
-  plans: "https://oahelper.in/pricing",
-  home: "https://oahelper.in",
+  browse: "https://www.oahelper.in/problems",
+  companies: "https://www.oahelper.in/companies",
+  login: "https://www.oahelper.in/login",
+  signup: "https://www.oahelper.in/signup",
+  share: "https://www.oahelper.in/contribute",
+  plans: "https://www.oahelper.in/premium",
+  home: "https://www.oahelper.in",
+};
+
+/**
+ * Freemium ladder: the page never asks for an account before it has shown the
+ * goods. Early CTAs open the free library, the closing one — after the whole
+ * argument has been read — is the account ask, with a browse escape hatch.
+ */
+export const CTA = {
+  navLogin: { label: "Log in", href: LINKS.login },
+  navStart: { label: "Start free", href: LINKS.signup },
+  heroBrowse: { label: "Browse OA questions — free", href: LINKS.browse },
+  proofBrowse: { label: "Browse free questions", href: LINKS.browse },
+  closeSignup: { label: "Create your free account", href: LINKS.signup },
+  closeAlt: { label: "or browse questions first", href: LINKS.browse },
 };
 
 /** The design's own five items, pointed at the closest live route. */
@@ -14,7 +31,7 @@ export const NAV_LINKS = [
   { label: "OA Store", href: "https://www.oahelper.in/premium" },
 ];
 
-export const NAV_CTA = { label: "Let's Chat!", href: "https://www.oahelper.in/contact" };
+
 
 export const VOICE = {
   tagline: "See it before you sit it",
