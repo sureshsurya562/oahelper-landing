@@ -44,7 +44,7 @@ export default function Close() {
             <span className="pr-caret" aria-hidden />
           </h2>
           <p>Stop Guessing. Start Preparing Smart.</p>
-          <a className="btn" href={LINKS.browse}>
+          <a className="btn" href={LINKS.browse} data-cursor="Let's go">
             {VOICE.cta} <span aria-hidden>→</span>
           </a>
         </div>

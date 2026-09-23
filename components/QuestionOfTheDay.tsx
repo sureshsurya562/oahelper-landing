@@ -263,7 +263,7 @@ export default function QuestionOfTheDay({ data }: { data: LandingData }) {
                   </b>
                 </span>
               </span>
-              <a className="qd-go" href={q.url} tabIndex={open ? 0 : -1}>
+              <a className="qd-go" href={q.url} tabIndex={open ? 0 : -1} data-cursor="Solve">
                 Solve Now <span aria-hidden>↗</span>
               </a>
             </div>

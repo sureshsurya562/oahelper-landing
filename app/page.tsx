@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import Cursor from "@/components/Cursor";
 import Hero from "@/components/Hero";
 import Sorted from "@/components/Sorted";
 import Value from "@/components/Value";
@@ -27,6 +28,7 @@ export default async function Home() {
         <Close />
       </main>
       <PageMotion />
+      <Cursor />
       <QuestionOfTheDay data={data} />
       {data.isSample && <p className="sample-badge">Preview data: set OA_PUBLIC_API_URL for live numbers</p>}
     </>

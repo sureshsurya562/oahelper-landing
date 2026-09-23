@@ -296,7 +296,7 @@ export default function Hero({ data }: { data: LandingData }) {
               <b>How??</b>
               <span>Practice the questions, patterns companies actually ask</span>
             </p>
-            <a className="btn" href={LINKS.browse}>
+            <a className="btn" href={LINKS.browse} data-cursor="Let's go">
               {VOICE.cta} <span aria-hidden>→</span>
             </a>
           </div>

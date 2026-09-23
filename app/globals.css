@@ -2808,6 +2808,91 @@ em.serif {
 }
 
 /* =========================================================
+   FOLLOWER CURSOR + card CTAs
+   ========================================================= */
+.cur {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 80;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+/* Offset right of the pointer in label mode, so the real cursor stays visible. */
+.cur-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 999px;
+  background: var(--mint);
+  border: 1.5px solid var(--paper-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font: 600 12px/1 var(--font);
+  color: #16201a;
+  white-space: nowrap;
+  transition: width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+    margin 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.25s ease, border-color 0.25s ease;
+}
+.cur-label {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Cards are links now; the CTA sits under the copy and lights up on hover. */
+.ss-card {
+  color: inherit;
+  text-decoration: none;
+}
+.ss-cta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 2px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(21, 21, 21, 0.3);
+  font: 600 12.5px/1 var(--ss-font, var(--font));
+  color: var(--ink-soft, #55534e);
+  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+.ss-cta i {
+  font-style: normal;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ss-card:hover .ss-cta,
+.ss-card:focus-visible .ss-cta {
+  background: var(--mint);
+  border-color: var(--paper-ink);
+  color: var(--paper-ink);
+  box-shadow: 0 2px 0 var(--paper-ink);
+  transform: translateY(-1px);
+}
+.ss-card:hover .ss-cta i {
+  transform: translateX(3px);
+}
+.ss-card:focus-visible {
+  outline: 2px solid var(--paper-ink);
+  outline-offset: 3px;
+}
+.ss-big-copy .ss-cta {
+  margin-top: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cur {
+    display: none;
+  }
+}
+
+/* =========================================================
    QUESTION OF THE DAY — mint sticker tab on the right rail
    ========================================================= */
 .qd {

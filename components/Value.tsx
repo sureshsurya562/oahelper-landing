@@ -63,7 +63,7 @@ const BARS = [
   { label: "Math", pct: 12, color: "#f3e9a8" },
 ];
 
-type Rail = { title: string; line: string; art: ReactNode };
+type Rail = { title: string; line: string; href: string; art: ReactNode };
 
 function buildRail(data: LandingData): Rail[] {
   const up = data.upcoming.length ? data.upcoming : [];
@@ -72,6 +72,7 @@ function buildRail(data: LandingData): Rail[] {
   return [
     {
       title: "Company-wise Patterns",
+      href: "https://www.oahelper.in/company-insights",
       line: "See which topics each company tests most, and prepare for those first.",
       art: (
         <>
@@ -95,6 +96,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "Instant OA Alerts",
+      href: "https://www.oahelper.in/oa-calendar",
       line: "Get notified as soon as a new OA is scheduled for your college.",
       art: (
         <div className="ss-rounds" style={{ justifyContent: "center", flex: 1 }}>
@@ -119,6 +121,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "Timed Mock OAs",
+      href: "https://www.oahelper.in/mock-oa",
       line: "Practice in an exam-style editor with a timer and hidden test cases.",
       art: (
         <div className="ss-editor">
@@ -145,6 +148,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "Real Screenshots",
+      href: "https://www.oahelper.in/problems",
       line: "The actual OA screen as students saw it, not somebody's rewrite.",
       art: (
         <div className="ss-shots">
@@ -159,6 +163,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "Interview Experiences",
+      href: "https://www.oahelper.in/interview-experiences",
       line: "Round by round write-ups from students who already cleared it.",
       art: (
         <div className="ss-rounds">
@@ -183,6 +188,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "60-Day DSA Roadmap",
+      href: "https://www.oahelper.in/placement-prep",
       line: "Eighteen patterns, ordered by what OAs actually repeat.",
       art: (
         <div className="ss-road">
@@ -206,6 +212,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "Your Campus Numbers",
+      href: "https://www.oahelper.in/company-insights",
       line: "Drives, offers and cutoffs for your college, kept current by your batch.",
       art: (
         <div className="ss-figs">
@@ -226,6 +233,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "OA Groups",
+      href: "https://www.oahelper.in/companies",
       line: "Same-day intel from everyone else sitting the very same test.",
       art: (
         <>
@@ -244,6 +252,7 @@ function buildRail(data: LandingData): Rail[] {
     },
     {
       title: "Contribute & Earn",
+      href: "https://www.oahelper.in/contribute",
       line: "Share one paper anonymously, unlock premium with OA Coins.",
       art: (
         <>
@@ -626,7 +635,7 @@ export default function Value({ data }: { data: LandingData }) {
         <div className="ss-top">
           {/* The headline promise: real papers, stamped and dated. */}
           <div className="ss-slot is-big">
-            <div className="ss-card is-big">
+            <a className="ss-card is-big" href="https://www.oahelper.in/problems" data-cursor="Explore">
               <div className="ss-fanbox">
                 <div className="ss-fan">
                   <div className="ss-fan-row">
@@ -683,6 +692,9 @@ export default function Value({ data }: { data: LandingData }) {
                       ? `${data.stats.questions}+ questions from ${data.stats.companies}+ companies, each tagged with the company, role and month it was asked.`
                       : "Every question comes from a real online assessment, tagged with the company, role and month it was asked."}
                   </p>
+                  <span className="ss-cta">
+                    Explore <i aria-hidden>&rarr;</i>
+                  </span>
                 </div>
                 <div className="ss-marqbox" aria-hidden>
                   <div className="ss-marq">
@@ -695,11 +707,11 @@ export default function Value({ data }: { data: LandingData }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
 
           <div className="ss-slot is-side">
-            <div className="ss-card">
+            <a className="ss-card" href="https://www.oahelper.in/oa-calendar" data-cursor="Explore">
               <div className="ss-art">
                 <div className="ss-cal-head">
                   <b>October 2026</b>
@@ -732,8 +744,11 @@ export default function Value({ data }: { data: LandingData }) {
               <div className="ss-copy">
                 <h3>OA Calendar</h3>
                 <p>Upcoming OAs for your campus in one calendar, with dates and timings.</p>
+                <span className="ss-cta">
+                  Explore <i aria-hidden>→</i>
+                </span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -758,13 +773,16 @@ export default function Value({ data }: { data: LandingData }) {
         <div className="ss-rail" ref={rail} onPointerDown={onPointerDown} tabIndex={0} role="group" aria-label="More features, scroll sideways">
           {cards.map((c) => (
             <div className="ss-slot" key={c.title}>
-              <div className="ss-card">
+              <a className="ss-card" href={c.href} data-cursor="Explore">
                 <div className="ss-art">{c.art}</div>
                 <div className="ss-copy">
                   <h3>{c.title}</h3>
                   <p>{c.line}</p>
+                  <span className="ss-cta">
+                    Explore <i aria-hidden>→</i>
+                  </span>
                 </div>
-              </div>
+              </a>
             </div>
           ))}
         </div>

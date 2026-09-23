@@ -59,7 +59,7 @@ export default function Proof({ data }: { data: LandingData }) {
             </h2>
             <p>Recent, verified, and added within hours of each drive.</p>
           </div>
-          <a className="btn" href={LINKS.browse}>
+          <a className="btn" href={LINKS.browse} data-cursor="Let's go">
             {VOICE.cta} <span aria-hidden>→</span>
           </a>
         </div>
