@@ -190,6 +190,12 @@ em.serif {
   position: relative;
   height: 400vh;
 }
+/* Phones play the hero from a single swipe (useCinematicHero), so there is no track. */
+@media (max-width: 759px) {
+  .cine {
+    height: 100vh;
+  }
+}
 .cine-sticky {
   position: sticky;
   top: 0;

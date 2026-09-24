@@ -88,10 +88,12 @@ export default function QuestionOfTheDay({ data }: { data: LandingData }) {
   /**
    * The dock introduces itself once, when the feature cards under See · Solve ·
    * Clear reach the middle of the screen — after every pinned animation has played.
+   * Not on phones: there the card would sit on top of what the student is reading,
+   * so it opens only when the tab is tapped.
    */
   useEffect(() => {
     if (!q) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 759px)").matches) return;
     const cue = document.querySelector(".ss-bento");
     if (!cue) return;
 

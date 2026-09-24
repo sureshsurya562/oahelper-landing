@@ -11,6 +11,9 @@ import { RefObject, useEffect } from "react";
  *
  * The animation runs over the first HOLD_AT of the section; the rest is a hold
  * on the closing frame, which scrolls on like the rest of the page.
+ * On phones there is no track: the section is one screen, and the first swipe down
+ * plays the whole map in PLAY_SECONDS while the page waits, the closing frame rests
+ * for REST_SECONDS, and after that it scrolls like any other section.
  *
  * `cx`/`cy` are the bezier control points each sticker arcs through on its way
  * into the log row with the same index.
@@ -76,6 +79,12 @@ type Layout = {
 const OA_SECONDS = 2699;
 /** Share of the section's scroll spent animating; the remainder holds the closing frame. */
 const HOLD_AT = 0.74;
+/** Phones: how long one swipe's playback takes, and where in the map it starts. */
+const PLAY_SECONDS = 3.5;
+/** Phones: how long the closing frame then stays put before a swipe can move on. */
+const REST_SECONDS = 1.5;
+const PLAY_FROM = 0.25;
+const PHONE = "(max-width: 759px)";
 
 export function useCinematicHero(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -114,7 +123,39 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const fine = window.matchMedia("(pointer: fine)").matches;
-    el.style.height = reduced ? "220vh" : "400vh";
+    const swipe = !reduced && window.matchMedia(PHONE).matches;
+    el.style.height = reduced ? "220vh" : swipe ? "100vh" : "400vh";
+
+    // Phones: one swipe down at the top of the page plays the sequence. The page is
+    // held while it plays and for a short rest on the closing frame, then scrolls
+    // freely. Opened part-way down, the hero is simply finished.
+    let playAt = swipe && window.scrollY > 8 ? -1e9 : 0;
+    let touchY = 0;
+    const playing = () => playAt > 0 && performance.now() - playAt < (PLAY_SECONDS + REST_SECONDS) * 1000;
+    const start = () => {
+      if (playAt || window.scrollY > 8) return false;
+      playAt = performance.now();
+      return true;
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      touchY = e.touches[0]?.clientY ?? 0;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const down = touchY - (e.touches[0]?.clientY ?? touchY) > 6;
+      if (down && (start() || playing()) && e.cancelable) e.preventDefault();
+    };
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY > 0 && (start() || playing())) e.preventDefault();
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (["ArrowDown", "PageDown", " ", "Spacebar"].includes(e.key) && (start() || playing())) e.preventDefault();
+    };
+    if (swipe) {
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
+      window.addEventListener("touchmove", onTouchMove, { passive: false });
+      window.addEventListener("wheel", onWheel, { passive: false });
+      window.addEventListener("keydown", onKey);
+    }
 
     // Film grain, generated once rather than shipped as an asset.
     const nc = document.createElement("canvas");
@@ -218,7 +259,13 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       const T = now / 1000;
       const rect = el.getBoundingClientRect();
       const tot = rect.height - window.innerHeight;
-      const tg = tot > 0 ? cl(-rect.top / tot / (reduced ? 1 : HOLD_AT)) : 0;
+      const tg = swipe
+        ? playAt
+          ? PLAY_FROM + (1 - PLAY_FROM) * cl((now - playAt) / 1000 / PLAY_SECONDS)
+          : 0
+        : tot > 0
+          ? cl(-rect.top / tot / (reduced ? 1 : HOLD_AT))
+          : 0;
       if (cur == null) cur = tg;
       cur += (tg - cur) * (1 - Math.exp(-dt * 7));
       if (Math.abs(tg - cur) < 1e-4) cur = tg;
@@ -368,6 +415,10 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       cancelAnimationFrame(raf);
       ro.disconnect();
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
     };
   }, [root]);
 }
