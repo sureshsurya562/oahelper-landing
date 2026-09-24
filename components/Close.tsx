@@ -57,10 +57,10 @@ export default function Close() {
         </div>
       </div>
 
-      <AskAI />
-
       <footer className="fw-foot">
         <div className="fw-in">
+          <AskAI />
+
           <div className="fw-top">
             <div className="fw-say">
               <span>Your next OA is closer than you think.</span>

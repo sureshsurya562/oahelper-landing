@@ -5,6 +5,7 @@ import type { LandingData } from "@/lib/types";
 import { COMPANIES, CTA, STICKER_INK, STICKER_RADII } from "@/lib/config";
 import { useCinematicHero } from "./useCinematicHero";
 import CompanyMark from "./CompanyMark";
+import HeroCarousel from "./HeroCarousel";
 
 const CASES = [
   { n: 1, ms: "11 ms", io: "stock = [1, 0, 5]", got: "4" },
@@ -289,15 +290,7 @@ export default function Hero({ data }: { data: LandingData }) {
           <div className="cine-vig" aria-hidden />
 
           <div className="cine-final">
-            <h2 className="display">
-              OA Helper makes your life easier
-              <br />
-              in your <em>next OA.</em>
-            </h2>
-            <p className="cine-how">
-              <b>How??</b>
-              <span>Practice the questions, patterns companies actually ask</span>
-            </p>
+            <HeroCarousel />
             <a className="btn" href={CTA.heroBrowse.href} data-cursor="It's free">
               {CTA.heroBrowse.label} <span aria-hidden>→</span>
             </a>

@@ -188,7 +188,7 @@ em.serif {
    ========================================================= */
 .cine {
   position: relative;
-  height: 320vh;
+  height: 400vh;
 }
 .cine-sticky {
   position: sticky;
@@ -794,7 +794,132 @@ em.serif {
   font-weight: 600;
 }
 .cine-final .btn {
-  margin-top: 34px;
+  margin-top: 30px;
+}
+
+/* Headline carousel: every slide shares one grid cell, so the frame keeps the
+   height of the tallest and nothing below it jumps between slides. */
+.cine-car {
+  width: min(100%, 1400px);
+}
+.cine-car-track {
+  display: grid;
+}
+.cine-car-slide {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+}
+.cine-car-slide[data-state="in"] {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+  filter: blur(6px);
+  pointer-events: none;
+}
+.cine-car-slide[data-state="out"] {
+  opacity: 0;
+  transform: translate3d(0, -36px, 0);
+  filter: blur(6px);
+  pointer-events: none;
+}
+.cine-car-nav {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font: 500 11.5px/1 var(--mono);
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.55);
+}
+.cine-car-pp {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.cine-car-pp svg {
+  display: block;
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+.cine-car-pp:hover,
+.cine-car-pp[aria-pressed="true"] {
+  color: #16201a;
+  border-color: var(--mint);
+  background: var(--mint);
+}
+.cine-car-pp:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+.cine-car-track {
+  cursor: pointer;
+}
+.cine-car-count {
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.cine-car-count i {
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.4);
+}
+.cine-car-dots {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+/* The button is a generous hit area; the visible dot is drawn inside it. */
+.cine-car-dots button {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.cine-car-dots button::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.cine-car-dots button:hover::before {
+  background: rgba(255, 255, 255, 0.5);
+}
+.cine-car-dots button.on::before {
+  background: var(--mint);
+  transform: scale(1.3);
+}
+.cine-car-dots button:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: -2px;
+  border-radius: 50%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cine-car-slide {
+    transition: opacity 0.4s ease;
+    transform: none !important;
+    filter: none !important;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1031,29 +1156,23 @@ em.serif {
 }
 
 /* =========================================================
-   STOP PRACTISING BLIND — 300vh, the pile sorts into your deck
+   STOP PRACTISING BLIND — layout 3a from the Claude design file:
+   split ground, dark chaos on the left and cream clarity on the right
    ========================================================= */
 .sb {
-  position: relative;
-  height: 300vh;
   background: var(--ink);
-}
-.sb-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
   background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1.3px);
   background-size: 22px 22px;
+  padding-block: clamp(96px, 14vh, 150px) clamp(64px, 10vh, 110px);
 }
-.sb-inner {
-  position: absolute;
-  inset: 0;
+.sb-in {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(24px, 5vh, 56px);
-  padding: clamp(72px, 13vh, 130px) clamp(16px, 4vw, 40px) clamp(28px, 7vh, 72px);
+  gap: clamp(32px, 6vh, 56px);
 }
 .sb-head {
   margin: 0;
@@ -1061,143 +1180,266 @@ em.serif {
   font-size: clamp(38px, 5.2vw, 88px);
   line-height: 1.02;
   letter-spacing: -0.045em;
-  opacity: 0;
 }
-.sb-grid {
-  flex: 1;
-  min-height: 0;
+.sb-split {
+  position: relative;
   width: 100%;
-  max-width: 1080px;
+  height: 520px;
+  border-radius: 22px;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 3vw, 40px);
+  grid-template-columns: 1fr 1fr;
 }
-.sb-col {
-  min-height: 0;
+.sb-side {
+  position: relative;
+  min-width: 0;
+  padding: 36px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: clamp(14px, 2vw, 24px);
-  border-radius: 22px;
-  border: 1px dashed rgba(255, 255, 255, 0.16);
-  opacity: 0;
 }
-.sb-col.is-oa {
-  border: 1px solid rgba(191, 231, 199, 0.35);
-  background: rgba(191, 231, 199, 0.04);
+/* Above the cream side, so the cards that fly across the seam stay on top. */
+.sb-side.is-rand {
+  z-index: 2;
+  background-color: #2a2a2d;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.55) 1.2px, transparent 1.6px);
+  background-size: 20px 20px;
+}
+.sb-side.is-oa {
+  background: var(--paper);
+  color: var(--paper-ink);
 }
 .sb-label {
-  align-self: flex-start;
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: var(--panel-2);
-  border: 1px solid var(--line-3);
-  font: 500 12px/1 var(--mono);
-  color: #9a9a9e;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: 0.12em;
+  color: #8a8a8e;
 }
-.sb-col.is-oa .sb-label {
-  background: var(--mint);
-  border: 1.5px solid var(--sticker-edge);
-  color: #16201a;
-  font-weight: 600;
+.sb-side.is-oa .sb-label {
+  color: var(--paper-dim);
 }
-.sb-lines {
-  font: 400 clamp(12px, 1.1vw, 15px) / 1.7 var(--mono);
-  color: var(--dim);
+.sb-say {
+  font: 300 38px/1.05 var(--font);
+  letter-spacing: -0.04em;
+  color: #a4a4a8;
 }
-.sb-col.is-oa .sb-lines {
-  color: var(--text-3);
+.sb-side.is-oa .sb-say {
+  color: var(--paper-ink);
 }
-.sb-slot {
+.sb-hope {
+  font: 400 14px/1.4 var(--mono);
+  color: #8a8a8e;
+}
+.sb-say em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ---------- the pile ---------- */
+/* Dimmed and softened per card (in Sorted.tsx), so the ones that fly can sharpen. */
+.sb-pile {
+  position: relative;
   flex: 1;
-  min-height: 110px;
 }
-.sb-field {
+.sb-pc {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-.sb-card {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 160px;
-  height: 96px;
-  opacity: 0;
-  will-change: transform, opacity;
-}
-.sb-card-face {
-  position: absolute;
-  inset: 0;
-  padding: 12px;
-  border-radius: 12px;
-  background: var(--panel-2);
-  border: 1px solid var(--line-3);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+  width: 124px;
+  height: 74px;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 10px;
+  background: #1c1c1e;
+  border: 1px solid #2e2e32;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 7px;
+  opacity: 0;
 }
-.sb-card-face span:first-child {
-  font: 500 11px/1 var(--mono);
-  color: #9a9a9e;
+.sb-pc span {
+  font: 500 9.5px/1 var(--mono);
+  color: var(--dim);
 }
-.sb-card-face i {
-  height: 6px;
+.sb-pc i {
+  height: 5px;
+  width: 80%;
   border-radius: 3px;
   background: #333338;
 }
-.sb-card-face i:last-child {
+.sb-pc i:last-child {
   width: 52%;
   background: #2a2a2e;
 }
-.sb-card-face i:nth-child(2) {
-  width: 82%;
-}
-.sb-badge {
-  position: absolute;
-  inset: 0;
-  padding: 12px;
-  border-radius: 12px;
-  background: var(--peach);
-  border: 1.5px solid var(--sticker-edge);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+
+/* ---------- the deck ---------- */
+.sb-show {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  opacity: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
-.sb-badge b {
-  font: 600 16px/1 var(--font);
-  color: #22190f;
-  letter-spacing: -0.01em;
-}
-.sb-badge span {
-  font: 500 11px/1.2 var(--mono);
-  color: #6b5540;
-}
-/* The one hard-shadow sticker in the dark half. */
-.sb-fresh {
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  padding: 10px 14px;
-  border-radius: 14px;
+.sb-note {
+  padding: 9px 14px;
+  border-radius: 12px;
   background: var(--mint);
-  color: #16201a;
   border: 1.5px solid var(--paper-ink);
   box-shadow: 0 3px 0 var(--paper-ink);
-  font: 500 13px/1.4 var(--font);
+  font: 500 12.5px/1.3 var(--font);
   text-align: center;
-  text-wrap: balance;
-  width: max-content;
+  opacity: 0;
+}
+.sb-deck {
+  position: relative;
+  width: 240px;
+  height: 146px;
+  opacity: 0;
+}
+.sb-plate {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+}
+.sb-plate.p2 {
+  transform: translateY(14px) scale(0.92);
+  background: #d9d3c6;
+}
+.sb-plate.p1 {
+  transform: translateY(7px) scale(0.96);
+  background: #e6e0d4;
+}
+.sb-co {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: #fff;
+  border: 1.5px solid var(--paper-ink);
+  box-shadow: 0 5px 0 var(--paper-ink);
+  overflow: hidden;
+  padding: 6px 6px 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.sb-ban {
+  height: 48px;
+  flex: none;
+  border-radius: 11px;
+}
+.sb-who {
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  margin: -20px 8px 0;
+}
+.sb-av {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2.5px solid #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sb-av .mk {
+  width: 21px;
+  height: 21px;
+}
+.sb-name {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sb-name b {
+  font: 600 15px/1 var(--font);
+}
+.sb-name span {
+  font: 400 8.5px/1 var(--mono);
+  color: var(--paper-dim);
+  white-space: nowrap;
+}
+.sb-go {
+  margin-bottom: 3px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--paper-ink);
+  color: #fff;
+  font: 600 9.5px/1 var(--font);
+}
+.sb-stats {
+  margin: 9px 8px 0;
+  padding-top: 8px;
+  border-top: 1px solid #ebe8e1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.sb-stats > span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sb-stats b {
+  font: 600 13px/1 var(--font);
+}
+.sb-stats span span {
+  font: 400 8.5px/1 var(--font);
+  color: var(--paper-dim);
 }
 
+/* ---------- the seal between the two grounds ---------- */
+.sb-vs {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%) scale(0);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--paper-ink);
+  border: 1.5px solid var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: italic 400 26px/1 var(--serif);
+  color: var(--paper);
+}
+
+/* Stacked on narrow screens: chaos on top, clarity below, the seal on the seam. */
 @media (max-width: 759px) {
-  .sb-grid {
+  .sb-split {
+    height: auto;
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  .sb-side {
+    padding: 26px 22px;
+  }
+  .sb-side.is-rand {
+    height: 510px;
+  }
+  .sb-side.is-oa {
+    height: 400px;
+  }
+  .sb-say {
+    font-size: 32px;
+  }
+  .sb-vs {
+    top: 510px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sb-pc,
+  .sb-note,
+  .sb-deck {
+    opacity: 1;
   }
 }
 
@@ -1742,106 +1984,59 @@ em.serif {
   color: #9a9a9e;
 }
 
-/* ---------- The rail of remaining features ---------- */
-.ss-railhead {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 8px 6px 0;
+/* ---------- The rest of what you get: a plain vertical grid ---------- */
+.ss-morehead {
+  padding: 28px 6px 4px;
+  text-align: center;
 }
-.ss-railhead h3 {
-  font: 600 20px/1.2 var(--ss-font);
+.ss-morehead h3 {
+  font: 600 clamp(22px, 2.2vw, 28px) / 1.2 var(--ss-font);
   letter-spacing: -0.02em;
 }
-.ss-railhead p {
-  margin: 6px 0 0;
-  font: 400 12.5px/1.5 var(--ss-mono);
+.ss-morehead p {
+  margin: 8px 0 0;
+  font: 400 13px/1.5 var(--ss-mono);
   color: var(--ink-soft);
 }
-.ss-nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: none;
-}
-.ss-count {
-  font: 500 12px/1 var(--ss-mono);
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-}
-.ss-nav button {
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  border: 1.5px solid var(--ink);
-  background: var(--chip);
-  box-shadow: 0 3px 0 var(--ink);
-  color: var(--ink);
-  font-size: 15px;
-  cursor: pointer;
-  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.15s ease;
-}
-.ss-nav button:hover:not(:disabled) {
-  background: var(--mint);
-}
-.ss-nav button:active:not(:disabled) {
-  transform: translateY(3px);
-  box-shadow: 0 0 0 var(--ink);
-}
-.ss-nav button:disabled {
-  opacity: 0.35;
-  cursor: default;
-  box-shadow: 0 3px 0 rgba(21, 21, 21, 0.4);
-}
-.ss-rail {
-  display: flex;
+.ss-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  cursor: grab;
-  padding: 4px 2px 6px;
-  -webkit-overflow-scrolling: touch;
 }
-.ss-rail::-webkit-scrollbar {
-  display: none;
-}
-.ss-rail.dragging {
-  cursor: grabbing;
-  scroll-snap-type: none;
-  user-select: none;
-}
-.ss-rail:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 4px;
-  border-radius: 22px;
-}
-.ss-rail .ss-slot {
-  flex: 0 0 clamp(250px, 31%, 330px);
-  scroll-snap-align: start;
-}
-.ss-rail .ss-art {
-  height: 210px;
+/* Every grid well takes the artwork's own proportions, so the product shots sit
+   uncropped and the drawn cards beside them line up row by row. */
+.ss-grid .ss-art {
+  aspect-ratio: 1818 / 1526;
   flex: none;
-}
-.ss-railbar {
-  position: relative;
-  height: 4px;
-  margin: 2px 6px 0;
-  border-radius: 999px;
-  background: rgba(21, 21, 21, 0.14);
-  overflow: hidden;
-}
-.ss-railbar i {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  border-radius: 999px;
-  background: var(--ink);
+  justify-content: center;
 }
 
-/* ---------- artwork bits shared by rail cards ---------- */
+/* ---------- product screenshots ---------- */
+.ss-art.is-shot {
+  padding: 0;
+  background-image: none;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px rgba(21, 21, 21, 0.06);
+}
+.ss-art.is-shot img {
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* The calendar well's shape follows the card beside it: keep the whole shot and
+   let the matching tint fill whatever space is left around it. */
+.ss-art.is-contain img {
+  object-fit: contain;
+}
+.ss-card:hover .ss-art.is-shot img {
+  transform: scale(1.035);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ss-card:hover .ss-art.is-shot img {
+    transform: none;
+  }
+}
+
+/* ---------- artwork bits shared by grid cards ---------- */
 .ss-art-head {
   display: flex;
   align-items: center;
@@ -1849,16 +2044,6 @@ em.serif {
 }
 .ss-art-head .ss-when {
   color: #9a9a9e;
-}
-.ss-bar {
-  display: grid;
-  grid-template-columns: 62px minmax(0, 1fr) 34px;
-  align-items: center;
-  gap: 10px;
-  font: 400 11.5px/1 var(--ss-mono);
-}
-.ss-bar > span:first-child {
-  color: #b8b8bc;
 }
 .ss-bar-track {
   height: 10px;
@@ -1871,56 +2056,6 @@ em.serif {
   height: 100%;
   width: 0;
   border-radius: 4px;
-}
-.ss-bar-pct {
-  color: #ececec;
-  text-align: right;
-}
-.ss-toast {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: #1c1c1e;
-  border: 1px solid #2e2e32;
-  opacity: 0;
-}
-.ss-toast.is-now {
-  background: #202022;
-  border-color: #3a3a3e;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
-}
-.ss-toast > i {
-  flex: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font: 700 12px/1 var(--ss-font);
-  font-style: normal;
-  color: #161b22;
-}
-.ss-toast > span {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.ss-toast b {
-  font: 500 13px/1.2 var(--ss-font);
-}
-.ss-toast em {
-  font: 400 11px/1.2 var(--ss-mono);
-  font-style: normal;
-  color: #9a9a9e;
-}
-.ss-toast > time {
-  font: 400 11px/1 var(--ss-mono);
-  color: #6a6a6e;
 }
 .ss-editor {
   flex: 1;
@@ -2068,26 +2203,6 @@ em.serif {
   grid-column: 1 / -1;
   height: 6px;
 }
-.ss-figs {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: auto;
-}
-.ss-figs div {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.ss-figs b {
-  font: 600 22px/1 var(--ss-mono);
-  letter-spacing: -0.02em;
-  color: #f2f2f2;
-}
-.ss-figs span {
-  font: 400 11px/1 var(--ss-mono);
-  color: #8a8a8e;
-}
 .ss-faces {
   display: flex;
   align-items: center;
@@ -2127,21 +2242,16 @@ em.serif {
     margin-top: -22vh;
     padding-bottom: 100px;
   }
-  .ss-rail .ss-slot {
-    flex-basis: 74%;
+  .ss-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 639px) {
   .ss-fanbox {
     height: 280px;
   }
-  .ss-railhead {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .ss-rail .ss-slot {
-    flex-basis: 84%;
+  .ss-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2768,82 +2878,81 @@ em.serif {
 }
 
 /* =========================================================
-   SUMMARISE WITH AI — one compact rail between panel and footer
+   SUMMARISE WITH AI — a small centred pill at the top of the paper footer
    ========================================================= */
 .ai {
-  background: var(--ink);
-  padding: clamp(24px, 4vh, 40px) clamp(16px, 4vw, 40px) clamp(20px, 3vh, 32px);
+  display: flex;
+  justify-content: center;
+  margin-top: calc(-1 * clamp(20px, 4vh, 48px));
 }
 .ai-in {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 12px 20px;
+  gap: 8px 14px;
+  padding: 6px 6px 6px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(21, 21, 21, 0.14);
+  background: var(--paper-card);
 }
 .ai-lab {
   font: 500 12px/1 var(--mono);
-  letter-spacing: 0.06em;
-  color: var(--dim);
+  letter-spacing: 0.04em;
+  color: var(--paper-soft);
 }
 .ai-lab span {
-  color: var(--mint);
-  margin-right: 7px;
+  color: var(--paper-dim);
+  margin-right: 6px;
 }
 .ai-row {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
 }
 .ai-btn {
   position: relative;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--muted);
+  border: 0;
+  background: transparent;
+  color: var(--paper-soft);
   font: inherit;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 /* Without this the inline marks have no intrinsic box and stretch the section. */
 .ai-btn svg {
   display: block;
-  width: 19px;
-  height: 19px;
+  width: 16px;
+  height: 16px;
   fill: currentColor;
 }
 .ai-btn:hover {
-  color: var(--tint, var(--text-hi));
-  border-color: var(--tint, var(--line-3));
-  background: var(--panel-2);
-  transform: translateY(-2px);
+  color: var(--paper-ink);
+  background: var(--paper-chip);
 }
 .ai-btn:focus-visible {
-  outline: 2px solid var(--mint);
-  outline-offset: 3px;
+  outline: 2px solid var(--paper-ink);
+  outline-offset: 2px;
 }
 .ai-tip {
   position: absolute;
-  bottom: calc(100% + 9px);
+  bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) translateY(4px);
-  padding: 6px 10px;
-  border-radius: 8px;
-  background: var(--panel-2);
-  border: 1px solid var(--line-3);
-  color: var(--text);
-  font: 500 11.5px/1 var(--font);
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: var(--paper-ink);
+  color: #fff;
+  font: 500 11px/1 var(--font);
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;

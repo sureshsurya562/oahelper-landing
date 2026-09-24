@@ -9,6 +9,9 @@ import { RefObject, useEffect } from "react";
  * 0.77–0.93  log swaps to the live assessment, camera pushes into the screen
  * 0.93–1.00  closing frame and CTA
  *
+ * The animation runs over the first HOLD_AT of the section; the rest is a hold
+ * on the closing frame, which scrolls on like the rest of the page.
+ *
  * `cx`/`cy` are the bezier control points each sticker arcs through on its way
  * into the log row with the same index.
  */
@@ -71,6 +74,8 @@ type Layout = {
 };
 
 const OA_SECONDS = 2699;
+/** Share of the section's scroll spent animating; the remainder holds the closing frame. */
+const HOLD_AT = 0.74;
 
 export function useCinematicHero(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -109,7 +114,7 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const fine = window.matchMedia("(pointer: fine)").matches;
-    el.style.height = reduced ? "220vh" : "320vh";
+    el.style.height = reduced ? "220vh" : "400vh";
 
     // Film grain, generated once rather than shipped as an asset.
     const nc = document.createElement("canvas");
@@ -213,7 +218,7 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
       const T = now / 1000;
       const rect = el.getBoundingClientRect();
       const tot = rect.height - window.innerHeight;
-      const tg = tot > 0 ? cl(-rect.top / tot) : 0;
+      const tg = tot > 0 ? cl(-rect.top / tot / (reduced ? 1 : HOLD_AT)) : 0;
       if (cur == null) cur = tg;
       cur += (tg - cur) * (1 - Math.exp(-dt * 7));
       if (Math.abs(tg - cur) < 1e-4) cur = tg;

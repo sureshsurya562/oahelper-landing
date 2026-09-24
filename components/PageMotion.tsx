@@ -108,7 +108,7 @@ export default function PageMotion() {
         const holder = el.closest<HTMLElement>("[data-rv]");
         const t0 = holder ? started.get(holder) : undefined;
         const k = t0 == null ? 0 : reduced ? 1 : out(cl((now - t0 - 120) / 1500));
-        const txt = Math.round(Number(el.dataset.count) * k) + (el.dataset.suffix || "");
+        const txt = Math.round(Number(el.dataset.count) * k).toLocaleString("en-IN") + (el.dataset.suffix || "");
         if (el.textContent !== txt) el.textContent = txt;
       });
 

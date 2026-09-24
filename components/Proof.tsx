@@ -40,9 +40,11 @@ export default function Proof({ data }: { data: LandingData }) {
   // Doubled so the marquee can wrap at the halfway point without a seam.
   const loop = [...feed, ...feed];
 
+  // Rounded marketing figures (9,081 published questions across 654 companies),
+  // pinned so the headline numbers don't wobble with every sync.
   const stats = [
-    { n: data.stats ? Number(data.stats.questions.replace(/[^\d]/g, "")) || 3500 : 3500, label: "Real OA questions", tint: "#bfe7c7" },
-    { n: data.stats ? Number(data.stats.companies.replace(/[^\d]/g, "")) || 400 : 400, label: "Companies tracked", tint: "#c6dbf3" },
+    { n: 9000, label: "Real OA questions", tint: "#bfe7c7" },
+    { n: 650, label: "Companies tracked", tint: "#c6dbf3" },
     { n: 1000, label: "Students placed", tint: "#f7d3b5" },
   ];
 
@@ -69,7 +71,7 @@ export default function Proof({ data }: { data: LandingData }) {
             <div className="pf-stat" key={s.label} data-rv data-rv-delay={i * 110}>
               <i style={{ background: s.tint }} aria-hidden />
               <b data-count={s.n} data-suffix="+">
-                {s.n}+
+                {s.n.toLocaleString("en-IN")}+
               </b>
               <span>{s.label}</span>
             </div>

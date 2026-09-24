@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import Image from "next/image";
+import { useEffect, useRef } from "react";
 import type { LandingData } from "@/lib/types";
 
 /**
@@ -53,229 +54,76 @@ const PLATES: [number, number, number][] = [
 ];
 const PLATE_KEYS = [0.08, 0.2, 0.34, 0.48];
 
-const CAL_MARKS: Record<number, string> = { 6: "#f7d3b5", 9: "#bfe7c7", 14: "#c6dbf3", 21: "#d7ee9f", 27: "#c4c9f5" };
+/**
+ * Product artwork from public/feature_cards_images. `tint` is each image's own
+ * background, so the well around it reads as part of the picture.
+ */
+type Shot = { src: string; alt: string; tint: string };
+const SHOTS = {
+  mock: { src: "/feature_cards_images/mockoa.png", alt: "Mock OA editor with a running timer and 3/3 tests passed", tint: "#edeef3" },
+  dsa: { src: "/feature_cards_images/60daydsa.png", alt: "DSA roadmap with Arrays and Sliding window done and today's topic highlighted", tint: "#e0ffeb" },
+  groups: { src: "/feature_cards_images/oagroups.png", alt: "Google OA group with 1.8k members and an invite button", tint: "#e5f3ff" },
+  coins: { src: "/feature_cards_images/oacoins.png", alt: "OA Coins redeemable on Swiggy, Zomato and Amazon", tint: "#eae5d8" },
+  shots: { src: "/feature_cards_images/Real screenshots.png", alt: "Real Amazon, Google and Microsoft OA screens, shared 3h ago", tint: "#141515" },
+  rounds: { src: "/feature_cards_images/interiviews.png", alt: "Interview rounds from OA to HR, with write-ups from students at Google and Amazon", tint: "#151615" },
+  calendar: { src: "/feature_cards_images/oacalendar2.png", alt: "OA calendar showing a Google OA on the 16th at 10:00 AM and 3 OAs this week", tint: "#f8f4ea" },
+} satisfies Record<string, Shot>;
 
-const BARS = [
-  { label: "Arrays", pct: 34, color: "#f7d3b5" },
-  { label: "Graphs", pct: 22, color: "#c6dbf3" },
-  { label: "DP", pct: 18, color: "#d9cdf4" },
-  { label: "Strings", pct: 14, color: "#bfe7c7" },
-  { label: "Math", pct: 12, color: "#f3e9a8" },
-];
+type Rail = { title: string; line: string; href: string; shot: Shot };
 
-type Rail = { title: string; line: string; href: string; art: ReactNode };
+function ShotArt({ shot, sizes, fit }: { shot: Shot; sizes: string; fit?: "contain" }) {
+  return (
+    <div className={`ss-art is-shot${fit ? " is-contain" : ""}`} style={{ backgroundColor: shot.tint }}>
+      <Image src={shot.src} alt={shot.alt} fill sizes={sizes} />
+    </div>
+  );
+}
 
-function buildRail(data: LandingData): Rail[] {
-  const up = data.upcoming.length ? data.upcoming : [];
-  const groupCount = up[0]?.questionCount ? `${up[0].questionCount * 38}+` : "1,800+";
-
+function buildRail(): Rail[] {
   return [
-    {
-      title: "Company-wise Patterns",
-      href: "https://www.oahelper.in/company-insights",
-      line: "See which topics each company tests most, and prepare for those first.",
-      art: (
-        <>
-          <div className="ss-art-head">
-            <span className="ss-co" style={{ background: "#f7d3b5", color: "#22190f" }}>
-              Amazon
-            </span>
-            <span className="ss-when">last 40 OAs</span>
-          </div>
-          {BARS.map((b) => (
-            <div className="ss-bar" key={b.label}>
-              <span>{b.label}</span>
-              <span className="ss-bar-track">
-                <i data-bar={b.pct} style={{ background: b.color }} />
-              </span>
-              <span className="ss-bar-pct">{b.pct}%</span>
-            </div>
-          ))}
-        </>
-      ),
-    },
-    {
-      title: "Instant OA Alerts",
-      href: "https://www.oahelper.in/oa-calendar",
-      line: "Get notified as soon as a new OA is scheduled for your college.",
-      art: (
-        <div className="ss-rounds" style={{ justifyContent: "center", flex: 1 }}>
-          <div className="ss-toast is-now">
-            <i style={{ background: "#c6dbf3" }}>OA</i>
-            <span>
-              <b>Microsoft OA link is live</b>
-              <em>Closes in 2 hours</em>
-            </span>
-            <time>now</time>
-          </div>
-          <div className="ss-toast">
-            <i style={{ background: "#d7ee9f", color: "#1a200f" }}>OA</i>
-            <span>
-              <b>Deloitte OA scheduled</b>
-              <em>Tomorrow · 10:00 AM</em>
-            </span>
-            <time>2h</time>
-          </div>
-        </div>
-      ),
-    },
     {
       title: "Timed Mock OAs",
       href: "https://www.oahelper.in/mock-oa",
       line: "Practice in an exam-style editor with a timer and hidden test cases.",
-      art: (
-        <div className="ss-editor">
-          <div className="ss-editor-bar">
-            <span>Q2 of 3</span>
-            <span className="ss-clock">
-              <i />
-              <span data-timer>44:59</span>
-            </span>
-          </div>
-          <div className="ss-lines">
-            <span style={{ width: "58%", background: "#c9b8f0", opacity: 0.75 }} />
-            <span style={{ width: "74%", marginLeft: 14 }} />
-            <span style={{ width: "40%", marginLeft: 14, background: "#a8dcb4", opacity: 0.75 }} />
-            <span style={{ width: "62%", marginLeft: 28 }} />
-            <span style={{ width: "30%", marginLeft: 14, background: "#f7d3b5", opacity: 0.75 }} />
-          </div>
-          <div className="ss-editor-foot">
-            <span>Test cases</span>
-            <span className="ss-pass">3 / 3 passed</span>
-          </div>
-        </div>
-      ),
+      shot: SHOTS.mock,
     },
     {
       title: "Real Screenshots",
       href: "https://www.oahelper.in/problems",
       line: "The actual OA screen as students saw it, not somebody's rewrite.",
-      art: (
-        <div className="ss-shots">
-          <span className="ss-shot-tag">Amazon OA · shared 3h ago</span>
-          <i />
-          <i className="lo" />
-          <i />
-          <i className="lo" />
-          <i />
-        </div>
-      ),
+      shot: SHOTS.shots,
     },
     {
       title: "Interview Experiences",
       href: "https://www.oahelper.in/interview-experiences",
       line: "Round by round write-ups from students who already cleared it.",
-      art: (
-        <div className="ss-rounds">
-          <div className="ss-round done">
-            <i />
-            Online Assessment<span>cleared</span>
-          </div>
-          <div className="ss-round done">
-            <i />
-            Tech Round 1<span>cleared</span>
-          </div>
-          <div className="ss-round now">
-            <i />
-            Tech Round 2<span>today</span>
-          </div>
-          <div className="ss-round">
-            <i />
-            HR Round<span>—</span>
-          </div>
-        </div>
-      ),
+      shot: SHOTS.rounds,
     },
     {
       title: "60-Day DSA Roadmap",
       href: "https://www.oahelper.in/placement-prep",
       line: "Eighteen patterns, ordered by what OAs actually repeat.",
-      art: (
-        <div className="ss-road">
-          <div className="done">
-            Arrays &amp; Hashing<em>done</em>
-          </div>
-          <div className="done">
-            Two Pointers<em>done</em>
-          </div>
-          <div>
-            Sliding Window<em>day 12</em>
-          </div>
-          <div>
-            Graphs<em>day 28</em>
-          </div>
-          <span className="ss-bar-track">
-            <i data-bar="18" style={{ background: "#bfe7c7" }} />
-          </span>
-        </div>
-      ),
-    },
-    {
-      title: "Your Campus Numbers",
-      href: "https://www.oahelper.in/company-insights",
-      line: "Drives, offers and cutoffs for your college, kept current by your batch.",
-      art: (
-        <div className="ss-figs">
-          <div>
-            <b>24</b>
-            <span>drives</span>
-          </div>
-          <div>
-            <b>312</b>
-            <span>placed</span>
-          </div>
-          <div>
-            <b>86%</b>
-            <span>offers</span>
-          </div>
-        </div>
-      ),
+      shot: SHOTS.dsa,
     },
     {
       title: "OA Groups",
       href: "https://www.oahelper.in/companies",
       line: "Same-day intel from everyone else sitting the very same test.",
-      art: (
-        <>
-          <div className="ss-faces">
-            <i style={{ background: "#c6dbf3" }} />
-            <i style={{ background: "#f7d3b5" }} />
-            <i style={{ background: "#bfe7c7" }} />
-            <i style={{ background: "#d9cdf4" }} />
-          </div>
-          <div className="ss-art-head">
-            <span style={{ font: "500 14px/1.3 var(--ss-font)" }}>{groupCount} preparing for Amazon</span>
-          </div>
-          <p className="ss-quote">&ldquo;Graphs came twice in today&apos;s slot — revise BFS.&rdquo;</p>
-        </>
-      ),
+      shot: SHOTS.groups,
     },
     {
       title: "Contribute & Earn",
       href: "https://www.oahelper.in/contribute",
       line: "Share one paper anonymously, unlock premium with OA Coins.",
-      art: (
-        <>
-          <span className="ss-coin">+50 OA Coins</span>
-          <p className="ss-quote">Posted anonymously · live in about an hour</p>
-        </>
-      ),
+      shot: SHOTS.coins,
     },
   ];
 }
 
 export default function Value({ data }: { data: LandingData }) {
   const root = useRef<HTMLElement>(null);
-  const rail = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState({ ratio: 1, progress: 0 });
-  const cards = buildRail(data);
+  const cards = buildRail();
   const company = data.hero?.company ?? "Amazon";
-
-  const days: { n: string; bg: string; fg: string }[] = [];
-  for (let i = 0; i < 3; i++) days.push({ n: "", bg: "transparent", fg: "transparent" });
-  for (let d = 1; d <= 31; d++) {
-    days.push(CAL_MARKS[d] ? { n: String(d), bg: CAL_MARKS[d], fg: "#151515" } : { n: String(d), bg: "#1c1c1e", fg: "#8a8a8e" });
-  }
 
   useEffect(() => {
     const el = root.current;
@@ -299,11 +147,7 @@ export default function Value({ data }: { data: LandingData }) {
       slots: qa(".ss-slot"),
       fan: qa(".ss-fan"),
       fanbox: q(".ss-fanbox"),
-      bars: qa("[data-bar]"),
-      toasts: qa(".ss-toast"),
-      chip: q(".ss-calchip"),
       marq: q(".ss-marq"),
-      timer: q("[data-timer]"),
     };
     if (!E.track || !E.stage || !E.obj || E.words.length !== 3) return;
 
@@ -473,10 +317,10 @@ export default function Value({ data }: { data: LandingData }) {
       E.cap.style.opacity = String(ca);
       E.cap.style.transform = `translate3d(0,${(1 - ca) * 26}px,0)`;
 
-      // Each tile reveals off its own position, so the rail behaves when scrolled.
+      // Each tile reveals off its own position; grid tiles stagger by column.
       const keys = E.slots.map((s, i) => {
         const r = s.getBoundingClientRect();
-        const k = reduced ? 1 : sm(cl((vh - r.top - 20 - (i >= 2 ? (i - 2) * 40 : i * 50)) / (vh * 0.3)));
+        const k = reduced ? 1 : sm(cl((vh - r.top - 20 - (i >= 2 ? ((i - 2) % 3) * 60 : i * 50)) / (vh * 0.3)));
         s.style.opacity = String(k);
         s.style.transform = `translate3d(0,${(1 - k) * 48}px,0)`;
         return k;
@@ -493,33 +337,11 @@ export default function Value({ data }: { data: LandingData }) {
         }px,0) rotate(${s.r * sp}deg) scale(${fsc})`;
       });
 
-      E.bars.forEach((b) => {
-        const holder = b.closest(".ss-slot") as HTMLElement | null;
-        const k = holder ? sm(cl((vh - holder.getBoundingClientRect().top - 40) / (vh * 0.3))) : 1;
-        b.style.width = `${Math.min(100, Number(b.dataset.bar) * 2.4) * k}%`;
-      });
-      E.toasts.forEach((t, i) => {
-        const holder = t.closest(".ss-slot") as HTMLElement | null;
-        const hk = holder ? sm(cl((vh - holder.getBoundingClientRect().top - 40) / (vh * 0.3))) : 1;
-        const k = sm(rp(0.2 + i * 0.3, 0.7 + i * 0.3, hk));
-        t.style.opacity = String(k);
-        t.style.transform = `translate3d(0,${(1 - k) * 24}px,0) scale(${0.96 + 0.04 * k})`;
-      });
-      const ck = sm(rp(0.4, 1, keys[1] ?? 1));
-      E.chip.style.opacity = String(ck);
-      E.chip.style.transform = `translate3d(0,${(1 - ck) * 20}px,0)`;
-
       if (!reduced && E.marq) {
         const half = E.marq.scrollWidth / 2;
         marq = (marq + dt * 32) % (half || 1);
         E.marq.style.transform = `translate3d(${-marq}px,0,0)`;
       }
-      if (E.timer) {
-        const left = 2699 - Math.floor(T % 2699);
-        const txt = `${String(Math.floor(left / 60)).padStart(2, "0")}:${String(left % 60).padStart(2, "0")}`;
-        if (E.timer.textContent !== txt) E.timer.textContent = txt;
-      }
-
       raf = requestAnimationFrame(frame);
     };
 
@@ -532,56 +354,6 @@ export default function Value({ data }: { data: LandingData }) {
       E.bento.classList.remove("is-armed");
     };
   }, []);
-
-  /* ---- rail paging ---- */
-  const paint = useCallback(() => {
-    const el = rail.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setPos({ ratio: el.clientWidth / el.scrollWidth, progress: max > 0 ? el.scrollLeft / max : 0 });
-  }, []);
-
-  useEffect(() => {
-    const el = rail.current;
-    if (!el) return;
-    paint();
-    el.addEventListener("scroll", paint, { passive: true });
-    const ro = new ResizeObserver(paint);
-    ro.observe(el);
-    return () => {
-      el.removeEventListener("scroll", paint);
-      ro.disconnect();
-    };
-  }, [paint]);
-
-  const page = (dir: 1 | -1) => {
-    const el = rail.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLElement>(".ss-slot");
-    el.scrollBy({ left: dir * (card ? card.offsetWidth + 16 : el.clientWidth * 0.8), behavior: "smooth" });
-  };
-
-  /* Mouse users can drag the rail; touch and trackpad already scroll natively. */
-  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = rail.current;
-    if (!el || e.pointerType !== "mouse" || e.button !== 0) return;
-    const startX = e.clientX;
-    const startLeft = el.scrollLeft;
-    el.classList.add("dragging");
-    const move = (ev: PointerEvent) => {
-      el.scrollLeft = startLeft - (ev.clientX - startX);
-    };
-    const up = () => {
-      el.classList.remove("dragging");
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerup", up);
-    };
-    window.addEventListener("pointermove", move);
-    window.addEventListener("pointerup", up);
-  };
-
-  const atStart = pos.progress <= 0.01;
-  const atEnd = pos.progress >= 0.99;
 
   return (
     <section className="ss" ref={root} aria-labelledby="ss-title">
@@ -712,35 +484,7 @@ export default function Value({ data }: { data: LandingData }) {
 
           <div className="ss-slot is-side">
             <a className="ss-card" href="https://www.oahelper.in/oa-calendar" data-cursor="Explore">
-              <div className="ss-art">
-                <div className="ss-cal-head">
-                  <b>October 2026</b>
-                  <span>5 OAs</span>
-                </div>
-                <div className="ss-dow" aria-hidden>
-                  <span>M</span>
-                  <span>T</span>
-                  <span>W</span>
-                  <span>T</span>
-                  <span>F</span>
-                  <span>S</span>
-                  <span>S</span>
-                </div>
-                <div className="ss-days" aria-hidden>
-                  {days.map((d, i) => (
-                    <span key={i} style={{ background: d.bg, color: d.fg }}>
-                      {d.n}
-                    </span>
-                  ))}
-                </div>
-                <div className="ss-calchip">
-                  <i />
-                  <span>
-                    <b>{company} SDE-1 OA</b>
-                    <em>Tue, Oct 6 · 10:00 AM</em>
-                  </span>
-                </div>
-              </div>
+              <ShotArt shot={SHOTS.calendar} sizes="(max-width: 900px) 92vw, 380px" fit="contain" />
               <div className="ss-copy">
                 <h3>OA Calendar</h3>
                 <p>Upcoming OAs for your campus in one calendar, with dates and timings.</p>
@@ -752,29 +496,16 @@ export default function Value({ data }: { data: LandingData }) {
           </div>
         </div>
 
-        <div className="ss-railhead">
-          <div>
-            <h3>Everything else you get</h3>
-            <p>Scroll across — {cards.length} more features in your season.</p>
-          </div>
-          <div className="ss-nav">
-            <span className="ss-count" aria-hidden>
-              {Math.min(cards.length, Math.round(pos.progress * (cards.length - 3)) + 3)} / {cards.length}
-            </span>
-            <button type="button" onClick={() => page(-1)} disabled={atStart} aria-label="Previous features">
-              ←
-            </button>
-            <button type="button" onClick={() => page(1)} disabled={atEnd} aria-label="More features">
-              →
-            </button>
-          </div>
+        <div className="ss-morehead">
+          <h3>Everything else that has your back</h3>
+          <p>From your first mock to the final HR round, it&apos;s all in one place.</p>
         </div>
 
-        <div className="ss-rail" ref={rail} onPointerDown={onPointerDown} tabIndex={0} role="group" aria-label="More features, scroll sideways">
+        <div className="ss-grid">
           {cards.map((c) => (
             <div className="ss-slot" key={c.title}>
               <a className="ss-card" href={c.href} data-cursor="Explore">
-                <div className="ss-art">{c.art}</div>
+                <ShotArt shot={c.shot} sizes="(max-width: 640px) 92vw, (max-width: 900px) 46vw, 360px" />
                 <div className="ss-copy">
                   <h3>{c.title}</h3>
                   <p>{c.line}</p>
@@ -785,10 +516,6 @@ export default function Value({ data }: { data: LandingData }) {
               </a>
             </div>
           ))}
-        </div>
-
-        <div className="ss-railbar" aria-hidden>
-          <i style={{ width: `${pos.ratio * 100}%`, left: `${pos.progress * (100 - pos.ratio * 100)}%` }} />
         </div>
       </div>
 
