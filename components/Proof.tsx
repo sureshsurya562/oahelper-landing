@@ -55,7 +55,10 @@ export default function Proof({ data }: { data: LandingData }) {
       <div className="pf-in">
         <div className="pf-head" data-rv>
           <div>
-            <span className="eyebrow">/// By the numbers</span>
+            <span className="eyebrow">
+              <i aria-hidden />
+              By the numbers
+            </span>
             <h2 id="pf-title">
               The only place with your company&apos;s <em className="serif">actual OA questions.</em>
             </h2>
@@ -100,7 +103,10 @@ export default function Proof({ data }: { data: LandingData }) {
 
         <div className="pf-voices">
           <div className="pf-vhead" data-rv>
-            <span className="eyebrow">/// From the last season</span>
+            <span className="eyebrow">
+              <i aria-hidden />
+              From the last season
+            </span>
             <h2>
               Students like you. <em className="serif">Here&apos;s what they said.</em>
             </h2>

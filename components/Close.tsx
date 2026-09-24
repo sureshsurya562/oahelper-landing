@@ -64,7 +64,10 @@ export default function Close() {
           <div className="fw-top">
             <div className="fw-say">
               <span>Your next OA is closer than you think.</span>
-              <span className="fw-mono">/// Real questions from this season&apos;s OAs</span>
+              <span className="fw-live">
+                <i aria-hidden />
+                Real questions from this season&apos;s OAs
+              </span>
             </div>
             <nav className="fw-col" aria-label="Product">
               <span className="fw-mono">Product</span>
@@ -98,7 +101,7 @@ export default function Close() {
           <div className="fw-base">
             <a className="fw-lockup" href={LINKS.home} aria-label="OA Helper home">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo/oahelper-nxtwave-lockup-light.png" alt="OA Helper, powered by NxtWave" width={1181} height={180} />
+              <img src="/logo/oahelper-nxtwave-lockup-dark.png" alt="OA Helper, powered by NxtWave" width={1181} height={180} />
             </a>
             <nav className="fw-legal" aria-label="Legal">
               {LEGAL.map((l) => (

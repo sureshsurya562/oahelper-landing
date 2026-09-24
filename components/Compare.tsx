@@ -15,7 +15,10 @@ export default function Compare() {
     <section className="cmp" aria-labelledby="cmp-title">
       <div className="cmp-in">
         <div className="cmp-head" data-rv>
-          <span className="eyebrow on-paper">/// OA Helper vs others</span>
+          <span className="eyebrow on-paper">
+            <i aria-hidden />
+            OA Helper vs others
+          </span>
           <h2 id="cmp-title">
             Generic prep, or your <em className="serif">actual OA.</em>
           </h2>

@@ -397,7 +397,7 @@ export default function Value({ data }: { data: LandingData }) {
               See, Solve and Clear
             </h2>
             <p className="ss-sub">
-              /// Every question here was asked in a real OA. See the pattern, solve it against the clock, and clear your round.
+              Every question here was asked in a real OA. See the pattern, solve it against the clock, and clear your round.
             </p>
           </div>
         </div>

@@ -85,7 +85,10 @@ export default function AskAI() {
     <section className="ai" aria-labelledby="ai-title">
       <div className="ai-in" data-rv>
         <h2 className="ai-lab" id="ai-title">
-          <span aria-hidden>///</span> Summarise with AI
+          <svg viewBox="0 0 24 24" aria-hidden>
+            <path d="M12 2.5c.5 4.6 2.4 6.8 7 7.5-4.6.7-6.5 2.9-7 7.5-.5-4.6-2.4-6.8-7-7.5 4.6-.7 6.5-2.9 7-7.5Zm6.5 11c.25 2 1.1 2.95 3 3.25-1.9.3-2.75 1.25-3 3.25-.25-2-1.1-2.95-3-3.25 1.9-.3 2.75-1.25 3-3.25Z" />
+          </svg>
+          Summarise with AI
         </h2>
 
         <ul className="ai-row">
