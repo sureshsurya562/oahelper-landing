@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { LandingData } from "@/lib/types";
 
@@ -84,17 +85,33 @@ export default function QuestionOfTheDay({ data }: { data: LandingData }) {
     };
   }, [q]);
 
-  /* The design's highlight: it peeks on its own 3.5s in, then withdraws. */
+  /**
+   * The dock introduces itself once, when the feature cards under See · Solve ·
+   * Clear reach the middle of the screen — after every pinned animation has played.
+   */
   useEffect(() => {
     if (!q) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const peek = window.setTimeout(() => {
+    const cue = document.querySelector(".ss-bento");
+    if (!cue) return;
+
+    // Measured on scroll, not by an observer: the hero sets its own height in an
+    // effect, so anything armed at mount sees a page that is still collapsed.
+    const onScroll = () => {
+      if (window.scrollY < window.innerHeight) return;
+      const r = cue.getBoundingClientRect();
+      const mid = window.innerHeight / 2;
+      if (r.top > mid || r.bottom < mid) return;
+
+      window.removeEventListener("scroll", onScroll);
       setOpen(true);
       shut.current = window.setTimeout(() => {
         if (!hovering.current && !pinned.current) setOpen(false);
       }, 4200);
-    }, 3500);
-    return () => window.clearTimeout(peek);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [q]);
 
   /* The pulse ring on the tab's peach dot. */
@@ -212,6 +229,11 @@ export default function QuestionOfTheDay({ data }: { data: LandingData }) {
             <div className="qd-visual" aria-hidden>
               <i />
             </div>
+            <Image className="qd-mark" src="/mascout.png" alt="" width={1660} height={1480} sizes="190px" aria-hidden />
+
+            <span className="qd-note" aria-hidden>
+              New question every day
+            </span>
             <div className="qd-clock" aria-hidden>
               <span>
                 <b>{clock.h}</b>

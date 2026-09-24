@@ -4,6 +4,7 @@ import { useRef } from "react";
 import type { LandingData } from "@/lib/types";
 import { COMPANIES, CTA, STICKER_INK, STICKER_RADII } from "@/lib/config";
 import { useCinematicHero } from "./useCinematicHero";
+import CompanyMark from "./CompanyMark";
 
 const CASES = [
   { n: 1, ms: "11 ms", io: "stock = [1, 0, 5]", got: "4" },
@@ -275,9 +276,10 @@ export default function Hero({ data }: { data: LandingData }) {
             return (
               <div className="cine-sticker" key={name} aria-hidden>
                 <div
-                  className="sticker"
+                  className="sticker has-mark"
                   style={{ background: bg, color: STICKER_INK[bg] ?? "#151515", borderRadius: STICKER_RADII[i % STICKER_RADII.length] }}
                 >
+                  <CompanyMark name={name} ink={bg} />
                   {name}
                 </div>
               </div>
