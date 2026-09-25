@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#070708;-webkit-font-smoothing:antialiased;}a{color:#bfe7c7;text-decoration:none;}a:hover{color:#f3f3f3;}</style>
+</helmet>
+<section ref="{{ root }}" style="padding:56px; display:flex; flex-direction:column; gap:36px; font-family:'Geist', system-ui, sans-serif; color:#f2f2f2; background:#070708;">
+  <div style="display:flex; flex-direction:column; gap:10px; max-width:760px;">
+    <span style="font:500 12px/1 'Geist Mono', monospace; color:#a8a8ac;">/// By the numbers · variations</span>
+    <h1 style="margin:0; font:400 44px/1.1 'Instrument Serif', serif; letter-spacing:-0.01em;">Stat cards and the “Just added” ticker, four ways</h1>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:48px;">
+
+    <div id="3a" style="flex:none; width:1240px; display:flex; flex-direction:column; gap:14px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">3a · Rolling counters + live feed</span>
+      <div style="box-sizing:border-box; padding:40px; border-radius:24px; background:#0b0b0b; border:1px solid #1d1d1f; display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:16px;">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:22px 28px; border-radius:20px; border:1px dashed rgba(255,255,255,0.16); background:rgba(255,255,255,0.015);">
+              <span style="display:flex; align-items:flex-end; font:300 76px/1 'Geist', sans-serif; letter-spacing:-0.05em; color:#f3f3f3; font-variant-numeric:tabular-nums;">
+                <sc-for list="{{ s.digits }}" as="d" hint-placeholder-count="4">
+                  <span style="display:inline-block; height:1em; overflow:hidden;"><span data-od="" data-d="{{ d.d }}" style="display:flex; flex-direction:column; will-change:transform;"><sc-for list="{{ strip }}" as="k" hint-placeholder-count="10"><span style="height:1em; line-height:1;">{{ k }}</span></sc-for></span></span>
+                </sc-for>
+                <span style="line-height:1;">+</span>
+              </span>
+              <span style="display:flex; align-items:center; gap:10px; font:400 13px/1 'Geist Mono', monospace; color:#9a9a9e; white-space:nowrap;"><span style="width:10px; height:10px; border-radius:3px; background:{{ s.c }};"></span>{{ s.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; flex-direction:column; border-radius:20px; background:#131314; border:1px solid #232325; overflow:hidden;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 22px; border-bottom:1px dashed rgba(255,255,255,0.12);">
+            <span style="display:flex; align-items:center; gap:10px; font:600 14px/1 'Geist', sans-serif;"><span data-pulse="" style="width:8px; height:8px; border-radius:50%; background:#bfe7c7; box-shadow:0 0 0 0 rgba(191,231,199,0.6);"></span>Just added</span>
+            <span style="font:400 12px/1 'Geist Mono', monospace; color:#6a6a6e;">Live · last 24h</span>
+          </div>
+          <div style="position:relative; height:320px; overflow:hidden; -webkit-mask-image:linear-gradient(180deg, #000 70%, transparent); mask-image:linear-gradient(180deg, #000 70%, transparent);">
+            <div data-feed="" style="will-change:transform;">
+              <sc-for list="{{ feed }}" as="t" hint-placeholder-count="6">
+                <div data-row="" style="display:flex; align-items:center; gap:12px; height:64px; box-sizing:border-box; padding:0 22px; border-bottom:1px solid #1c1c1e;">
+                  <span data-fd="" style="flex:none; width:10px; height:10px; border-radius:3px; background:{{ t.color }};"></span>
+                  <b data-fc="" style="font:600 15px/1 'Geist', sans-serif; color:#f2f2f2; white-space:nowrap;">{{ t.company }}</b>
+                  <span data-fs="" style="font:400 14px/1 'Geist', sans-serif; color:#8a8a8e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.college }}</span>
+                  <span data-fa="" style="margin-left:auto; font:400 12px/1 'Geist Mono', monospace; color:#6a6a6e; white-space:nowrap;">{{ t.ago }} ago</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="3b" style="flex:none; width:1240px; display:flex; flex-direction:column; gap:14px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">3b · Split-flap board</span>
+      <div style="box-sizing:border-box; padding:40px; border-radius:24px; background:#0b0b0b; border:1px solid #1d1d1f; display:flex; flex-direction:column; gap:16px;">
+        <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px;">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex; flex-direction:column; gap:22px; padding:28px 26px 26px; border-radius:22px; border:1px dashed rgba(255,255,255,0.16); background:rgba(255,255,255,0.015);">
+              <span style="display:flex; gap:6px;">
+                <sc-for list="{{ s.chars }}" as="c" hint-placeholder-count="5">
+                  <span data-fl="" data-ch="{{ c.ch }}" style="display:flex; align-items:center; justify-content:center; width:58px; height:84px; border-radius:10px; background:linear-gradient(180deg, #1d1d20 0 49.4%, #070708 49.4% 50.6%, #18181a 50.6% 100%); box-shadow:inset 0 1px 0 rgba(255,255,255,0.06); font:500 52px/1 'Geist Mono', monospace; color:#f3f3f3;">{{ c.ch }}</span>
+                </sc-for>
+              </span>
+              <span style="display:flex; align-items:center; gap:10px; font:400 13px/1 'Geist Mono', monospace; color:#9a9a9e;"><span style="width:10px; height:10px; border-radius:3px; background:{{ s.c }};"></span>{{ s.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="border-radius:20px; background:#131314; border:1px solid #232325; padding:8px 10px; font:500 15px/1 'Geist Mono', monospace; text-transform:uppercase;">
+          <div style="display:grid; grid-template-columns:120px minmax(0, 1.2fr) minmax(0, 1.3fr) 110px; gap:12px; padding:12px 14px; font-size:11px; letter-spacing:0.08em; color:#6a6a6e;"><span>Status</span><span>Company</span><span>College</span><span>Added</span></div>
+          <sc-for list="{{ board }}" as="t" hint-placeholder-count="3">
+            <div data-brow="" style="display:grid; grid-template-columns:120px minmax(0, 1.2fr) minmax(0, 1.3fr) 110px; gap:12px; align-items:center; padding:14px; border-top:1px solid #1f1f21;">
+              <span data-bst="" style="justify-self:start; padding:6px 9px; border-radius:6px; background:#1d1d20; color:#8a8a8e; font-size:11px; letter-spacing:0.06em;">Added</span>
+              <span data-bc="" style="white-space:pre; color:#f3f3f3; letter-spacing:0.04em;">{{ t.company }}</span>
+              <span data-bs="" style="white-space:pre; color:#a8a8ac; letter-spacing:0.04em;">{{ t.college }}</span>
+              <span data-ba="" style="white-space:pre; color:#bfe7c7; letter-spacing:0.04em;">{{ t.ago }} ago</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div id="3c" style="flex:none; width:1240px; display:flex; flex-direction:column; gap:14px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">3c · Cards with live visuals + two-lane ticker</span>
+      <div style="box-sizing:border-box; padding:40px; border-radius:24px; background:#0b0b0b; border:1px solid #1d1d1f; display:flex; flex-direction:column; gap:16px;">
+        <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px;">
+          <div style="display:flex; flex-direction:column; gap:18px; padding:28px 26px 26px; border-radius:22px; border:1px dashed rgba(255,255,255,0.16); background:rgba(255,255,255,0.015);">
+            <div style="display:flex; align-items:flex-end; gap:4px; height:64px;">
+              <sc-for list="{{ bars }}" as="b" hint-placeholder-count="18"><span data-bar="" style="flex:1; height:40%; border-radius:3px; background:#bfe7c7; opacity:0.85;"></span></sc-for>
+            </div>
+            <span data-cu="" data-n="3500" style="font:300 88px/0.9 'Geist', sans-serif; letter-spacing:-0.055em; color:#f3f3f3; font-variant-numeric:tabular-nums;">3500+</span>
+            <span style="font:400 13px/1 'Geist Mono', monospace; color:#9a9a9e;">Real OA questions</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:18px; padding:28px 26px 26px; border-radius:22px; border:1px dashed rgba(255,255,255,0.16); background:rgba(255,255,255,0.015);">
+            <div style="display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:5px; height:64px;">
+              <sc-for list="{{ companies }}" as="c" hint-placeholder-count="12"><span data-cg="" style="display:flex; align-items:center; justify-content:center; border-radius:6px; background:#18181a; color:#6a6a6e; font:500 10px/1 'Geist Mono', monospace; white-space:nowrap; overflow:hidden; transition:background .35s, color .35s;">{{ c }}</span></sc-for>
+            </div>
+            <span data-cu="" data-n="400" style="font:300 88px/0.9 'Geist', sans-serif; letter-spacing:-0.055em; color:#f3f3f3; font-variant-numeric:tabular-nums;">400+</span>
+            <span style="font:400 13px/1 'Geist Mono', monospace; color:#9a9a9e;">Companies tracked</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:18px; padding:28px 26px 26px; border-radius:22px; border:1px dashed rgba(255,255,255,0.16); background:rgba(255,255,255,0.015);">
+            <div style="display:flex; align-items:center; height:64px;">
+              <sc-for list="{{ avatars }}" as="a" hint-placeholder-count="5"><span data-avs="" style="width:52px; height:52px; margin-right:-14px; border-radius:50%; background:{{ a.bg }}; border:3px solid #0b0b0b; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="{{ a.src }}" alt="" style="width:120%; height:120%; object-fit:cover; margin-top:8px;"></span></sc-for>
+            </div>
+            <span data-cu="" data-n="1000" style="font:300 88px/0.9 'Geist', sans-serif; letter-spacing:-0.055em; color:#f3f3f3; font-variant-numeric:tabular-nums;">1000+</span>
+            <span style="font:400 13px/1 'Geist Mono', monospace; color:#9a9a9e;">Students placed</span>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; padding:10px 0; border-radius:22px; background:#131314; border:1px solid #232325; overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);">
+          <div data-la="" style="display:flex; width:max-content; will-change:transform;">
+            <sc-for list="{{ laneA }}" as="t" hint-placeholder-count="12"><span style="flex:none; display:flex; align-items:center; gap:9px; padding:8px 34px 8px 0; font:400 14px/1 'Geist', sans-serif; color:#a8a8ac; white-space:nowrap;"><span style="width:8px; height:8px; border-radius:3px; background:{{ t.color }};"></span><b style="font-weight:600; color:#f2f2f2;">{{ t.company }}</b><span>questions added · {{ t.ago }} ago</span></span></sc-for>
+          </div>
+          <div data-lb="" style="display:flex; gap:10px; width:max-content; will-change:transform;">
+            <sc-for list="{{ laneB }}" as="c" hint-placeholder-count="16"><span style="flex:none; padding:8px 13px; border-radius:999px; border:1px dashed rgba(255,255,255,0.16); font:500 12px/1 'Geist Mono', monospace; color:#8a8a8e; white-space:nowrap;">{{ c }}</span></sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="3d" style="flex:none; width:1240px; display:flex; flex-direction:column; gap:14px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">3d · One strip + notification stack</span>
+      <div style="box-sizing:border-box; padding:40px; border-radius:24px; background:#0b0b0b; border:1px solid #1d1d1f;">
+        <div style="display:grid; grid-template-columns:minmax(0, 1.5fr) minmax(0, 1fr); gap:16px; align-items:stretch;">
+          <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); border-radius:22px; border:1px dashed rgba(255,255,255,0.16); background:rgba(255,255,255,0.015);">
+            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+              <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:18px; padding:30px 26px; border-right:1px dashed rgba(255,255,255,0.12);">
+                <span style="width:10px; height:10px; border-radius:3px; background:{{ s.c }};"></span>
+                <span data-cu="" data-n="{{ s.n }}" style="font:300 64px/0.9 'Geist', sans-serif; letter-spacing:-0.05em; color:#f3f3f3; font-variant-numeric:tabular-nums;">{{ s.txt }}</span>
+                <span style="font:400 13px/1 'Geist Mono', monospace; color:#9a9a9e;">{{ s.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="position:relative; min-height:230px; border-radius:22px; background:#131314; border:1px solid #232325; overflow:hidden;">
+            <span style="position:absolute; left:22px; top:20px; display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#bfe7c7; color:#16201a; font:600 12px/1 'Geist Mono', monospace;"><span style="width:7px; height:7px; border-radius:50%; background:#16201a;"></span>Just added</span>
+            <div style="position:absolute; left:22px; right:22px; bottom:24px; height:84px;">
+              <sc-for list="{{ toasts }}" as="t" hint-placeholder-count="3">
+                <div data-ts="" style="position:absolute; left:0; right:0; bottom:0; display:flex; align-items:center; gap:14px; padding:16px 18px; border-radius:16px; background:#1d1d20; border:1px solid #2c2c30; box-shadow:0 18px 30px -12px rgba(0,0,0,0.7); transform-origin:50% 0; will-change:transform,opacity;">
+                  <span data-tdot="" style="flex:none; width:36px; height:36px; border-radius:10px; background:{{ t.color }};"></span>
+                  <span style="display:flex; flex-direction:column; gap:7px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3; white-space:nowrap;">New <span data-tc="">{{ t.company }}</span> OA questions</b><span data-tl="" style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e; white-space:nowrap;">{{ t.college }} · {{ t.ago }} ago</span></span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  root = React.createRef();
+  T = [['Goldman Sachs', 'IIT Kharagpur', '2h', '#d4e2f4'], ['Uber', 'NIT Trichy', '5h', '#f3e9a8'], ['Flipkart', 'VIT Vellore', '9h', '#c4c9f5'], ['Amazon', 'BITS Pilani', '11h', '#f7d3b5'], ['Atlassian', 'IIIT Hyderabad', '14h', '#b7dcf6'], ['Microsoft', 'DTU', '20h', '#c6dbf3']].map(([company, college, ago, color]) => ({ company, college, ago, color }));
+
+  componentDidMount() {
+    const R = this.root.current; if (!R) return;
+    const qa = s => Array.from(R.querySelectorAll(s)), q = s => R.querySelector(s), T = this.T, L = T.length;
+    this.timers = []; this.scr = [];
+    const every = (ms, fn) => { fn(); this.timers.push(setInterval(fn, ms)); };
+    const later = (ms, fn) => this.timers.push(setTimeout(fn, ms));
+    // 3a odometer
+    const ods = qa('[data-od]');
+    every(9000, () => {
+      ods.forEach(e => { e.style.transition = 'none'; e.style.transform = 'translateY(0)'; });
+      void R.offsetHeight;
+      ods.forEach((e, i) => { e.style.transition = `transform 1.9s cubic-bezier(.16,1,.3,1) ${(i % 4) * 0.09 + Math.floor(i / 4) * 0.12}s`; e.style.transform = `translateY(-${+e.getAttribute('data-d')}em)`; });
+    });
+    // 3a feed
+    const feed = q('[data-feed]'), rows = qa('[data-row]'); let k = 0;
+    const fillRow = (r, t) => { r.querySelector('[data-fc]').textContent = t.company; r.querySelector('[data-fs]').textContent = t.college; r.querySelector('[data-fa]').textContent = t.ago + ' ago'; r.querySelector('[data-fd]').style.background = t.color; };
+    this.timers.push(setInterval(() => {
+      k++; rows.forEach((r, i) => fillRow(r, T[((k - i) % L + L) % L]));
+      const h = rows[0].offsetHeight;
+      feed.style.transition = 'none'; feed.style.transform = `translateY(-${h}px)`;
+      rows[0].style.transition = 'none'; rows[0].style.background = 'rgba(191,231,199,0.12)';
+      void feed.offsetHeight;
+      feed.style.transition = 'transform .7s cubic-bezier(.2,.8,.2,1)'; feed.style.transform = 'translateY(0)';
+      rows[0].style.transition = 'background 2s ease .6s'; rows[0].style.background = 'transparent';
+    }, 2400));
+    // 3b flaps
+    const DIG = '0123456789', AZ = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const scramble = (el, target, delay, dur, pool) => this.scr.push({ el, target, start: performance.now() + delay, dur, pool });
+    const fl = qa('[data-fl]');
+    every(9000, () => fl.forEach((e, i) => scramble(e, e.getAttribute('data-ch'), i * 70, 700 + (i % 5) * 120, DIG)));
+    const brows = qa('[data-brow]'); let bk = 0;
+    const pad = (s, n) => (s + ' '.repeat(n)).slice(0, n).toUpperCase();
+    const fillB = (first) => brows.forEach((r, i) => {
+      const t = T[((bk - i) % L + L) % L], d = first ? 0 : i * 140;
+      scramble(r.querySelector('[data-bc]'), pad(t.company, 14), d, 650, AZ);
+      scramble(r.querySelector('[data-bs]'), pad(t.college, 15), d + 80, 750, AZ);
+      scramble(r.querySelector('[data-ba]'), pad(t.ago + ' ago', 8), d + 160, 500, AZ);
+      const st = r.querySelector('[data-bst]'), top = i === 0;
+      st.textContent = top ? 'New' : 'Added'; st.style.background = top ? '#bfe7c7' : '#1d1d20'; st.style.color = top ? '#16201a' : '#8a8a8e';
+    });
+    fillB(true); this.timers.push(setInterval(() => { bk++; fillB(false); }, 2800));
+    // count-ups
+    const cus = qa('[data-cu]');
+    every(9000, () => { const t0 = performance.now(); cus.forEach(e => { e._t0 = t0; e._n = +e.getAttribute('data-n'); }); });
+    // 3c company grid
+    const cg = qa('[data-cg]'); let prev = -1;
+    every(1100, () => { if (prev >= 0) { cg[prev].style.background = '#18181a'; cg[prev].style.color = '#6a6a6e'; } let n; do { n = Math.floor(Math.random() * cg.length); } while (n === prev); prev = n; cg[n].style.background = '#c6dbf3'; cg[n].style.color = '#151515'; });
+    // 3c avatars
+    const avs = qa('[data-avs]');
+    every(6000, () => { avs.forEach(a => { a.style.transition = 'none'; a.style.opacity = 0; a.style.transform = 'translateY(14px) scale(.8)'; }); void R.offsetHeight; avs.forEach((a, i) => { a.style.transition = `opacity .4s ease ${i * .12}s, transform .55s cubic-bezier(.3,1.6,.5,1) ${i * .12}s`; a.style.opacity = 1; a.style.transform = 'none'; }); });
+    // 3d toasts
+    const ts = qa('[data-ts]'), role = ts.map((_, i) => i); let tk = 0;
+    const RS = ['translateY(0) scale(1)', 'translateY(-16px) scale(.95)', 'translateY(-32px) scale(.9)'], OP = [1, .5, .22];
+    const fillT = (el, t) => { el.querySelector('[data-tc]').textContent = t.company; el.querySelector('[data-tl]').textContent = t.college + ' · ' + t.ago + ' ago'; el.querySelector('[data-tdot]').style.background = t.color; };
+    const place = (el, r) => { el.style.transform = RS[r]; el.style.opacity = OP[r]; el.style.zIndex = 3 - r; };
+    ts.forEach((el, i) => { fillT(el, T[((0 - i) % L + L) % L]); place(el, i); });
+    this.timers.push(setInterval(() => {
+      tk++;
+      ts.forEach((el, i) => {
+        if (role[i] === 2) { el.style.transition = 'none'; fillT(el, T[tk % L]); el.style.transform = 'translateY(40px) scale(1)'; el.style.opacity = 0; el.style.zIndex = 4; void el.offsetHeight; role[i] = 0; }
+        else role[i]++;
+        el.style.transition = 'transform .6s cubic-bezier(.2,.9,.25,1), opacity .5s ease'; place(el, role[i]);
+      });
+    }, 2600));
+    // rAF loop
+    const bars = qa('[data-bar]'), la = q('[data-la]'), lb = q('[data-lb]'), pulse = q('[data-pulse]');
+    const loop = now => {
+      this.raf = requestAnimationFrame(loop);
+      const s = now / 1000;
+      this.scr = this.scr.filter(o => {
+        if (now < o.start) return true;
+        const p = (now - o.start) / o.dur, tg = o.target;
+        if (p >= 1) { o.el.textContent = tg; return false; }
+        if ((o.f = (o.f || 0) + 1) % 3) return true;
+        const reveal = Math.floor(p * tg.length);
+        o.el.textContent = tg.split('').map((c, i) => i < reveal || c === ' ' || c === '+' ? c : o.pool[Math.floor(Math.random() * o.pool.length)]).join('');
+        return true;
+      });
+      cus.forEach(e => { if (e._t0 == null) return; const p = Math.min(1, (now - e._t0) / 1600), v = 1 - Math.pow(1 - p, 3); const txt = Math.round(e._n * v) + '+'; if (e.textContent !== txt) e.textContent = txt; });
+      bars.forEach((b, i) => { const h = 22 + 70 * (0.5 + 0.5 * Math.sin(s * 1.4 - i * 0.45)) * (0.55 + 0.45 * (i / bars.length)); b.style.height = h.toFixed(1) + '%'; });
+      if (la) { const half = la.scrollWidth / 2; if (half) la.style.transform = `translateX(${(-(s * 34) % half).toFixed(1)}px)`; }
+      if (lb) { const half = lb.scrollWidth / 2; if (half) lb.style.transform = `translateX(${(((s * 26) % half) - half).toFixed(1)}px)`; }
+      if (pulse) { const p = (s % 1.6) / 1.6; pulse.style.boxShadow = `0 0 0 ${(p * 9).toFixed(1)}px rgba(191,231,199,${(0.55 * (1 - p)).toFixed(2)})`; }
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { (this.timers || []).forEach(t => { clearInterval(t); clearTimeout(t); }); cancelAnimationFrame(this.raf); }
+
+  renderVals() {
+    const T = this.T;
+    const stats = [[3500, 'Real OA questions', '#bfe7c7'], [400, 'Companies tracked', '#c6dbf3'], [1000, 'Students placed', '#f7d3b5']].map(([n, label, c]) => ({ n, label, c, txt: n + '+', digits: String(n).split('').map(d => ({ d: +d })), chars: (n + '+').split('').map(ch => ({ ch })) }));
+    const colleges = ['IIT Kharagpur', 'NIT Trichy', 'VIT Vellore', 'BITS Pilani', 'IIIT Hyderabad', 'DTU', 'IIT Bombay', 'NIT Warangal'];
+    return {
+      root: this.root, stats, strip: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      feed: [0, 1, 2, 3, 4, 5].map(i => T[(L6(-i))]),
+      board: [0, 1, 2].map(i => T[L6(-i)]),
+      bars: Array.from({ length: 18 }, (_, i) => i),
+      companies: ['Amazon', 'Google', 'Microsoft', 'Goldman', 'Uber', 'Flipkart', 'Atlassian', 'Adobe', 'Visa', 'Amex', 'eBay', 'Oracle'],
+      avatars: [1, 2, 3, 4, 5].map((n, i) => ({ src: 'assets/avatars/avatar-' + n + '.png', bg: ['#c6dbf3', '#f7d3b5', '#f5c6d6', '#d9cdf4', '#bfe7c7'][i] })),
+      laneA: T.concat(T), laneB: colleges.concat(colleges),
+      toasts: [0, 1, 2].map(i => T[L6(-i)]),
+    };
+    function L6(i) { return ((i % 6) + 6) % 6; }
+  }
+}
+</script>
+</body>
+</html>

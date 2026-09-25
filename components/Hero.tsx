@@ -13,9 +13,10 @@ const CASES = [
   { n: 3, ms: "12 ms", io: "stock = [4, 1, 1, 2]", got: "3" },
 ];
 
-export default function Hero({ data }: { data: LandingData }) {
+/** `still` renders the opening frame only, for the intro's monitor: no track, no input, no CTA. */
+export default function Hero({ data, still = false }: { data: LandingData; still?: boolean }) {
   const root = useRef<HTMLElement>(null);
-  useCinematicHero(root);
+  useCinematicHero(root, still);
 
   const company = data.hero?.company ?? "Amazon";
   const counts = new Map(data.upcoming.map((u) => [u.company, u.questionCount]));
@@ -25,7 +26,7 @@ export default function Hero({ data }: { data: LandingData }) {
   const synced = data.stats ? `${data.stats.companies} companies · ${data.stats.questions} questions` : "12 companies · this season's papers";
 
   return (
-    <section className="cine" ref={root} aria-label="How OA Helper works">
+    <section className={still ? "cine cine--still" : "cine"} ref={root} aria-label={still ? undefined : "How OA Helper works"}>
       <div className="cine-sticky">
         <div className="cine-panel">
           <div className="cine-bg" aria-hidden />
@@ -290,10 +291,14 @@ export default function Hero({ data }: { data: LandingData }) {
           <div className="cine-vig" aria-hidden />
 
           <div className="cine-final">
-            <HeroCarousel />
-            <a className="btn" href={CTA.heroBrowse.href} data-cursor="It's free">
-              {CTA.heroBrowse.label} <span aria-hidden>→</span>
-            </a>
+            {!still && (
+              <>
+                <HeroCarousel />
+                <a className="btn" href={CTA.heroBrowse.href} data-cursor="It's free">
+                  {CTA.heroBrowse.label} <span aria-hidden>→</span>
+                </a>
+              </>
+            )}
           </div>
 
         </div>

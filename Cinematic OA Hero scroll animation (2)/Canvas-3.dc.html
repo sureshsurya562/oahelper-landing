@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0b0b0b;-webkit-font-smoothing:antialiased;}a{color:#bfe7c7;text-decoration:none;}a:hover{color:#f3f3f3;}</style>
+</helmet>
+<section ref="{{ root }}" data-screen-label="Testimonials" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; padding:clamp(72px, 12vh, 140px) 20px;">
+  <div style="max-width:1160px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap:clamp(32px, 5vw, 64px); align-items:center;">
+
+    <div style="display:flex; flex-direction:column; gap:22px; min-width:0;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="display:flex; align-items:center; gap:6px; font:500 13px/1 'Geist', sans-serif; color:#f2f2f2; white-space:nowrap;"><svg viewBox="0 0 16 16" style="width:11px; height:11px;"><path d="M8 0C8.6 4.6 11.4 7.4 16 8C11.4 8.6 8.6 11.4 8 16C7.4 11.4 4.6 8.6 0 8C4.6 7.4 7.4 4.6 8 0Z" fill="#f2f2f2"></path></svg>Testimonials</span>
+        <span style="font:500 12px/1 'Geist Mono', monospace; color:#6a6a6e;"><span data-idx="">01</span> / 03</span>
+      </div>
+      <h2 style="margin: 0;  font-size: clamp(38px, 4.6vw, 68px); line-height: 1.02; letter-spacing:-0.035em; color: #f3f3f3; text-wrap: balance; font-family:'Inter', sans-serif; font-weight:600;">What users <em style="font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; letter-spacing:-0.02em; font-size:1.06em;">say.</em></h2>
+      <p style="margin:0; max-width:420px; font:400 15px/1.6 'Geist', sans-serif; color:#a8a8ac; text-wrap:pretty;">Real experiences from students who prepared smarter, practised with purpose, and showed up with confidence.</p>
+
+      <div style="margin-top:8px; display:flex; flex-wrap:wrap; align-items:center; gap:18px; padding:18px; border-radius:20px; background:#151515; border:1px solid #242426; max-width:440px;">
+        <div style="display:flex; flex-direction:column; gap:6px;"><b style="font:300 46px/1 'Geist', sans-serif; letter-spacing:-0.05em; color:#f3f3f3;">1000+</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">students placed</span></div>
+        <div style="margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:10px;">
+          <div style="display:flex;">
+            <span style="width:36px; height:36px; border-radius:50%; background:#c6dbf3; border:2px solid #151515; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="assets/avatars/avatar-1.png" alt="" style="width:120%; height:120%; object-fit:cover; margin-top:6px;"></span>
+            <span style="width:36px; height:36px; margin-left:-11px; border-radius:50%; background:#f7d3b5; border:2px solid #151515; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="assets/avatars/avatar-2.png" alt="" style="width:120%; height:120%; object-fit:cover; margin-top:6px;"></span>
+            <span style="width:36px; height:36px; margin-left:-11px; border-radius:50%; background:#f5c6d6; border:2px solid #151515; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="assets/avatars/avatar-3.png" alt="" style="width:120%; height:120%; object-fit:cover; margin-top:6px;"></span>
+            <span style="width:36px; height:36px; margin-left:-11px; border-radius:50%; background:#d9cdf4; border:2px solid #151515; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="assets/avatars/avatar-4.png" alt="" style="width:120%; height:120%; object-fit:cover; margin-top:6px;"></span>
+            <span style="width:36px; height:36px; margin-left:-11px; border-radius:50%; background:#bfe7c7; border:2px solid #151515; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="assets/avatars/avatar-5.png" alt="" style="width:120%; height:120%; object-fit:cover; margin-top:6px;"></span>
+            <span style="width:36px; height:36px; margin-left:-11px; border-radius:50%; background:#f3f3f3; border:2px solid #151515; display:flex; align-items:center; justify-content:center; font:600 10px/1 'Geist', sans-serif; color:#151515;">+1k</span>
+          </div>
+          <span style="display:flex; align-items:center; gap:6px; font:500 12px/1 'Geist', sans-serif; color:#d8d8d8;"><span style="color:#f7d3b5; letter-spacing:2px;">★★★★★</span>4.8 from students</span>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button type="button" onClick="{{ prev }}" aria-label="Previous" style="width:48px; height:48px; border-radius:50%; border:1px solid #3a3a3e; background:transparent; color:#f3f3f3; font-size:18px; cursor:pointer;" style-hover="background:#1c1c1e; border-color:#6a6a6e;">←</button>
+        <button type="button" onClick="{{ next }}" aria-label="Next" style="width:48px; height:48px; border-radius:50%; border:none; background:#f3f3f3; color:#111; font-size:18px; cursor:pointer;" style-hover="background:#bfe7c7;">→</button>
+      </div>
+    </div><div data-deck="" style="position: relative; height: 467px; min-width: 0; width: 100%; max-width: 495px;">
+      <sc-for list="{{ voices }}" as="v" hint-placeholder-count="3">
+        <div data-dc="" style="position:absolute; left:0; right:0; top:20px; margin:0 auto; max-width:540px; height:460px; will-change:transform,opacity;">
+          <sc-if value="{{ v.isPhoto }}" hint-placeholder-val="{{ true }}">
+          <div style="position: relative; height: 425px; border-radius: 26px; overflow: hidden; background: #151515; border: 1px solid #2a2a2c; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); width: 100%; max-width: 473px; box-sizing: border-box;">
+            <div style="position:relative; margin:10px; border-radius:18px; overflow:hidden; background:{{ v.grad }};">
+              <img data-av="" src="{{ v.av }}" alt="{{ v.name }}" style="position:absolute; left:50%; top:46%; width:78%; max-width:200px; height:auto; transform:translate(-50%,-50%); filter:drop-shadow(0 18px 24px rgba(0,0,0,0.28));">
+              <span style="position:absolute; left:12px; bottom:12px; display:flex; align-items:center; gap:6px; padding:7px 10px; border-radius:999px; background:rgba(15,15,16,0.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); font:500 11px/1 'Geist Mono', monospace; color:#bfe7c7; pointer-events:none;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Verified student</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:18px; padding:26px 26px 24px 10px; min-width:0;">
+              <span style="font:400 64px/0.6 'Instrument Serif', serif; color:{{ v.bg }}; height:26px;">“</span>
+              <p data-q="" style="margin:0; font:400 clamp(14px, 1.25vw, 17px)/1.5 'Geist', sans-serif; letter-spacing:-0.01em; color:#e4e4e4; text-wrap:pretty;">{{ v.q }}</p>
+              <div style="margin-top:auto; display:flex; align-items:center; gap:12px; padding-top:16px; border-top:1px dashed rgba(255,255,255,0.14);">
+                <span style="flex:none; width:40px; height:40px; border-radius:50%; background:{{ v.bg }}; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="{{ v.av }}" alt="" style="width:118%; height:118%; object-fit:cover; margin-top:6px;"></span>
+                <span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">{{ v.name }}</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ v.role }}</span></span>
+                <span style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:1px solid #3a3a3e; display:flex; align-items:center; justify-content:center; color:#d8d8d8; font-size:13px;">↗</span>
+              </div>
+            </div>
+            <span data-bar="" style="position:absolute; left:0; bottom:0; height:3px; width:100%; background:{{ v.bg }}; transform-origin:0 50%; transform:scaleX(0);"></span>
+          </div>
+          </sc-if>
+          <sc-if value="{{ v.isBlank }}" hint-placeholder-val="{{ false }}">
+          <div style="position: relative; height: 425px; border-radius: 26px; overflow: hidden; background: #151515; border: 1px solid #2a2a2c; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); width: 100%; max-width: 473px; box-sizing: border-box;">
+            <div style="position:relative; margin:10px; border-radius:18px; overflow:hidden; background:{{ v.grad }};">
+              <span style="position:absolute; left:12px; bottom:12px; display:flex; align-items:center; gap:6px; padding:7px 10px; border-radius:999px; background:rgba(15,15,16,0.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); font:500 11px/1 'Geist Mono', monospace; color:#bfe7c7; pointer-events:none;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Verified student</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:18px; padding:26px 26px 24px 10px; min-width:0;">
+              <span style="font:400 64px/0.6 'Instrument Serif', serif; color:{{ v.bg }}; height:26px;">“</span>
+              <p data-q="" style="margin:0; font:400 clamp(14px, 1.25vw, 17px)/1.5 'Geist', sans-serif; letter-spacing:-0.01em; color:#e4e4e4; text-wrap:pretty;">{{ v.q }}</p>
+              <div style="margin-top:auto; display:flex; align-items:center; gap:12px; padding-top:16px; border-top:1px dashed rgba(255,255,255,0.14);">
+                <span style="flex:none; width:40px; height:40px; border-radius:50%; background:{{ v.bg }}; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="{{ v.av }}" alt="" style="width:118%; height:118%; object-fit:cover; margin-top:6px;"></span>
+                <span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">{{ v.name }}</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ v.role }}</span></span>
+                <span style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:1px solid #3a3a3e; display:flex; align-items:center; justify-content:center; color:#d8d8d8; font-size:13px;">↗</span>
+              </div>
+            </div>
+            <span data-bar="" style="position:absolute; left:0; bottom:0; height:3px; width:100%; background:{{ v.bg }}; transform-origin:0 50%; transform:scaleX(0);"></span>
+          </div>
+          </sc-if>
+          <sc-if value="{{ v.isText }}" hint-placeholder-val="{{ false }}">
+          <div style="position: relative; height: 425px; border-radius: 26px; overflow: hidden; background: #151515; border: 1px solid #2a2a2c; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7); width: 100%; max-width: 473px; box-sizing: border-box; box-sizing:border-box; display:flex; flex-direction:column; gap:22px; padding:34px 34px 30px;">
+            <span style="font:400 64px/0.6 'Instrument Serif', serif; color:{{ v.bg }}; height:26px;">“</span>
+            <p data-q="" style="margin:0; font:400 clamp(16px, 1.45vw, 19px)/1.5 'Geist', sans-serif; letter-spacing:-0.01em; color:#e4e4e4; text-wrap:pretty;">{{ v.q }}</p>
+            <div style="margin-top:auto; display:flex; align-items:center; gap:12px; padding-top:16px; border-top:1px dashed rgba(255,255,255,0.14);"><span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">{{ v.name }}</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ v.role }}</span></span><span style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:1px solid #3a3a3e; display:flex; align-items:center; justify-content:center; color:#d8d8d8; font-size:13px;">↗</span></div>
+            <span data-bar="" style="position:absolute; left:0; bottom:0; height:3px; width:100%; background:{{ v.bg }}; transform-origin:0 50%; transform:scaleX(0);"></span>
+          </div>
+          </sc-if>
+          <sc-if value="{{ v.isAvatar }}" hint-placeholder-val="{{ false }}">
+          <div style="position: relative; height: 425px; border-radius: 26px; overflow: hidden; background: #151515; border: 1px solid #2a2a2c; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7); width: 100%; max-width: 473px; box-sizing: border-box; box-sizing:border-box; display:flex; flex-direction:column; gap:22px; padding:34px 34px 30px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;"><span style="font:400 64px/0.6 'Instrument Serif', serif; color:{{ v.bg }}; height:26px;">“</span><sc-if value="{{ v.chSticker }}" hint-placeholder-val="{{ true }}"><span style="flex:none; display:flex; align-items:center; gap:7px; padding:8px 13px 8px 9px; border-radius:999px; background:#bfe7c7; color:#0f2a17; border:3px solid #f7f5ef; box-shadow:0 1px 0 #d9d4c7, 0 10px 18px -6px rgba(0,0,0,0.6); transform:rotate(-2deg); font:700 12px/1 'Geist', sans-serif; letter-spacing:0.01em; white-space:nowrap;"><span style="width:18px; height:18px; border-radius:50%; background:#0f2a17; color:#bfe7c7; display:flex; align-items:center; justify-content:center; font:700 11px/1 'Geist', sans-serif;">✓</span>Verified student</span></sc-if><sc-if value="{{ v.chOutline }}" hint-placeholder-val="{{ false }}"><span style="flex:none; white-space:nowrap; display:flex; align-items:center; gap:6px; padding:7px 11px; border-radius:999px; border:1px solid #2f3a31; font:500 11px/1 'Geist Mono', monospace; color:#bfe7c7;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Verified student</span></sc-if><sc-if value="{{ v.chMono }}" hint-placeholder-val="{{ false }}"><span style="flex:none; white-space:nowrap; display:flex; align-items:center; gap:6px; font:500 11px/1 'Geist Mono', monospace; letter-spacing:0.06em; color:#8a8a8e;"><span style="color:#bfe7c7;">✓</span>VERIFIED STUDENT</span></sc-if></div>
+            <p data-q="" style="margin:0; font:400 clamp(16px, 1.45vw, 19px)/1.5 'Geist', sans-serif; letter-spacing:-0.01em; color:#e4e4e4; text-wrap:pretty;">{{ v.q }}</p>
+            <div style="margin-top:auto; display:flex; align-items:center; gap:12px; padding-top:16px; border-top:1px dashed rgba(255,255,255,0.14);"><span style="flex:none; width:48px; height:48px; border-radius:50%; background:{{ v.bg }}; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="{{ v.av }}" alt="" style="width:118%; height:118%; object-fit:cover; margin-top:6px;"></span><span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><span style="display:flex; align-items:center; gap:6px;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">{{ v.name }}</b><sc-if value="{{ v.chTick }}" hint-placeholder-val="{{ false }}"><span title="Verified student" style="flex:none; width:16px; height:16px; border-radius:50%; background:#bfe7c7; color:#0f2a17; display:flex; align-items:center; justify-content:center; font:700 10px/1 'Geist', sans-serif;">✓</span></sc-if></span><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ v.role }}</span></span><span style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:1px solid #3a3a3e; display:flex; align-items:center; justify-content:center; color:#d8d8d8; font-size:13px;">↗</span></div>
+            <span data-bar="" style="position:absolute; left:0; bottom:0; height:3px; width:100%; background:{{ v.bg }}; transform-origin:0 50%; transform:scaleX(0);"></span>
+          </div>
+          </sc-if>
+          <sc-if value="{{ v.isBanner }}" hint-placeholder-val="{{ false }}">
+          <div style="position: relative; height: 425px; border-radius: 26px; overflow: hidden; background: #151515; border: 1px solid #2a2a2c; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7); width: 100%; max-width: 473px; box-sizing: border-box; display:flex; flex-direction:column;">
+            <div style="position:relative; flex:none; height:150px; margin:10px 10px 0; border-radius:18px; overflow:hidden; background:{{ v.grad }};">
+              <img src="{{ v.av }}" alt="{{ v.name }}" style="position:absolute; right:22px; bottom:-34px; width:150px; height:auto; filter:drop-shadow(0 14px 20px rgba(0,0,0,0.28));">
+              <span style="position:absolute; left:12px; bottom:12px;"><span style="display:flex; align-items:center; gap:6px; padding:7px 10px; border-radius:999px; background:rgba(15,15,16,0.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); font:500 11px/1 'Geist Mono', monospace; color:#bfe7c7; width:max-content;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Verified student</span></span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; gap:16px; padding:22px 26px 24px; min-width:0;">
+              <p data-q="" style="margin:0; font:400 clamp(14px, 1.25vw, 16px)/1.5 'Geist', sans-serif; letter-spacing:-0.01em; color:#e4e4e4; text-wrap:pretty;">{{ v.q }}</p>
+              <div style="margin-top:auto; display:flex; align-items:center; gap:12px; padding-top:16px; border-top:1px dashed rgba(255,255,255,0.14);"><span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">{{ v.name }}</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ v.role }}</span></span><span style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:1px solid #3a3a3e; display:flex; align-items:center; justify-content:center; color:#d8d8d8; font-size:13px;">↗</span></div>
+            </div>
+            <span data-bar="" style="position:absolute; left:0; bottom:0; height:3px; width:100%; background:{{ v.bg }}; transform-origin:0 50%; transform:scaleX(0);"></span>
+          </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    
+  </div>
+
+  <div style="max-width:1160px; margin:clamp(48px, 8vh, 80px) auto 0; display:flex; flex-direction:column; gap:18px;">
+    <span style="font:500 12px/1 'Geist Mono', monospace; color:#6a6a6e;">Our students cleared OAs at</span>
+    <div style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);">
+      <div data-mq="" style="display:flex; align-items:center; gap:56px; width:max-content; padding:6px 0;">
+        <sc-for list="{{ logos }}" as="l" hint-placeholder-count="12"><span style="display:flex; align-items:center; gap:10px; opacity:.72; filter:grayscale(1) brightness(1.8);"><img src="{{ l.src }}" alt="{{ l.n }}" style="display:block; height:26px; width:auto;"><span style="font:600 17px/1 'Geist', sans-serif; letter-spacing:-0.02em; color:#f3f3f3;">{{ l.n }}</span></span></sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;cardStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Photo panel&quot;,&quot;Blank photo panel&quot;,&quot;Text only&quot;,&quot;Text + small avatar&quot;,&quot;Photo banner on top&quot;],&quot;default&quot;:&quot;Photo panel&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Testimonial card&quot;},&quot;chipStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sticker&quot;,&quot;None&quot;,&quot;Outline pill&quot;,&quot;Mono label&quot;,&quot;Tick next to name&quot;],&quot;default&quot;:&quot;Sticker&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Testimonial card&quot;}}">
+class Component extends DCLogic {
+  root = React.createRef();
+  state = { i: 0 };
+  componentDidMount() {
+    this.red = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.t0 = performance.now(); this.D = 5200; this.S = new WeakMap();
+    const loop = now => { this.frame(now); this.raf = requestAnimationFrame(loop); };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  go(d) { this.act = ((this.act || 0) + d + 3) % 3; this.t0 = performance.now(); this.changed = performance.now(); }
+  frame(now) {
+    const root = this.root.current; if (!root) return;
+    const cl = v => v < 0 ? 0 : v > 1 ? 1 : v, e = t => 1 - Math.pow(1 - t, 3);
+    const dt = Math.min(.05, (now - (this.lt || now)) / 1000), K = 1 - Math.exp(-dt * 8); this.lt = now;
+    if (this.act == null) { this.act = 0; this.changed = now; }
+    if (!this.red && now - this.t0 > this.D) { this.go(1); }
+    const cs = Array.from(root.querySelectorAll('[data-dc]')), n = cs.length || 1, act = this.act, T = now / 1000;
+    const idx = root.querySelector('[data-idx]'); if (idx) { const s = '0' + (act + 1); if (idx.textContent !== s) idx.textContent = s; }
+    cs.forEach((c, i) => {
+      const rel = ((i - act) % n + n) % n, prevTop = rel === n - 1;
+      const o = this.S.get(c) || { y: rel * 22, s: 1 - rel * .06, r: 0, x: 0, op: 1 };
+      const leaving = prevTop && now - this.changed < 700, lt = cl((now - this.changed) / 700);
+      let ty = -rel * 22, ts = 1 - rel * .06, tr = rel === 0 ? 0 : (rel === 1 ? 2.5 : -2.5), tx = 0, top = 1;
+      if (leaving) { tx = -e(lt) * 140; tr = -e(lt) * 10; top = 1 - lt; ty = 30 * lt; ts = 1 - .06 * lt; }
+      o.y += (ty - o.y) * K; o.s += (ts - o.s) * K; o.r += (tr - o.r) * K; o.x = leaving ? tx : o.x + (0 - o.x) * K;
+      this.S.set(c, o);
+      c.style.transform = 'translate(' + o.x.toFixed(1) + 'px,' + (o.y + (rel === 0 ? Math.sin(T * 1.2) * 3 : 0)).toFixed(1) + 'px) rotate(' + o.r.toFixed(2) + 'deg) scale(' + o.s.toFixed(3) + ')';
+      c.style.zIndex = leaving ? n + 1 : n - rel;
+      c.style.opacity = leaving ? top : rel > 2 ? 0 : 1;
+      c.style.filter = rel === 0 || leaving ? 'none' : 'brightness(' + (1 - rel * .22) + ')';
+      const q = c.querySelector('[data-q]');
+      if (q) {
+        if (!q._split) { q._split = true; const w = q.textContent.trim().split(/\s+/); q.textContent = ''; w.forEach(x => { const s = document.createElement('span'); s.textContent = x + ' '; s.style.display = 'inline-block'; s.style.whiteSpace = 'pre'; q.appendChild(s); }); }
+        Array.from(q.children).forEach((w, j) => { const t = rel !== 0 || this.red ? 1 : e(cl(((now - this.changed) / 1000 - .25 - j * .03) / .45)); w.style.opacity = rel === 0 ? t : 1; w.style.filter = rel === 0 && t < 1 ? 'blur(' + ((1 - t) * 5).toFixed(1) + 'px)' : 'none'; w.style.transform = rel === 0 ? 'translateY(' + ((1 - t) * 8).toFixed(1) + 'px)' : 'none'; });
+      }
+      const b = c.querySelector('[data-bar]'); if (b) b.style.transform = 'scaleX(' + (rel === 0 && !this.red ? cl((now - this.t0) / this.D) : 0).toFixed(3) + ')';
+    });
+    const mq = root.querySelector('[data-mq]');
+    if (mq && !this.red) { const half = mq.scrollWidth / 2; if (half) mq.style.transform = 'translateX(' + (-(T * 30) % half).toFixed(1) + 'px)'; }
+  }
+  renderVals() {
+    const voices = [
+      { q: "I was tired of solving random DSA questions without knowing what to expect in the actual OA. OAHelper helped me practice questions closer to the company's pattern, which made my preparation feel much more focused.", av: 'assets/avatars/avatar-1.png', name: 'Tripti Byas', role: 'Final-year CSE Student', ini: 'TB', bg: '#c6dbf3', slot: 'voice-tripti', grad: 'radial-gradient(60% 80% at 30% 20%, #9ec2f2 0%, rgba(158,194,242,0) 70%), linear-gradient(160deg, #c6dbf3, #7ea2d6)' },
+      { q: 'What stood out to me was how targeted the preparation felt. Instead of endlessly searching through different resources, I could focus on the companies that actually mattered for my placement preparation.', av: 'assets/avatars/avatar-3.png', name: 'Priya Verma', role: 'Designer', ini: 'PV', bg: '#bfe7c7', slot: 'voice-priya', grad: 'radial-gradient(60% 80% at 30% 20%, #a8e2b6 0%, rgba(168,226,182,0) 70%), linear-gradient(160deg, #bfe7c7, #6fb884)' },
+      { q: 'The interview experiences and contributions from other students make the platform feel genuinely useful. You get a much clearer idea of what to expect before walking into an OA.', av: 'assets/avatars/avatar-2.png', name: 'Rahul Kumar', role: 'Aspiring Software Engineer', ini: 'RK', bg: '#f7d3b5', slot: 'voice-rahul', grad: 'radial-gradient(60% 80% at 30% 20%, #ffd2ad 0%, rgba(255,210,173,0) 70%), linear-gradient(160deg, #f7d3b5, #e39a64)' },
+    ].map(v => { const k = this.props.cardStyle ?? 'Photo panel', ch = this.props.chipStyle ?? 'Sticker'; return Object.assign({}, v, { isPhoto: k === 'Photo panel', isBlank: k === 'Blank photo panel', isText: k === 'Text only', isAvatar: k === 'Text + small avatar', isBanner: k === 'Photo banner on top', chSticker: ch === 'Sticker', chOutline: ch === 'Outline pill', chMono: ch === 'Mono label', chTick: ch === 'Tick next to name' }); });
+    const L = [['amazon', 'Amazon'], ['google', 'Google'], ['microsoft', 'Microsoft'], ['meta', 'Meta'], ['uber', 'Uber'], ['atlassian', 'Atlassian']].map(([f, n]) => ({ n, src: 'assets/logos/' + f + '.svg' }));
+    return { root: this.root, voices, logos: L.concat(L), prev: () => this.go(-1), next: () => this.go(1) };
+  }
+}
+</script>
+</body>
+</html>

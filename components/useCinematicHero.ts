@@ -86,7 +86,11 @@ const REST_SECONDS = 1.5;
 const PLAY_FROM = 0.25;
 const PHONE = "(max-width: 759px)";
 
-export function useCinematicHero(root: RefObject<HTMLElement | null>) {
+/**
+ * `still` holds the map at 0 (stickers drift, caret blinks) and ignores scroll and input:
+ * the intro's monitor shows this copy until the real hero takes over from it.
+ */
+export function useCinematicHero(root: RefObject<HTMLElement | null>, still = false) {
   useEffect(() => {
     const el = root.current;
     if (!el) return;
@@ -121,19 +125,30 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
     };
     if (!E.panel || !E.term || !E.log) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const swipe = !reduced && window.matchMedia(PHONE).matches;
-    el.style.height = reduced ? "220vh" : swipe ? "100vh" : "400vh";
+    const reduced = !still && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fine = !still && window.matchMedia("(pointer: fine)").matches;
+    const swipe = !still && !reduced && window.matchMedia(PHONE).matches;
+    if (!still) el.style.height = reduced ? "220vh" : swipe ? "100vh" : "400vh";
 
-    // Phones: one swipe down at the top of the page plays the sequence. The page is
-    // held while it plays and for a short rest on the closing frame, then scrolls
-    // freely. Opened part-way down, the hero is simply finished.
-    let playAt = swipe && window.scrollY > 8 ? -1e9 : 0;
+    // Where the section sits in the viewport by layout, ignoring the transform the intro
+    // puts on it while pinning it onto its monitor.
+    const place = () => {
+      let y = 0;
+      for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) y += n.offsetTop;
+      const top = y - window.scrollY;
+      return { top, bottom: top + el.offsetHeight, height: el.offsetHeight };
+    };
+
+    // Phones: one swipe down with the hero at the top of the screen plays the sequence.
+    // The page is held while it plays and for a short rest on the closing frame, then
+    // scrolls freely. Reached with a fling that carries past it, the hero plays without
+    // holding the page; opened part-way down, it is simply finished.
+    const atTop = () => Math.abs(place().top) <= 8;
+    let playAt = swipe && place().bottom < 0 ? -1e9 : 0;
     let touchY = 0;
-    const playing = () => playAt > 0 && performance.now() - playAt < (PLAY_SECONDS + REST_SECONDS) * 1000;
+    const playing = () => playAt > 0 && performance.now() - playAt < (PLAY_SECONDS + REST_SECONDS) * 1000 && atTop();
     const start = () => {
-      if (playAt || window.scrollY > 8) return false;
+      if (playAt || !atTop()) return false;
       playAt = performance.now();
       return true;
     };
@@ -177,11 +192,18 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
     let tmx = 0;
     let tmy = 0;
     const onMove = (e: MouseEvent) => {
+      // Clamped: while the intro pins the hero onto its monitor the panel's rect is tiny.
       const r = E.panel.getBoundingClientRect();
-      tmx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      tmy = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      tmx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
+      tmy = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
     };
-    window.addEventListener("mousemove", onMove, { passive: true });
+    if (fine) window.addEventListener("mousemove", onMove, { passive: true });
+
+    let onScreen = true;
+    const seen = new IntersectionObserver(([e]) => {
+      onScreen = e.isIntersecting;
+    });
+    if (still) seen.observe(el);
 
     let L: Layout | null = null;
     const layout = () => {
@@ -253,13 +275,16 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
 
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
-      if (!L) return;
+      if (!L || (still && !onScreen)) return;
       const dt = Math.min(0.05, (now - (last || now)) / 1000);
       last = now;
       const T = now / 1000;
-      const rect = el.getBoundingClientRect();
+      const rect = place();
       const tot = rect.height - window.innerHeight;
-      const tg = swipe
+      if (swipe && !playAt && rect.top < -8) playAt = rect.bottom > 0 ? now : -1e9;
+      const tg = still
+        ? 0
+        : swipe
         ? playAt
           ? PLAY_FROM + (1 - PLAY_FROM) * cl((now - playAt) / 1000 / PLAY_SECONDS)
           : 0
@@ -414,11 +439,12 @@ export function useCinematicHero(root: RefObject<HTMLElement | null>) {
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      seen.disconnect();
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKey);
     };
-  }, [root]);
+  }, [root, still]);
 }

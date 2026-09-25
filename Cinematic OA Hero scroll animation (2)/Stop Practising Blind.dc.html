@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0b0b0b;-webkit-font-smoothing:antialiased;}a{color:#bfe7c7;text-decoration:none;}a:hover{color:#f3f3f3;}</style>
+</helmet>
+<section ref="{{ root }}" data-screen-label="Stop practising blind" style="background-color:#0b0b0b; background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1.3px); background-size:22px 22px; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; padding:clamp(90px, 14vh, 150px) 20px clamp(80px, 12vh, 130px);">
+  <div style="max-width:1120px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:clamp(36px, 6vh, 64px);">
+    <h2 data-hd="" style="margin:0; text-align:center;  font-size:clamp(38px, 5.2vw, 88px); line-height:1.02; letter-spacing:-0.035em; color:#f3f3f3; font-family:'Inter', sans-serif; font-weight:600;">Stop practising <em style="font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; letter-spacing:-0.02em; font-size:1.06em;">blind.</em></h2>
+    <div data-split="" style="position:relative; width:100%; border-radius:26px; overflow:hidden; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); box-shadow:0 40px 80px -30px rgba(0,0,0,0.8);">
+      <div style="position:relative; z-index:2; min-height:clamp(460px, 62vh, 600px); background-color:#3a3a3d; background-image:radial-gradient(rgba(255,255,255,0.14) 1.1px, transparent 1.5px); background-size:20px 20px; border:1px solid #47474b; border-right:none; border-radius:26px 0 0 26px; padding:clamp(28px, 3.4vw, 44px); display:flex; flex-direction:column; gap:16px; box-sizing:border-box;">
+        <span style="font:500 12px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#b4b4b8;">RANDOM PREP</span>
+        <b style="font:300 clamp(30px, 3.4vw, 48px)/1.05 'Geist', sans-serif; letter-spacing:-0.04em; color:#d6d6d9;">3,000 problems.<br>Pick whatever.</b>
+        <div data-pile="" style="position:relative; flex:1; min-height:330px;">
+          <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:136px; height:80px; transform:rotate({{ c.r }}deg); box-sizing:border-box; padding:11px; border-radius:11px; background:#1c1c1e; border:1px solid #2e2e32; box-shadow:0 10px 22px rgba(0,0,0,0.45); display:flex; flex-direction:column; gap:8px;"><span style="font:500 10.5px/1 'Geist Mono', monospace; color:#8a8a8e;">Problem #{{ c.n }}</span><span style="height:5px; width:80%; border-radius:3px; background:#333338;"></span><span style="height:5px; width:52%; border-radius:3px; background:#2a2a2e;"></span></div></sc-for>
+        </div>
+      </div>
+      <div style="position:relative; z-index:1; min-height:clamp(460px, 62vh, 600px); background:#f3efe6; color:#151515; padding:clamp(28px, 3.4vw, 44px); display:flex; flex-direction:column; gap:16px; box-sizing:border-box;">
+        <span style="font:500 12px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#7a776f;">OA HELPER</span>
+        <b style="font:300 clamp(30px, 3.4vw, 48px)/1.05 'Geist', sans-serif; letter-spacing:-0.04em;">Your company.<br>What it <em style="font-family:'Instrument Serif', serif; font-style:italic; font-weight:400;">actually</em> asked.</b>
+        <div style="flex:1; min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;">
+          <span data-pop="2.1" style="padding:10px 16px; border-radius:12px; background:#bfe7c7; border:1.5px solid #151515; box-shadow:0 3px 0 #151515; font:500 14px/1.3 'Geist', sans-serif; text-align:center; opacity:0;">Asked in last Tuesday's drive. Shared the same night.</span>
+          <div style="transform:scale(1.22); transform-origin:50% 30%; margin-bottom:34px;">
+            <div data-amz="" style="position:relative; width:240px; height:146px; opacity:0;">
+              <div style="position:absolute; inset:0; transform:translateY(14px) scale(.92); border-radius:16px; background:#d9d3c6;"></div>
+              <div style="position:absolute; inset:0; transform:translateY(7px) scale(.96); border-radius:16px; background:#e6e0d4;"></div>
+              <div style="position:absolute; inset:0; border-radius:16px; background:#fff; border:1.5px solid #151515; box-shadow:0 5px 0 #151515; overflow:hidden; padding:6px 6px 10px; box-sizing:border-box; display:flex; flex-direction:column;">
+                <div style="height:48px; flex:none; border-radius:11px; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62;"></div>
+                <div style="display:flex; align-items:flex-end; gap:9px; margin:-20px 8px 0;"><span style="flex:none; width:40px; height:40px; border-radius:50%; background:#fff; border:2.5px solid #fff; box-shadow:0 3px 10px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:21px; height:21px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">Amazon</b><span style="font:400 8.5px/1 'Geist Mono', monospace; color:#7a776f; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:3px; padding:6px 10px; border-radius:999px; background:#151515; color:#fff; font:600 9.5px/1 'Geist', sans-serif;">Practise</span></div>
+                <div style="margin:9px 8px 0; padding-top:8px; border-top:1px solid #ebe8e1; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">12</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">3</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Practised</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span data-vs="" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(0); width:64px; height:64px; border-radius:50%; background:#151515; border:1.5px solid #f3efe6; display:flex; align-items:center; justify-content:center; font:italic 400 28px/1 'Instrument Serif', serif; color:#f3efe6; z-index:3;">vs</span>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  root = React.createRef();
+  componentDidMount() {
+    this.red = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.buildDeck();
+    const R = this.root.current;
+    this.io = new IntersectionObserver(es => es.forEach(e => { this.vis = e.isIntersecting; if (this.vis && this.t0 == null) this.t0 = performance.now() / 1000; }), { threshold: 0.25 });
+    if (R) this.io.observe(R.querySelector('[data-split]') || R);
+    const loop = now => { if (this.vis || this.t0 == null) this.frame(now); this.raf = requestAnimationFrame(loop); };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); if (this.io) this.io.disconnect(); }
+  buildDeck() {
+    const R = this.root.current; if (!R) return;
+    const CO = [
+      { n: 'Google', logo: 'google', sub: 'STEP · OA this season', st: ['9', '2', '3.1k'], bg: 'radial-gradient(55% 110% at 15% 25%, #7fb2ff 0%, rgba(127,178,255,0) 62%), radial-gradient(60% 120% at 85% 75%, #8fd8a4 0%, rgba(143,216,164,0) 64%), radial-gradient(40% 90% at 55% 0%, #ffd66e 0%, rgba(255,214,110,0) 60%), #a9c8f5' },
+      { n: 'Microsoft', logo: 'microsoft', sub: 'SWE Intern · OA', st: ['14', '4', '2.8k'], bg: 'radial-gradient(55% 110% at 20% 20%, #5cc4ff 0%, rgba(92,196,255,0) 62%), radial-gradient(60% 120% at 82% 80%, #b6e36a 0%, rgba(182,227,106,0) 64%), radial-gradient(40% 90% at 60% 0%, #ffcb52 0%, rgba(255,203,82,0) 60%), #9fd4f2' },
+      { n: 'Meta', logo: 'meta', sub: 'Rotational · OA', st: ['7', '1', '1.9k'], bg: 'radial-gradient(60% 110% at 18% 20%, #3d8bff 0%, rgba(61,139,255,0) 62%), radial-gradient(70% 120% at 82% 80%, #c8d9ff 0%, rgba(200,217,255,0) 64%), radial-gradient(45% 90% at 58% 0%, #0a4fc4 0%, rgba(10,79,196,0) 62%), #8fb4f7' },
+      { n: 'Uber', logo: 'uber', sub: 'SDE-1 · OA this season', st: ['8', '2', '1.2k'], bg: 'radial-gradient(60% 110% at 20% 20%, #5a5a60 0%, rgba(90,90,96,0) 62%), radial-gradient(70% 120% at 82% 80%, #c9c9cf 0%, rgba(201,201,207,0) 64%), #8c8c93' },
+    ];
+    const deck = R.querySelector('[data-amz]'); if (!deck || deck._built) return; deck._built = true;
+    const top = deck.lastElementChild, cards = [top];
+    CO.forEach(co => {
+      const c = top.cloneNode(true), bs = c.querySelectorAll('b');
+      c.firstElementChild.style.background = co.bg;
+      const img = c.querySelector('img'); img.src = 'assets/logos/' + co.logo + '.svg'; img.alt = co.n;
+      bs[0].textContent = co.n;
+      const sub = Array.from(c.querySelectorAll('span')).find(sp => sp.textContent.indexOf('OA this season') >= 0 && !sp.querySelector('span')); if (sub) sub.textContent = co.sub;
+      const n = bs.length; co.st.forEach((v, j) => { bs[n - 3 + j].textContent = v; });
+      deck.insertBefore(c, top); cards.unshift(c);
+    });
+    deck._cards = cards.reverse();
+  }
+  base(el) { if (el._b == null) el._b = el.style.transform || ''; return el._b; }
+  frame(now) {
+    const R = this.root.current; if (!R) return;
+    const cl = v => v < 0 ? 0 : v > 1 ? 1 : v, e = t => 1 - Math.pow(1 - t, 3), io = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const back = t => { const c1 = 1.7, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+    const T = now / 1000, P = 12, red = this.red, started = this.t0 != null;
+    const el = started ? T - this.t0 : 0, f = red ? 6 : el % P, out = red ? 0 : cl((f - (P - .8)) / .6);
+    const a = R.querySelector('[data-amz]'), pile = R.querySelector('[data-pile]');
+    const ar = a && a.getBoundingClientRect(), pr = pile && pile.getBoundingClientRect();
+    const tx = ar ? ar.left + ar.width / 2 : 0, ty = ar ? ar.top + ar.height / 2 : 0;
+    R.querySelectorAll('[data-pc]').forEach((c, i) => {
+      const b = this.base(c), t = red ? 1 : started ? e(cl((f - .05 - i * .07) / .6)) : 0;
+      const k = red ? 1 : io(cl((f - 1.7 - i * .07) / .9));
+      const dr = Math.sin(T * .9 + i * 1.7) * 2.2 * (1 - k), dy = Math.sin(T * 1.1 + i) * 3 * (1 - k);
+      let mx = 0, my = 0;
+      if (k > 0 && pr) { mx = (tx - (pr.left + c.offsetLeft + c.offsetWidth / 2)) * k; my = (ty - (pr.top + c.offsetTop + c.offsetHeight / 2)) * k; }
+      c.style.transform = 'translate(' + mx.toFixed(1) + 'px,' + ((1 - t) * -70 + dy + my).toFixed(1) + 'px) ' + b + ' rotate(' + ((1 - t) * (i % 2 ? 24 : -24) + dr - k * (i % 2 ? 8 : -8)).toFixed(1) + 'deg) scale(' + (1 - .35 * k).toFixed(3) + ')';
+      c.style.opacity = (t * (1 - cl((k - .82) / .18))).toFixed(3);
+      c.style.zIndex = k > 0 ? 5 : '';
+    });
+    if (a) {
+      const b = this.base(a), t = red ? 1 : started ? cl((f - 2.85) / .6) : 0, k = t > 0 ? back(t) : 0;
+      a.style.transform = b + ' translateY(' + ((1 - k) * 30 + out * 16).toFixed(1) + 'px) scale(' + (.7 + .3 * k).toFixed(3) + ')';
+      a.style.opacity = (cl(t * 2.5) * (1 - out)).toFixed(3);
+      const cs = a._cards;
+      if (cs) {
+        const nC = cs.length, dealT = red ? 0 : Math.max(0, f - 4.4), step = 1.5, dk = Math.floor(dealT / step), fr = e(cl((dealT % step) / .6));
+        cs.forEach((c, i) => {
+          const slot = ((i - dk) % nC + nC) % nC;
+          let x = 0, y = slot * 4, r = slot * (i % 2 ? 1.2 : -1.2), op = slot > 3 ? 0 : 1, z = nC - slot;
+          if (slot === nC - 1 && dk > 0) { const s = Math.sin(Math.PI * fr); x = s * 250; r = s * 14; y = slot * 4 * fr; z = fr < .5 ? nC + 1 : 0; op = fr < .5 ? 1 : 1 - (fr - .5) * 2; }
+          c.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + r.toFixed(2) + 'deg)';
+          c.style.opacity = op; c.style.zIndex = z;
+        });
+      }
+    }
+    const p = R.querySelector('[data-pop]');
+    if (p) { const t = red ? 1 : started ? cl((f - 3.4) / .45) : 0, k = t > 0 ? back(t) : 0; p.style.opacity = (t * (1 - out)).toFixed(3); p.style.transform = 'translateY(' + ((1 - k) * 10).toFixed(1) + 'px) scale(' + (.86 + .14 * k).toFixed(3) + ')'; }
+    const vs = R.querySelector('[data-vs]');
+    if (vs) { const t = red ? 1 : started ? cl((f - 1.1) / .5) : 0; vs.style.transform = 'translate(-50%,-50%) scale(' + (t > 0 ? back(t) : 0).toFixed(3) + ') rotate(' + ((1 - t) * -90).toFixed(0) + 'deg)'; }
+  }
+  renderVals() {
+    const pile = [[4, 10, -12, 211], [38, 0, 7, 384], [18, 60, 14, 730], [52, 70, -8, 1249], [0, 120, -6, 1541], [30, 128, 18, 153], [60, 150, 9, 1768], [12, 190, -15, 2066], [44, 206, -4, 903], [66, 230, 11, 2233], [24, 250, 6, 2979]].map(([x, y, r, n]) => ({ x, y, r, n }));
+    return { pile, root: this.root };
+  }
+}
+</script>
+</body>
+</html>

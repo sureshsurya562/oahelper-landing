@@ -57,8 +57,10 @@
   --content-max: 1120px;
   --gutter: 20px;
 
-  --font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* One sans face, Inter, for everything: SemiBold for headings and UI, Regular/Medium
+     for reading text. What used to be the mono labels are plain Inter Regular. */
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --serif: "Instrument Serif", ui-serif, Georgia, serif;
 }
 
@@ -97,11 +99,21 @@ pre {
   font-family: var(--mono);
 }
 
-/* The one display treatment: light weight, tight tracking, serif italic accent. */
+/* Counters and clocks keep a steady width while their digits change. */
+.cine-clock,
+.cine-timer,
+.qd-clock,
+.qd-tab-time,
+.pf-stat b,
+.cine-car-count {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The one display treatment: Inter SemiBold, tight tracking, serif italic accent. */
 .display {
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.04;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.035em;
   color: var(--text-hi);
   text-wrap: balance;
 }
@@ -202,6 +214,266 @@ em.serif {
 }
 
 /* =========================================================
+   CINEMATIC INTRO — student at the desk, camera flies into the monitor
+   Layers are sized and moved by components/intro/engine.ts.
+   ========================================================= */
+.intro {
+  position: relative;
+  background: #05060a;
+  color: #eef2f8;
+}
+.intro-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #05060a;
+  isolation: isolate;
+}
+.intro-scene {
+  position: absolute;
+  inset: 0;
+}
+.intro-card,
+.intro-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  backface-visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+.intro-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.intro-card .intro-blur {
+  opacity: 0;
+}
+/* Small logo where a nav would sit; the page's own nav takes over once the intro lands. */
+/* The OAHELPER wordmark card (layout from the cinematic intro design). The engine
+   sets --bw (visible scene width) and --bcx (camera axis) in scene pixels. */
+.intro-brand {
+  pointer-events: none;
+  user-select: none;
+}
+.intro-brand h1 {
+  margin: 0;
+  position: absolute;
+  left: calc(var(--bcx, 836) * 1px);
+  bottom: 470px;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: "Inter", var(--font);
+  font-weight: 800;
+  font-size: min(250px, calc(var(--bw, 1600) * 0.155px));
+  line-height: 0.74;
+  letter-spacing: -0.035em;
+  color: #fff;
+  white-space: nowrap;
+  perspective: 1400px;
+}
+.intro-brand h1 span {
+  display: inline-block;
+  will-change: transform;
+  transform-origin: 50% 80%;
+}
+.intro-shade {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(5, 6, 12, 0.25) 0%, rgba(5, 6, 12, 0.78) 62%, rgba(3, 4, 8, 0.96) 100%);
+}
+.intro-screen {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.intro-glow {
+  position: absolute;
+  inset: -55% -30%;
+  pointer-events: none;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(110, 120, 255, 0.55) 0%, rgba(70, 150, 255, 0.22) 38%, rgba(60, 90, 255, 0) 70%);
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+/* The glass is wider than most viewports; the hero sits in the middle on the page's own ink. */
+.intro-glass {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--intro-r, 16px);
+  background: var(--ink);
+}
+.intro-box {
+  position: absolute;
+}
+.intro-px {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--intro-px, 0);
+  mix-blend-mode: overlay;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 40, 70, 0.9) 0 2px, rgba(40, 255, 120, 0.9) 2px 4px, rgba(60, 120, 255, 0.9) 4px 6px, transparent 6px 7px),
+    repeating-linear-gradient(0deg, transparent 0 6px, rgba(0, 0, 0, 0.9) 6px 7px);
+}
+.intro-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: calc(var(--intro-glass, 1) * 0.55);
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 30%, transparent 45%, transparent 70%, rgba(255, 200, 170, 0.06) 100%);
+}
+.intro-ca {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--intro-ca, 0);
+  border-radius: var(--intro-r, 16px);
+}
+.intro-ca i {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  mix-blend-mode: screen;
+  box-shadow: 0 0 0 3px rgba(255, 50, 110, 0.55), 0 0 40px 6px rgba(255, 60, 130, 0.25);
+  transform: translateX(-5px);
+}
+.intro-ca i + i {
+  box-shadow: 0 0 0 3px rgba(40, 210, 255, 0.55), 0 0 40px 6px rgba(40, 180, 255, 0.25);
+  transform: translateX(5px);
+}
+.intro-motes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.intro-bloom {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(190, 200, 255, 0.9) 0%, rgba(120, 150, 255, 0.35) 45%, rgba(60, 80, 200, 0) 80%);
+}
+/* Round glass button with a double chevron sliding down: reads as "scroll" without words. */
+.intro-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(20px, 5vh, 44px);
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(20, 22, 30, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px) saturate(1.3);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  pointer-events: none;
+}
+.intro-cue::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: intro-ring 2.4s ease-out infinite;
+}
+.intro-cue svg {
+  animation: intro-chev 1.6s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+.intro-cue path:first-child {
+  opacity: 0.55;
+}
+@keyframes intro-chev {
+  0% {
+    transform: translateY(-5px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+@keyframes intro-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+/* Black until the plates have decoded. */
+.intro-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: #05060a;
+  pointer-events: none;
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.intro-cover.is-ready {
+  opacity: 0;
+}
+
+/* The monitor's copy of the hero: one screen, no track. */
+.cine.cine--still {
+  position: absolute;
+  inset: 0;
+  height: auto;
+}
+.cine--still .cine-sticky {
+  position: absolute;
+  inset: 0;
+  height: auto;
+}
+
+/* The hero starts under the intro's last screen and is revealed by it (engine.ts sets its opacity). */
+@media (prefers-reduced-motion: no-preference) {
+  .intro + .cine {
+    margin-top: -100vh;
+    opacity: 0;
+    transform-origin: 0 0;
+  }
+  .nav,
+  .qd {
+    transition: opacity 0.5s ease, visibility 0.5s;
+  }
+  body:has(.intro:not([data-landed])) :is(.nav, .qd) {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}
+
+/* =========================================================
    CINEMATIC HERO — 320vh, sticky panel, terminal becomes the OA
    ========================================================= */
 .cine {
@@ -259,33 +531,25 @@ em.serif {
   will-change: transform, opacity;
 }
 .cine-head h1 {
-  font-size: clamp(40px, 4.8vw, 88px);
+  font-size: clamp(36px, 4.4vw, 78px);
 }
 
-/* Hero headlines: Bricolage Grotesque, bold and a little quirky, reads like a
-   confident senior talking rather than a product demo. The key words are
-   underlined in mint the way a student marks up their notes. */
+/* Hero headlines: Inter, bold and tight; the key words switch to an italic serif. */
 .cine-head h1,
 .cine-car-slide h2 {
-  font-family: "Bricolage Grotesque", var(--font);
-  font-optical-sizing: auto;
+  font-family: "Inter", var(--font);
   font-weight: 700;
-  line-height: 1.02;
+  line-height: 1.04;
   letter-spacing: -0.035em;
 }
 .cine-head h1 em,
 .cine-car-slide h2 em {
-  font-family: inherit;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 1em;
-  letter-spacing: -0.035em;
-  color: var(--mint);
-  padding-bottom: 0.1em;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6.5C22 2.5 40 8.5 60 5s38-3.5 58 1' fill='none' stroke='%23bfe7c7' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E")
-    left bottom / 100% 0.16em no-repeat;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.02em;
+  color: inherit;
 }
 .cine-dim {
   position: absolute;
@@ -496,7 +760,7 @@ em.serif {
 .cine-qnav {
   display: flex;
   gap: 6px;
-  font: 500 12px/1 var(--mono);
+  font: 400 12px/1 var(--mono);
   white-space: nowrap;
 }
 .cine-qnav span {
@@ -525,7 +789,7 @@ em.serif {
   padding: 6px 10px;
   border-radius: 6px;
   background: #18181a;
-  font: 500 13px/1 var(--mono);
+  font: 400 13px/1 var(--mono);
   color: var(--text);
 }
 .cine-clock i {
@@ -822,7 +1086,7 @@ em.serif {
   will-change: transform, opacity;
 }
 .cine-final h2 {
-  font-size: clamp(42px, 5.4vw, 96px);
+  font-size: clamp(38px, 4.8vw, 84px);
 }
 .cine-how {
   margin: 26px 0 0;
@@ -881,7 +1145,7 @@ em.serif {
   align-items: center;
   justify-content: center;
   gap: 14px;
-  font: 500 11.5px/1 var(--mono);
+  font: 400 11.5px/1 var(--mono);
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.55);
 }
@@ -1229,7 +1493,7 @@ em.serif {
   text-align: center;
   font-size: clamp(38px, 5.2vw, 88px);
   line-height: 1.02;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.035em;
 }
 .sb-split {
   position: relative;
@@ -1260,7 +1524,7 @@ em.serif {
   color: var(--paper-ink);
 }
 .sb-label {
-  font: 500 11px/1 var(--mono);
+  font: 400 11px/1 var(--mono);
   letter-spacing: 0.12em;
   color: #8a8a8e;
 }
@@ -1268,7 +1532,7 @@ em.serif {
   color: var(--paper-dim);
 }
 .sb-say {
-  font: 300 38px/1.05 var(--font);
+  font: 600 38px/1.05 var(--font);
   letter-spacing: -0.04em;
   color: #a4a4a8;
 }
@@ -1307,7 +1571,7 @@ em.serif {
   opacity: 0;
 }
 .sb-pc span {
-  font: 500 9.5px/1 var(--mono);
+  font: 400 9.5px/1 var(--mono);
   color: var(--dim);
 }
 .sb-pc i {
@@ -1513,8 +1777,8 @@ em.serif {
   --lime: #d7ee9f;
   --peri: #c4c9f5;
   --sun: #f3e9a8;
-  --ss-font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --ss-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ss-font: var(--font);
+  --ss-mono: var(--mono);
 
   position: relative;
   z-index: 1;
@@ -1633,7 +1897,7 @@ em.serif {
   opacity: 1;
 }
 .ss-face.f-code {
-  font: 500 36cqw/1 var(--ss-mono);
+  font: 400 36cqw/1 var(--ss-mono);
   letter-spacing: -0.08em;
   color: var(--peach);
 }
@@ -1999,7 +2263,7 @@ em.serif {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  font: 500 12px/1 var(--ss-mono);
+  font: 400 12px/1 var(--ss-mono);
   background: #1c1c1e;
   color: #8a8a8e;
 }
@@ -2035,31 +2299,153 @@ em.serif {
   color: #9a9a9e;
 }
 
-/* ---------- The rest of what you get: a plain vertical grid ---------- */
-.ss-morehead {
-  padding: 28px 6px 4px;
-  text-align: center;
+/* ---------- The rest of what you get: cards stacking one at a time (FeatureStack) ---------- */
+.fs-track {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
 }
-.ss-morehead h3 {
-  font: 600 clamp(22px, 2.2vw, 28px) / 1.2 var(--ss-font);
+.fs-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  color: var(--ink);
+  /* Stack centre, nudged down so the deepest pile clears the fixed nav. */
+  --fs-cy: calc(50% + 28px);
+}
+.fs-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.fs-side {
+  position: absolute;
+  top: var(--fs-cy);
+  margin: 0;
+  font: 400 clamp(22px, 2.1vw, 30px) / 1.25 var(--ss-font);
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
-.ss-morehead p {
-  margin: 8px 0 0;
-  font: 400 13px/1.5 var(--ss-mono);
-  color: var(--ink-soft);
+.fs-side.is-l {
+  right: calc(50% + 184px);
+  transform: translate(calc(-1 * var(--fs-off, 0px)), -50%);
+  text-align: right;
 }
-.ss-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+.fs-side.is-r {
+  left: calc(50% + 184px);
+  transform: translate(var(--fs-off, 0px), -50%);
 }
-/* Every grid well takes the artwork's own proportions, so the product shots sit
-   uncropped and the drawn cards beside them line up row by row. */
-.ss-grid .ss-art {
+.fs-side.is-top,
+.fs-side.is-bot {
+  display: none;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 24px;
+  white-space: normal;
+}
+.fs-side.is-top {
+  top: max(7%, 92px);
+}
+.fs-side.is-bot {
+  top: auto;
+  bottom: 5%;
+}
+.fs-lab {
+  position: absolute;
+  left: 50%;
+  top: var(--fs-cy);
+  margin: 0;
+  transform: translate(-50%, var(--fs-lab, -198px));
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 13px/1 var(--ss-font);
+  white-space: nowrap;
+}
+.fs-lab svg {
+  width: 11px;
+  height: 11px;
+}
+.fs-card {
+  position: absolute;
+  left: 50%;
+  top: var(--fs-cy);
+  width: 320px;
+  margin-left: -160px;
+  color: #fff;
+  text-decoration: none;
+  will-change: transform;
+}
+.fs-card-in {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 14px 16px;
+  border-radius: 12px;
+  background: #2b2b2b;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.7);
+  transition: box-shadow 0.25s ease;
+}
+.fs-card:hover .fs-card-in {
+  box-shadow: 0 0 0 2px #66708f, 0 30px 60px -24px rgba(0, 0, 0, 0.7);
+}
+.fs-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 600 16px/1 var(--ss-font);
+}
+.fs-head svg {
+  width: 14px;
+  height: 14px;
+}
+.fs-art {
+  position: relative;
   aspect-ratio: 1818 / 1526;
-  flex: none;
-  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.fs-art img {
+  object-fit: cover;
+}
+.fs-art.is-contain img {
+  object-fit: contain;
+}
+/* Artwork without its own background: fitted whole, with a margin inside the well. */
+.fs-art.is-inset img {
+  object-fit: contain;
+  inset: 7% !important;
+  width: 86% !important;
+  height: 86% !important;
+}
+.fs-card-in > p {
+  margin: 0;
+  font: 400 11.5px/1.45 var(--ss-font);
+  color: #e4e4e4;
+}
+.fs-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: #0b0b0b;
+  opacity: 0;
+  pointer-events: none;
+}
+@media (max-width: 759px) {
+  .fs-side.is-l,
+  .fs-side.is-r {
+    display: none;
+  }
+  .fs-side.is-top,
+  .fs-side.is-bot {
+    display: block;
+  }
 }
 
 /* ---------- product screenshots ---------- */
@@ -2293,16 +2679,10 @@ em.serif {
     margin-top: -22vh;
     padding-bottom: 100px;
   }
-  .ss-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 @media (max-width: 639px) {
   .ss-fanbox {
     height: 280px;
-  }
-  .ss-grid {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2338,8 +2718,8 @@ em.serif {
 .cmp-head h2 {
   font-size: clamp(36px, 4.6vw, 72px);
   line-height: 1.04;
-  letter-spacing: -0.045em;
-  font-weight: 300;
+  letter-spacing: -0.035em;
+  font-weight: 600;
   text-wrap: balance;
 }
 .cmp-table {
@@ -2398,7 +2778,7 @@ em.serif {
 .cmp-label {
   padding: 18px 4px;
   border-top: 1px dashed rgba(21, 21, 21, 0.2);
-  font: 500 12.5px/1.4 var(--mono);
+  font: 400 12.5px/1.4 var(--mono);
   color: var(--paper-soft);
   display: flex;
   align-items: center;
@@ -2523,10 +2903,10 @@ em.serif {
 }
 .pf-head h2 {
   max-width: 780px;
-  font-weight: 300;
+  font-weight: 600;
   font-size: clamp(34px, 4.2vw, 64px);
   line-height: 1.05;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .pf-head p {
@@ -2557,7 +2937,7 @@ em.serif {
   border-radius: 4px;
 }
 .pf-stat b {
-  font: 300 clamp(60px, 6.6vw, 108px) / 0.9 var(--font);
+  font: 600 clamp(60px, 6.6vw, 108px) / 0.9 var(--font);
   letter-spacing: -0.055em;
   color: var(--text-hi);
   font-variant-numeric: tabular-nums;
@@ -2644,10 +3024,10 @@ em.serif {
   align-self: center;
 }
 .pf-vhead h2 {
-  font-weight: 300;
+  font-weight: 600;
   font-size: clamp(34px, 4.2vw, 64px);
   line-height: 1.05;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .pf-cards {
@@ -2736,6 +3116,331 @@ em.serif {
 }
 
 /* =========================================================
+   TESTIMONIALS — "What users say.": copy on the left, a rotating deck of
+   quote cards on the right, a marquee of companies underneath
+   ========================================================= */
+.vt {
+  background: var(--ink);
+  color: var(--text);
+  padding: clamp(72px, 12vh, 140px) 20px;
+}
+.vt-in {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+.vt-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+.vt-lab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.vt-lab > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 13px/1 var(--font);
+  color: var(--text);
+  white-space: nowrap;
+}
+.vt-lab svg {
+  width: 11px;
+  height: 11px;
+  fill: currentColor;
+}
+.vt-count {
+  font: 400 12px/1 var(--mono);
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.vt-copy h2 {
+  margin: 0;
+  font: 600 clamp(38px, 4.6vw, 68px) / 1.02 var(--font);
+  letter-spacing: -0.035em;
+  color: var(--text-hi);
+  text-wrap: balance;
+}
+.vt-sub {
+  margin: 0;
+  max-width: 420px;
+  font: 400 15px/1.6 var(--font);
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.vt-proof {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  max-width: 440px;
+}
+.vt-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vt-stat b {
+  font: 600 46px/1 var(--font);
+  letter-spacing: -0.045em;
+  color: var(--text-hi);
+}
+.vt-stat span {
+  font: 400 12px/1 var(--mono);
+  color: var(--dim);
+}
+.vt-crowd {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.vt-faces {
+  display: flex;
+}
+.vt-faces > span {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--panel);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vt-faces > span + span {
+  margin-left: -11px;
+}
+.vt-faces img {
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+  margin-top: 6px;
+}
+.vt-faces .vt-more {
+  background: var(--text-hi);
+  font: 600 10px/1 var(--font);
+  color: var(--panel);
+}
+.vt-rate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 12px/1 var(--font);
+  color: var(--text-3);
+}
+.vt-rate span {
+  color: var(--peach);
+  letter-spacing: 2px;
+}
+.vt-nav {
+  display: flex;
+  gap: 10px;
+}
+.vt-nav button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #3a3a3e;
+  background: transparent;
+  color: var(--text-hi);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.vt-nav button:hover {
+  background: var(--panel-2);
+  border-color: var(--faint);
+}
+.vt-nav button.is-next {
+  border: none;
+  background: var(--text-hi);
+  color: #111;
+}
+.vt-nav button.is-next:hover {
+  background: var(--mint);
+}
+.vt-nav button:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+
+/* ---------- the deck ---------- */
+.vt-deck {
+  position: relative;
+  height: 467px;
+  min-width: 0;
+  width: 100%;
+  max-width: 495px;
+}
+.vt-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  margin: 0 auto;
+  max-width: 540px;
+  height: 460px;
+  will-change: transform, opacity;
+}
+.vt-card-in {
+  position: relative;
+  height: 425px;
+  width: 100%;
+  max-width: 473px;
+  box-sizing: border-box;
+  border-radius: 26px;
+  overflow: hidden;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 34px 34px 30px;
+}
+.vt-mark {
+  font: 400 64px/0.6 var(--serif);
+  height: 26px;
+}
+.vt-q {
+  margin: 0;
+  font: 400 clamp(16px, 1.45vw, 19px) / 1.5 var(--font);
+  letter-spacing: -0.01em;
+  color: #e4e4e4;
+  text-wrap: pretty;
+}
+.vt-q span {
+  display: inline-block;
+  white-space: pre;
+}
+.vt-who {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.14);
+}
+.vt-av {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vt-av img {
+  width: 118%;
+  height: 118%;
+  object-fit: cover;
+  margin-top: 6px;
+}
+.vt-name {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.vt-name b {
+  font: 600 15px/1 var(--font);
+  color: var(--text-hi);
+}
+.vt-name span {
+  font: 400 12px/1 var(--mono);
+  color: var(--dim);
+}
+.vt-go {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #3a3a3e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  font-size: 13px;
+}
+.vt-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+/* ---------- company marquee ---------- */
+.vt-logos {
+  max-width: 1160px;
+  margin: clamp(48px, 8vh, 80px) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.vt-logos > span {
+  font: 400 12px/1 var(--mono);
+  color: var(--faint);
+}
+.vt-mask {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.vt-mq {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  width: max-content;
+  padding: 6px 0;
+}
+.vt-mq > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.72;
+  filter: grayscale(1) brightness(1.8);
+  font: 600 17px/1 var(--font);
+  letter-spacing: -0.02em;
+  color: var(--text-hi);
+}
+.vt-mq img {
+  display: block;
+  height: 26px;
+  width: auto;
+}
+/* Phones: a shorter deck so the cards fit the screen. */
+@media (max-width: 559px) {
+  .vt-deck {
+    height: 430px;
+  }
+  .vt-card {
+    height: 420px;
+  }
+  .vt-card-in {
+    height: 390px;
+    padding: 26px 24px 24px;
+  }
+}
+
+/* =========================================================
    CLOSE — particle vortex panel, then the paper footer wordmark
    ========================================================= */
 .cl {
@@ -2784,7 +3489,7 @@ em.serif {
 .pr-body h2 {
   font-size: clamp(40px, 5vw, 84px);
   line-height: 1.02;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.035em;
 }
 .pr-caret {
   display: inline-block;
@@ -2946,6 +3651,211 @@ em.serif {
   }
   .pr-scrim {
     background: radial-gradient(ellipse 74% 40% at 50% 50%, rgba(5, 5, 6, 0.92) 0%, rgba(5, 5, 6, 0.66) 58%, rgba(5, 5, 6, 0) 100%);
+  }
+}
+
+/* =========================================================
+   MEET THE TEAM — layout 1a: overlapping avatar row, sticker card on hover,
+   on the same dark dotted panel as the hero and footer
+   ========================================================= */
+/* Same near-black ground and edge as the closing panel right above it, so the two
+   read as one stretch. Compact: the sticker card floats up over the padding. */
+.tm {
+  --tm-bg: #050506;
+  margin: 10px 0 0;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--tm-bg);
+  padding: clamp(28px, 4.5vh, 44px) clamp(20px, 4vw, 48px);
+}
+.tm-in {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 32px;
+  padding-top: 28px;
+}
+.tm-title {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.tm-title h2 {
+  margin: 0;
+  font: 600 clamp(28px, 3vw, 40px) / 1.04 var(--font);
+  letter-spacing: -0.035em;
+  color: var(--text-hi);
+  text-wrap: balance;
+}
+.tm-hint {
+  font: 400 12px/1 var(--mono);
+  color: var(--dim);
+}
+.tm-row {
+  --av: 72px;
+  --lap: -13px;
+  position: relative;
+  flex: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;
+}
+.tm-av {
+  position: relative;
+}
+.tm-av + .tm-av {
+  margin-left: var(--lap);
+}
+.tm-face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--av);
+  height: var(--av);
+  padding: 0;
+  border-radius: 50%;
+  border: 3px solid var(--tm-bg);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 14px 28px -10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1), opacity 0.25s ease;
+}
+.tm-face img {
+  width: 118%;
+  height: 118%;
+  object-fit: cover;
+  margin-top: 14%;
+}
+.tm-face:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+.tm-row[data-any] .tm-av:not(.is-on) .tm-face {
+  opacity: 0.45;
+}
+.tm-av.is-on .tm-face {
+  transform: translateY(-14px) scale(1.12);
+}
+/* The sticker card sits centred above its avatar. */
+.tm-pop {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  padding-bottom: 16px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.tm-av.is-on .tm-pop {
+  pointer-events: auto;
+}
+.tm-card {
+  width: max-content;
+  min-width: 196px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px 14px;
+  border-radius: 18px;
+  color: var(--paper-ink);
+  border: 1.5px solid var(--paper-ink);
+  box-shadow: 0 4px 0 var(--paper-ink), 0 24px 40px -12px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(10px) scale(0.85);
+  transform-origin: 50% 100%;
+  transition: opacity 0.22s ease, transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+.tm-av.is-on .tm-card {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(var(--tilt));
+}
+.tm-card b {
+  font: 600 17px/1.1 var(--font);
+  letter-spacing: -0.02em;
+}
+.tm-card > span {
+  font: 400 12px/1 var(--mono);
+  opacity: 0.75;
+}
+.tm-card a {
+  margin-top: 6px;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 8px 8px;
+  border-radius: 999px;
+  background: var(--paper-ink);
+  color: var(--text-hi);
+  font: 600 12px/1 var(--font);
+  white-space: nowrap;
+}
+.tm-card a:hover {
+  background: #000;
+  color: #fff;
+}
+.tm-card a i {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--text-hi);
+  color: var(--paper-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: normal 700 11px/1 var(--font);
+}
+/* Below the width where heading and row sit side by side, the row moves under
+   the heading, centred, with the card's room between them. */
+@media (max-width: 1199px) {
+  .tm-in {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 0;
+    gap: 118px;
+  }
+  .tm-row {
+    align-self: center;
+  }
+}
+.tm-hint .tap,
+.tm-hint .hover {
+  display: none;
+}
+@media (hover: hover) {
+  .tm-hint .hover {
+    display: inline;
+  }
+}
+@media (hover: none) {
+  .tm-hint .tap {
+    display: inline;
+  }
+}
+/* Phones: smaller avatars so all nine fit, and the card centres over the whole
+   row (the avatar gives up being its anchor) so it never runs off the screen. */
+@media (max-width: 759px) {
+  .tm-row {
+    --av: 44px;
+    --lap: -8px;
+  }
+  .tm-face {
+    border-width: 2.5px;
+  }
+  .tm-av {
+    position: static;
+  }
+  .tm-av.is-on .tm-face {
+    transform: translateY(-8px) scale(1.12);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tm-face,
+  .tm-card {
+    transition: opacity 0.2s ease;
   }
 }
 
@@ -3219,7 +4129,7 @@ em.serif {
   bottom: 14px;
   z-index: 1;
   text-align: center;
-  font: 500 11px/1 var(--mono);
+  font: 400 11px/1 var(--mono);
   color: #9a9a9e;
 }
 .qd-clock {
@@ -3277,7 +4187,7 @@ em.serif {
   gap: 10px;
 }
 .qd-eyebrow {
-  font: 500 12px/1 var(--mono);
+  font: 400 12px/1 var(--mono);
   letter-spacing: 0.08em;
   color: #9a9a9e;
 }
@@ -3485,7 +4395,7 @@ em.serif {
   border-radius: 6px;
   background: #16201a;
   color: var(--mint);
-  font: 500 10.5px/1 var(--mono);
+  font: 400 10.5px/1 var(--mono);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }

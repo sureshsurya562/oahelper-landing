@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&amp;family=Geist+Mono:wght@500&amp;family=Inter:wght@600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#070708;-webkit-font-smoothing:antialiased;}a{color:#bfe7c7;text-decoration:none;}a:hover{color:#f3f3f3;}</style>
+</helmet>
+<section data-screen-label="Company chip variations" style="padding:56px; display:flex; flex-direction:column; gap:36px; font-family:'Geist', system-ui, sans-serif; color:#f2f2f2; background:#070708;">
+  <div style="display:flex; flex-direction:column; gap:12px;">
+    <span style="font:500 12px/1 'Geist Mono', monospace; color:#a8a8ac;">/// Hero company chips · variations</span>
+    <h1 style="margin:0; font:600 44px/1.05 'Inter', sans-serif; letter-spacing:-0.035em;">Company chips, <em style="font-family:'Instrument Serif', serif; font-style:italic; font-weight:400;">six ways.</em></h1>
+  </div>
+  <div style="display:flex; flex-wrap:wrap; gap:40px;">
+
+    <div id="1a" style="width:620px; display:flex; flex-direction:column; gap:12px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1a · Frosted glass pill</span>
+      <div style="min-height:250px; box-sizing:border-box; padding:36px; border-radius:22px; background-color:#0b0b0b; background-image:radial-gradient(40% 60% at 20% 30%, rgba(191,231,199,0.28) 0%, rgba(191,231,199,0) 70%), radial-gradient(40% 60% at 80% 75%, rgba(198,219,243,0.28) 0%, rgba(198,219,243,0) 70%), radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1.3px); background-size:100% 100%, 100% 100%, 22px 22px; border:1px solid #1d1d1f; display:flex; flex-wrap:wrap; align-content:center; gap:14px;">
+        <sc-for list="{{ cos }}" as="c" hint-placeholder-count="12">
+          <div style="display:flex; align-items:center; gap:7px; padding:7px 14px; border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.72) 100%); border:1px solid rgba(255,255,255,0.7); -webkit-backdrop-filter:blur(14px) saturate(1.6); backdrop-filter:blur(14px) saturate(1.6); white-space:nowrap; box-shadow:0 10px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -6px 12px rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.08);">
+            <sc-if value="{{ c.icon }}" hint-placeholder-val="{{ false }}"><img src="{{ c.icon }}" alt="" style="width:15px; height:15px; object-fit:contain;"></sc-if>
+            <sc-if value="{{ c.ms }}" hint-placeholder-val="{{ false }}"><span style="display:grid; grid-template-columns:6px 6px; gap:1px;"><span style="width:6px; height:6px; background:#f25022;"></span><span style="width:6px; height:6px; background:#7fba00;"></span><span style="width:6px; height:6px; background:#00a4ef;"></span><span style="width:6px; height:6px; background:#ffb900;"></span></span></sc-if><sc-if value="{{ c.gs }}" hint-placeholder-val="{{ false }}"><span style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:20px; height:20px; background:#7399c6; color:#ffffff; font:600 5.5px/1.05 'Instrument Serif', serif;"><span>Goldman</span><span>Sachs</span></span></sc-if><span style="display:flex; font:{{ c.font }}; letter-spacing:-0.02em; color:{{ c.color }};"><sc-for list="{{ c.letters }}" as="l" hint-placeholder-count="6"><span style="color:{{ l.c }};">{{ l.ch }}</span></sc-for></span><sc-if value="{{ c.spark }}" hint-placeholder-val="{{ false }}"><span style="font:700 12px/1 'Geist', sans-serif; color:#ffc220;">✱</span></sc-if><sc-if value="{{ c.fk }}" hint-placeholder-val="{{ false }}"><span style="width:7px; height:7px; border-radius:2px; background:#ffe11b; transform:rotate(12deg);"></span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1b" style="width:620px; display:flex; flex-direction:column; gap:12px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1b · Die-cut sticker (white border, tilt, peel shadow)</span>
+      <div style="min-height:250px; box-sizing:border-box; padding:36px; border-radius:22px; background-color:#0b0b0b; background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1.3px); background-size:22px 22px; border:1px solid #1d1d1f; display:flex; flex-wrap:wrap; align-content:center; gap:18px 16px;">
+        <sc-for list="{{ cos }}" as="c" hint-placeholder-count="12">
+          <div style="padding:4px; border-radius:999px; background:#ffffff; transform:rotate({{ c.r }}deg); box-shadow:0 1px 0 #d9d6cf, 0 12px 20px -6px rgba(0,0,0,0.6);">
+            <div style="display:flex; align-items:center; gap:7px; padding:7px 13px; border-radius:999px; background:{{ c.tint }}; white-space:nowrap;">
+              <sc-if value="{{ c.icon }}" hint-placeholder-val="{{ false }}"><img src="{{ c.icon }}" alt="" style="width:15px; height:15px; object-fit:contain;"></sc-if>
+              <sc-if value="{{ c.ms }}" hint-placeholder-val="{{ false }}"><span style="display:grid; grid-template-columns:6px 6px; gap:1px;"><span style="width:6px; height:6px; background:#f25022;"></span><span style="width:6px; height:6px; background:#7fba00;"></span><span style="width:6px; height:6px; background:#00a4ef;"></span><span style="width:6px; height:6px; background:#ffb900;"></span></span></sc-if><sc-if value="{{ c.gs }}" hint-placeholder-val="{{ false }}"><span style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:20px; height:20px; background:#7399c6; color:#ffffff; font:600 5.5px/1.05 'Instrument Serif', serif;"><span>Goldman</span><span>Sachs</span></span></sc-if><span style="display:flex; font:{{ c.font }}; letter-spacing:-0.02em; color:{{ c.color }};"><sc-for list="{{ c.letters }}" as="l" hint-placeholder-count="6"><span style="color:{{ l.c }};">{{ l.ch }}</span></sc-for></span><sc-if value="{{ c.spark }}" hint-placeholder-val="{{ false }}"><span style="font:700 12px/1 'Geist', sans-serif; color:#ffc220;">✱</span></sc-if><sc-if value="{{ c.fk }}" hint-placeholder-val="{{ false }}"><span style="width:7px; height:7px; border-radius:2px; background:#ffe11b; transform:rotate(12deg);"></span></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1c" style="width:620px; display:flex; flex-direction:column; gap:12px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1c · App-icon tile + name</span>
+      <div style="min-height:250px; box-sizing:border-box; padding:36px; border-radius:22px; background-color:#0b0b0b; background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1.3px); background-size:22px 22px; border:1px solid #1d1d1f; display:flex; flex-wrap:wrap; align-content:center; gap:14px;">
+        <sc-for list="{{ cos }}" as="c" hint-placeholder-count="12">
+          <div style="display:flex; align-items:center; gap:9px; padding:5px 14px 5px 5px; border-radius:14px; background:#1a1a1c; border:1px solid #2a2a2c; white-space:nowrap; box-shadow:0 10px 22px rgba(0,0,0,0.45);">
+            <span style="width:28px; height:28px; border-radius:9px; background:#ffffff; display:flex; align-items:center; justify-content:center; font:700 14px/1 'Geist', sans-serif; color:{{ c.mark }};">
+              <sc-if value="{{ c.icon }}" hint-placeholder-val="{{ false }}"><img src="{{ c.icon }}" alt="" style="width:16px; height:16px; object-fit:contain;"></sc-if>
+              <sc-if value="{{ c.noIcon }}" hint-placeholder-val="{{ true }}">{{ c.initial }}</sc-if>
+            </span>
+            <span style="font:600 13px/1 'Geist', sans-serif; color:#f3f3f3;">{{ c.name }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1d" style="width:620px; display:flex; flex-direction:column; gap:12px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1d · Glass pill, brand dot</span>
+      <div style="min-height:250px; box-sizing:border-box; padding:36px; border-radius:22px; background:radial-gradient(60% 80% at 30% 20%, #1c2a22 0%, rgba(28,42,34,0) 70%), radial-gradient(50% 70% at 80% 90%, #1b2230 0%, rgba(27,34,48,0) 70%), #0b0b0b; border:1px solid #1d1d1f; display:flex; flex-wrap:wrap; align-content:center; gap:12px;">
+        <sc-for list="{{ cos }}" as="c" hint-placeholder-count="12">
+          <div style="display:flex; align-items:center; gap:9px; padding:9px 15px 9px 11px; border-radius:999px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); white-space:nowrap; box-shadow:inset 0 1px 0 rgba(255,255,255,0.12);">
+            <span style="width:8px; height:8px; border-radius:50%; background:{{ c.mark }}; box-shadow:0 0 10px {{ c.mark }};"></span>
+            <span style="font:500 13px/1 'Geist', sans-serif; color:#f3f3f3;">{{ c.name }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1e" style="width:620px; display:flex; flex-direction:column; gap:12px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1e · Luggage tag with OA count</span>
+      <div style="min-height:250px; box-sizing:border-box; padding:36px; border-radius:22px; background-color:#0b0b0b; background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1.3px); background-size:22px 22px; border:1px solid #1d1d1f; display:flex; flex-wrap:wrap; align-content:center; gap:14px;">
+        <sc-for list="{{ cos }}" as="c" hint-placeholder-count="12">
+          <div style="display:flex; align-items:stretch; border-radius:999px; background:#ffffff; overflow:hidden; white-space:nowrap; transform:rotate({{ c.r }}deg); box-shadow:0 10px 22px rgba(0,0,0,0.45);">
+            <span style="display:flex; align-items:center; gap:7px; padding:7px 12px 7px 14px;">
+              <sc-if value="{{ c.icon }}" hint-placeholder-val="{{ false }}"><img src="{{ c.icon }}" alt="" style="width:14px; height:14px; object-fit:contain;"></sc-if>
+              <sc-if value="{{ c.ms }}" hint-placeholder-val="{{ false }}"><span style="display:grid; grid-template-columns:6px 6px; gap:1px;"><span style="width:6px; height:6px; background:#f25022;"></span><span style="width:6px; height:6px; background:#7fba00;"></span><span style="width:6px; height:6px; background:#00a4ef;"></span><span style="width:6px; height:6px; background:#ffb900;"></span></span></sc-if><sc-if value="{{ c.gs }}" hint-placeholder-val="{{ false }}"><span style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:20px; height:20px; background:#7399c6; color:#ffffff; font:600 5.5px/1.05 'Instrument Serif', serif;"><span>Goldman</span><span>Sachs</span></span></sc-if><span style="display:flex; font:{{ c.font }}; letter-spacing:-0.02em; color:{{ c.color }};"><sc-for list="{{ c.letters }}" as="l" hint-placeholder-count="6"><span style="color:{{ l.c }};">{{ l.ch }}</span></sc-for></span><sc-if value="{{ c.spark }}" hint-placeholder-val="{{ false }}"><span style="font:700 12px/1 'Geist', sans-serif; color:#ffc220;">✱</span></sc-if><sc-if value="{{ c.fk }}" hint-placeholder-val="{{ false }}"><span style="width:7px; height:7px; border-radius:2px; background:#ffe11b; transform:rotate(12deg);"></span></sc-if>
+            </span>
+            <span style="display:flex; align-items:center; padding:0 11px; border-left:1.5px dashed #d9d6cf; background:{{ c.tint }}; font:500 11px/1 'Geist Mono', monospace; color:#151515;">{{ c.qs }} Qs</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1f" style="width:620px; display:flex; flex-direction:column; gap:12px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1f · Brand-colour pill, white wordmark</span>
+      <div style="min-height:250px; box-sizing:border-box; padding:36px; border-radius:22px; background-color:#0b0b0b; background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1.3px); background-size:22px 22px; border:1px solid #1d1d1f; display:flex; flex-wrap:wrap; align-content:center; gap:14px;">
+        <sc-for list="{{ cos }}" as="c" hint-placeholder-count="12">
+          <div style="display:flex; align-items:center; padding:9px 16px; border-radius:999px; background:{{ c.brand }}; border:1.5px solid #f4f1ea; white-space:nowrap; transform:rotate({{ c.r }}deg); box-shadow:0 3px 0 #000000, 0 12px 22px -8px rgba(0,0,0,0.6);">
+            <span style="font:{{ c.font }}; letter-spacing:-0.02em; color:{{ c.onBrand }};">{{ c.name }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const G = ['#4285f4', '#ea4335', '#fbbc05', '#4285f4', '#34a853', '#ea4335'];
+    const raw = [
+      ['Google', null, "500 15px/1 'Geist', sans-serif", '#4285f4', '#4285f4', '#e7f0fe', 186, '#ffffff', '#1a73e8'],
+      ['Microsoft', null, "600 12.5px/1 'Geist', sans-serif", '#737373', '#00a4ef', '#e5f5fd', 164, '#2f2f2f', '#ffffff'],
+      ['Amazon', 'assets/logos/amazon.svg', "700 13.5px/1 'Geist', sans-serif", '#111111', '#ff9900', '#fff1dc', 212, '#232f3e', '#ff9900'],
+      ['Meta', 'assets/logos/meta.svg', "600 13.5px/1 'Geist', sans-serif", '#1c2b33', '#0866ff', '#e3edff', 118, '#0866ff', '#ffffff'],
+      ['Adobe', null, "800 12.5px/1 'Geist', sans-serif", '#fa0f00', '#fa0f00', '#ffe3e1', 97, '#fa0f00', '#ffffff'],
+      ['Atlassian', 'assets/logos/atlassian.svg', "600 12.5px/1 'Geist', sans-serif", '#0052cc', '#0052cc', '#e1ebfa', 84, '#0052cc', '#ffffff'],
+      ['Uber', 'assets/logos/uber.svg', "600 14px/1 'Geist', sans-serif", '#000000', '#000000', '#ececec', 106, '#000000', '#ffffff'],
+      ['Walmart', null, "700 13.5px/1 'Geist', sans-serif", '#0071ce', '#ffc220', '#e1effb', 131, '#0071ce', '#ffc220'],
+      ['Deloitte', null, "700 13.5px/1 'Geist', sans-serif", '#000000', '#86bc25', '#eef6e1', 142, '#000000', '#86bc25'],
+      ['Flipkart', null, "italic 700 13.5px/1 'Geist', sans-serif", '#2874f0', '#2874f0', '#fff9d1', 158, '#2874f0', '#ffe11b'],
+      ['Goldman Sachs', null, "400 14px/1 'Instrument Serif', serif", '#1f2a44', '#7399c6', '#e9f0f8', 123, '#7399c6', '#ffffff'],
+      ['JPMorgan', null, "600 12.5px/1 'Geist', sans-serif", '#111111', '#5f4b3b', '#efe9e3', 139, '#111111', '#ffffff'],
+    ];
+    const rot = [-4, 3, -2, 5, -3, 2, -5, 4, -2, 3, -4, 2];
+    raw[6][1] = null; raw[0][7] = '#1a73e8'; raw[0][8] = '#ffffff'; raw[10][7] = '#1f3a60';
+    const cos = raw.map(([name, icon, font, color, mark, tint, qs, brand, onBrand], i) => ({
+      name, icon, noIcon: !icon, font, color, mark, tint, qs, brand, onBrand, r: rot[i], initial: name[0],
+      ms: name === 'Microsoft', gs: name === 'Goldman Sachs', spark: name === 'Walmart', fk: name === 'Flipkart',
+      letters: name === 'Google' ? name.split('').map((ch, k) => ({ ch, c: G[k] })) : name === 'Deloitte' ? [{ ch: 'Deloitte', c: color }, { ch: '.', c: '#86bc25' }] : [{ ch: name === 'JPMorgan' ? 'J.P.Morgan' : name, c: color }],
+    }));
+    return { cos };
+  }
+}
+</script>
+</body>
+</html>

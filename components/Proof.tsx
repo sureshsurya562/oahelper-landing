@@ -1,31 +1,6 @@
 import type { LandingData } from "@/lib/types";
 import { COMPANIES, CTA } from "@/lib/config";
 
-const VOICES = [
-  {
-    quote: "I stopped solving random DSA sets. Now I practise what my company actually asks, and prep finally feels focused.",
-    name: "Tripti Byas",
-    role: "Final-year CSE",
-    initials: "TB",
-    tint: "#c6dbf3",
-  },
-  {
-    quote: "Instead of digging through random resources, I only see the companies that matter for my placements.",
-    name: "Priya Verma",
-    role: "Final-year student",
-    initials: "PV",
-    tint: "#16201a",
-    lift: true,
-  },
-  {
-    quote: "The interview experiences make the next round less of a black box. You walk in knowing what to expect.",
-    name: "Rahul Kumar",
-    role: "Aspiring SDE",
-    initials: "RK",
-    tint: "#f7d3b5",
-  },
-];
-
 export default function Proof({ data }: { data: LandingData }) {
   const tint = new Map(COMPANIES);
   const fallback = [
@@ -98,39 +73,6 @@ export default function Proof({ data }: { data: LandingData }) {
                 </span>
               ))}
             </div>
-          </div>
-        </div>
-
-        <div className="pf-voices">
-          <div className="pf-vhead" data-rv>
-            <span className="eyebrow">
-              <i aria-hidden />
-              From the last season
-            </span>
-            <h2>
-              Students like you. <em className="serif">Here&apos;s what they said.</em>
-            </h2>
-          </div>
-          <div className="pf-cards">
-            {VOICES.map((v, i) => (
-              <div key={v.name} data-rv data-rv-delay={i * 100}>
-                <figure className={`pf-card${v.lift ? " is-lift" : ""}`}>
-                  <span className="pf-stars" aria-label="Five out of five">
-                    ★★★★★
-                  </span>
-                  <p>&ldquo;{v.quote}&rdquo;</p>
-                  <figcaption className="pf-who">
-                    <i style={{ background: v.tint, color: v.lift ? "#bfe7c7" : undefined }} aria-hidden>
-                      {v.initials}
-                    </i>
-                    <span>
-                      <b>{v.name}</b>
-                      <em>{v.role}</em>
-                    </span>
-                  </figcaption>
-                </figure>
-              </div>
-            ))}
           </div>
         </div>
       </div>

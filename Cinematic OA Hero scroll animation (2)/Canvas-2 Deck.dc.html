@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&amp;family=Geist+Mono:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0b0b0b;-webkit-font-smoothing:antialiased;}a{color:#bfe7c7;text-decoration:none;}a:hover{color:#f3f3f3;}</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+<section data-label="Title" data-screen-label="Title" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; padding:0 160px; display:flex; flex-direction:column; justify-content:center; gap:36px;">
+  <span style="font:500 28px/1.2 'Geist Mono', monospace; color:#8a8a8e;">/// Turn 3 · "Stop practising blind" without the boxed columns</span>
+  <h1 style="margin:0; font-weight:300; font-size:136px; line-height:1.02; letter-spacing:-0.045em; text-wrap:pretty;">Random prep vs OA Helper, <em style="font-family:'Instrument Serif', serif; font-style:italic; font-weight:400;">seven layouts.</em></h1>
+</section>
+<section data-label="3a · Split ground: dark chaos, cream clarity" data-screen-label="3a Split ground: dark chaos, cream clarity" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;">
+  <div style="width:1472px; display:flex; align-items:center; gap:18px;"><span style="padding:9px 14px; border-radius:8px; background:#bfe7c7; color:#16201a; font:600 24px/1 'Geist Mono', monospace;">3a</span><span style="font:500 36px/1.1 'Geist', sans-serif; letter-spacing:-0.02em;">Split ground: dark chaos, cream clarity</span></div>
+  <div id="3a" data-om-raster="" style="position:relative; width:1472px; height:832px;">
+    <div style="position:absolute; left:0; top:0; width:920px; transform:scale(1.6); transform-origin:0 0;">
+      <div style="position:relative; height:520px; border-radius:22px; overflow:hidden; display:grid; grid-template-columns:1fr 1fr;">
+        <div style="position:relative; background-color:#101011; background-image:radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.3px); background-size:22px 22px; padding:36px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#6a6a6e;">RANDOM PREP</span>
+          <b style="font:300 38px/1.05 'Geist', sans-serif; letter-spacing:-0.04em; color:#8a8a8e;">3,000 problems.<br>Pick whatever.</b>
+          <div style="position:relative; flex:1; opacity:.55; filter:blur(.6px);">
+            <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:124px; height:74px; transform:rotate({{ c.r }}deg); box-sizing:border-box; padding:10px; border-radius:10px; background:#1c1c1e; border:1px solid #2e2e32; box-shadow:0 10px 22px rgba(0,0,0,0.45); display:flex; flex-direction:column; gap:7px;"><span style="font:500 9.5px/1 'Geist Mono', monospace; color:#8a8a8e;">Problem #{{ c.n }}</span><span style="height:5px; width:80%; border-radius:3px; background:#333338;"></span><span style="height:5px; width:52%; border-radius:3px; background:#2a2a2e;"></span></div></sc-for>
+          </div>
+        </div>
+        <div style="position:relative; background:#f3efe6; color:#151515; padding:36px; display:flex; flex-direction:column; gap:14px;">
+          <span style="font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#7a776f;">OA HELPER</span>
+          <b style="font:300 38px/1.05 'Geist', sans-serif; letter-spacing:-0.04em;">Your company.<br>What it <em style="font-family:'Instrument Serif', serif; font-style:italic; font-weight:400;">actually</em> asked.</b>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+            <span data-pop="2.1" style="padding:9px 14px; border-radius:12px; background:#bfe7c7; border:1.5px solid #151515; box-shadow:0 3px 0 #151515; font:500 12.5px/1.3 'Geist', sans-serif;">Asked in last Tuesday's drive. Shared the same night.</span>
+            <div data-amz="" style="position:relative; width:240px; height:146px;">
+              <div style="position:absolute; inset:0; transform:translateY(14px) scale(.92); border-radius:16px; background:#d9d3c6;"></div>
+              <div style="position:absolute; inset:0; transform:translateY(7px) scale(.96); border-radius:16px; background:#e6e0d4;"></div>
+              <div style="position:absolute; inset:0; border-radius:16px; background:#fff; border:1.5px solid #151515; box-shadow:0 5px 0 #151515; overflow:hidden; padding:6px 6px 10px; box-sizing:border-box; display:flex; flex-direction:column;">
+                <div style="height:48px; flex:none; border-radius:11px; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62;"></div>
+                <div style="display:flex; align-items:flex-end; gap:9px; margin:-20px 8px 0;"><span style="flex:none; width:40px; height:40px; border-radius:50%; background:#fff; border:2.5px solid #fff; box-shadow:0 3px 10px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:21px; height:21px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">Amazon</b><span style="font:400 8.5px/1 'Geist Mono', monospace; color:#7a776f; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:3px; padding:6px 10px; border-radius:999px; background:#151515; color:#fff; font:600 9.5px/1 'Geist', sans-serif;">Practise</span></div>
+                <div style="margin:9px 8px 0; padding-top:8px; border-top:1px solid #ebe8e1; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">12</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">3</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Practised</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:58px; height:58px; border-radius:50%; background:#151515; border:1.5px solid #f3efe6; display:flex; align-items:center; justify-content:center; font:italic 400 26px/1 'Instrument Serif', serif; color:#f3efe6;" data-vs="">vs</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-label="3b · One stage, toggle between the two" data-screen-label="3b One stage, toggle between the two" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;">
+  <div style="width:1472px; display:flex; align-items:center; gap:18px;"><span style="padding:9px 14px; border-radius:8px; background:#bfe7c7; color:#16201a; font:600 24px/1 'Geist Mono', monospace;">3b</span><span style="font:500 36px/1.1 'Geist', sans-serif; letter-spacing:-0.02em;">One stage, toggle between the two</span></div>
+  <div id="3b" data-om-raster="" style="position:relative; width:1472px; height:832px;">
+    <div style="position:absolute; left:0; top:0; width:920px; transform:scale(1.6); transform-origin:0 0;">
+      <div style="position:relative; height:520px; border-radius:22px; background-color:#101011; background-image:radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.3px); background-size:22px 22px; overflow:hidden; display:flex; flex-direction:column; align-items:center; padding-top:34px; box-sizing:border-box;">
+        <div style="display:flex; gap:4px; padding:5px; border-radius:999px; background:#1b1b1d; border:1px solid #2a2a2c;">
+          <span data-tg="0" style="padding:10px 18px; border-radius:999px; font:500 13px/1 'Geist Mono', monospace; color:#6a6a6e; transition:background .3s, color .3s;">Random prep</span>
+          <span data-tg="1" style="padding:10px 18px; border-radius:999px; background:#bfe7c7; color:#16201a; font:600 13px/1 'Geist Mono', monospace; transition:background .3s, color .3s;">OA Helper</span>
+        </div>
+        <div style="position:absolute; left:50%; top:52%; width:520px; height:360px; transform:translate(-50%,-50%); background:radial-gradient(closest-side, rgba(191,231,199,0.12), rgba(191,231,199,0));"></div>
+        <div data-ghost="" style="position:absolute; left:60px; top:130px; width:300px; height:320px; opacity:.22; filter:blur(1.5px);">
+          <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:124px; height:74px; transform:rotate({{ c.r }}deg); box-sizing:border-box; padding:10px; border-radius:10px; background:#1c1c1e; border:1px solid #2e2e32; display:flex; flex-direction:column; gap:7px;"><span style="font:500 9.5px/1 'Geist Mono', monospace; color:#8a8a8e;">Problem #{{ c.n }}</span><span style="height:5px; width:80%; border-radius:3px; background:#333338;"></span></div></sc-for>
+        </div>
+        <div style="position:relative; margin-top:64px; display:flex; flex-direction:column; align-items:center; gap:18px;">
+          <span data-pop="2.1" style="padding:10px 16px; border-radius:12px; background:#bfe7c7; color:#16201a; font:500 13px/1.3 'Geist', sans-serif;">Asked in last Tuesday's drive. Shared the same night.</span>
+          <div data-amz="" style="position:relative; width:288px; height:175px; transform:rotate(-1.5deg);">
+            <div style="position:absolute; inset:0; transform:translateY(16px) scale(.92); border-radius:18px; background:#1d1d1f; border:1px solid #2a2a2c;"></div>
+            <div style="position:absolute; inset:0; transform:translateY(8px) scale(.96); border-radius:18px; background:#27272a; border:1px solid #333336;"></div>
+            <div style="position:absolute; inset:0; border-radius:18px; background:#fbfaf7; box-shadow:0 26px 50px rgba(0,0,0,0.6); overflow:hidden; padding:7px 7px 12px; box-sizing:border-box; display:flex; flex-direction:column;">
+              <div style="height:58px; flex:none; border-radius:12px; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62;"></div>
+              <div style="display:flex; align-items:flex-end; gap:10px; margin:-24px 10px 0;"><span style="flex:none; width:48px; height:48px; border-radius:50%; background:#fff; border:3px solid #fbfaf7; box-shadow:0 3px 10px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:25px; height:25px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:4px;"><b style="font:600 18px/1 'Geist', sans-serif; color:#151515;">Amazon</b><span style="font:400 10px/1 'Geist Mono', monospace; color:#7a776f; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:4px; padding:7px 12px; border-radius:999px; background:#151515; color:#fbfaf7; font:600 11px/1 'Geist', sans-serif;">Practise</span></div>
+              <div style="margin:10px 10px 0; padding-top:9px; border-top:1px solid #e8e5de; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px; color:#151515;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">12</b><span style="font:400 9.5px/1 'Geist', sans-serif; color:#7a776f;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">3</b><span style="font:400 9.5px/1 'Geist', sans-serif; color:#7a776f;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 9.5px/1 'Geist', sans-serif; color:#7a776f;">Practised</span></span></div>
+            </div>
+          </div>
+        </div>
+        <span style="position:absolute; left:0; right:0; bottom:28px; text-align:center; font:400 13px/1 'Geist Mono', monospace; color:#8a8a8e;">Your company → what it asked this season → the questions that matter</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-label="3c · Editorial columns, ruled, no containers" data-screen-label="3c Editorial columns, ruled, no containers" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;">
+  <div style="width:1472px; display:flex; align-items:center; gap:18px;"><span style="padding:9px 14px; border-radius:8px; background:#bfe7c7; color:#16201a; font:600 24px/1 'Geist Mono', monospace;">3c</span><span style="font:500 36px/1.1 'Geist', sans-serif; letter-spacing:-0.02em;">Editorial columns, ruled, no containers</span></div>
+  <div id="3c" data-om-raster="" style="position:relative; width:1472px; height:832px;">
+    <div style="position:absolute; left:0; top:0; width:920px; transform:scale(1.6); transform-origin:0 0;">
+      <div style="position:relative; height:520px; background:#0b0b0b; display:grid; grid-template-columns:1fr 1px 1fr; border-top:1px solid #2a2a2c; border-bottom:1px solid #2a2a2c;">
+        <div style="position:relative; padding:30px 34px; display:flex; flex-direction:column; gap:10px;">
+          <span style="font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#6a6a6e;">01 · RANDOM PREP</span>
+          <b style="font:300 104px/0.9 'Geist', sans-serif; letter-spacing:-0.06em; color:#3a3a3e; text-decoration:line-through; text-decoration-thickness:3px; text-decoration-color:#f5baae;" data-cnt="3000" data-strike="">3,000</b>
+          <span style="font:400 14px/1.6 'Geist Mono', monospace; color:#8a8a8e;">problems → pick whatever → hope it shows up</span>
+          <div style="position:relative; flex:1; opacity:.35;">
+            <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:110px; height:64px; transform:rotate({{ c.r }}deg) scale(.85); box-sizing:border-box; padding:9px; border-radius:9px; background:#1c1c1e; border:1px solid #2e2e32; display:flex; flex-direction:column; gap:6px;"><span style="font:500 9px/1 'Geist Mono', monospace; color:#8a8a8e;">Problem #{{ c.n }}</span><span style="height:5px; width:80%; border-radius:3px; background:#333338;"></span></div></sc-for>
+          </div>
+        </div>
+        <div style="background:#2a2a2c;"></div>
+        <div style="position:relative; padding:30px 34px; display:flex; flex-direction:column; gap:10px;">
+          <span style="font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#bfe7c7;">02 · OA HELPER</span>
+          <b style="font:300 104px/0.9 'Geist', sans-serif; letter-spacing:-0.06em; color:#f3f3f3;" data-cnt="12">12</b>
+          <span style="font:400 14px/1.6 'Geist Mono', monospace; color:#d8d8d8;">questions Amazon asked this season</span>
+          <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+            <div data-amz="" style="position:relative; width:240px; height:146px;">
+              <div style="position:absolute; inset:0; transform:translateY(14px) scale(.92); border-radius:16px; background:#1d1d1f; border:1px solid #2a2a2c;"></div>
+              <div style="position:absolute; inset:0; transform:translateY(7px) scale(.96); border-radius:16px; background:#27272a; border:1px solid #333336;"></div>
+              <div style="position:absolute; inset:0; border-radius:16px; background:#fbfaf7; box-shadow:0 22px 44px rgba(0,0,0,0.55); overflow:hidden; padding:6px 6px 10px; box-sizing:border-box; display:flex; flex-direction:column; color:#151515;">
+                <div style="height:48px; flex:none; border-radius:11px; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62;"></div>
+                <div style="display:flex; align-items:flex-end; gap:9px; margin:-20px 8px 0;"><span style="flex:none; width:40px; height:40px; border-radius:50%; background:#fff; border:2.5px solid #fbfaf7; box-shadow:0 3px 10px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:21px; height:21px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">Amazon</b><span style="font:400 8.5px/1 'Geist Mono', monospace; color:#7a776f; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:3px; padding:6px 10px; border-radius:999px; background:#151515; color:#fbfaf7; font:600 9.5px/1 'Geist', sans-serif;">Practise</span></div>
+                <div style="margin:9px 8px 0; padding-top:8px; border-top:1px solid #e8e5de; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">12</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">3</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Practised</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-label="3d · Before / after slider" data-screen-label="3d Before / after slider" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;">
+  <div style="width:1472px; display:flex; align-items:center; gap:18px;"><span style="padding:9px 14px; border-radius:8px; background:#bfe7c7; color:#16201a; font:600 24px/1 'Geist Mono', monospace;">3d</span><span style="font:500 36px/1.1 'Geist', sans-serif; letter-spacing:-0.02em;">Before / after slider</span></div>
+  <div id="3d" data-om-raster="" style="position:relative; width:1472px; height:832px;">
+    <div style="position:absolute; left:0; top:0; width:920px; transform:scale(1.6); transform-origin:0 0;">
+      <div style="position:relative; height:520px; border-radius:22px; overflow:hidden; background:#101011;">
+        <div data-sl="l" style="position:absolute; left:0; top:0; bottom:0; width:50%; overflow:hidden; background-color:#0d0d0e; background-image:radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1.3px); background-size:22px 22px;">
+          <span style="position:absolute; left:28px; top:28px; font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#6a6a6e;">BEFORE · RANDOM PREP</span>
+          <div style="position:absolute; left:40px; right:30px; top:110px; bottom:40px; opacity:.6; filter:grayscale(1);">
+            <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:124px; height:74px; transform:rotate({{ c.r }}deg); box-sizing:border-box; padding:10px; border-radius:10px; background:#1c1c1e; border:1px solid #2e2e32; box-shadow:0 10px 22px rgba(0,0,0,0.45); display:flex; flex-direction:column; gap:7px;"><span style="font:500 9.5px/1 'Geist Mono', monospace; color:#8a8a8e;">Problem #{{ c.n }}</span><span style="height:5px; width:80%; border-radius:3px; background:#333338;"></span><span style="height:5px; width:52%; border-radius:3px; background:#2a2a2e;"></span></div></sc-for>
+          </div>
+        </div>
+        <div data-sl="r" style="position:absolute; right:0; top:0; bottom:0; width:50%; overflow:hidden; background:radial-gradient(60% 50% at 50% 55%, rgba(255,153,0,0.12), rgba(255,153,0,0)), #121314;">
+          <span style="position:absolute; right:28px; top:28px; font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#bfe7c7;">AFTER · OA HELPER</span>
+          <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+            <span data-pop="2.1" style="padding:9px 14px; border-radius:12px; background:#bfe7c7; color:#16201a; font:500 12.5px/1.3 'Geist', sans-serif;">Asked in last Tuesday's drive.</span>
+            <div data-amz="" style="position:relative; width:240px; height:146px;">
+              <div style="position:absolute; inset:0; transform:translateY(14px) scale(.92); border-radius:16px; background:#1d1d1f; border:1px solid #2a2a2c;"></div>
+              <div style="position:absolute; inset:0; transform:translateY(7px) scale(.96); border-radius:16px; background:#27272a; border:1px solid #333336;"></div>
+              <div style="position:absolute; inset:0; border-radius:16px; background:#fbfaf7; box-shadow:0 22px 44px rgba(0,0,0,0.55); overflow:hidden; padding:6px 6px 10px; box-sizing:border-box; display:flex; flex-direction:column; color:#151515;">
+                <div style="height:48px; flex:none; border-radius:11px; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62;"></div>
+                <div style="display:flex; align-items:flex-end; gap:9px; margin:-20px 8px 0;"><span style="flex:none; width:40px; height:40px; border-radius:50%; background:#fff; border:2.5px solid #fbfaf7; box-shadow:0 3px 10px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:21px; height:21px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">Amazon</b><span style="font:400 8.5px/1 'Geist Mono', monospace; color:#7a776f; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:3px; padding:6px 10px; border-radius:999px; background:#151515; color:#fbfaf7; font:600 9.5px/1 'Geist', sans-serif;">Practise</span></div>
+                <div style="margin:9px 8px 0; padding-top:8px; border-top:1px solid #e8e5de; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">12</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">3</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Practised</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-sl="h" style="position:absolute; left:50%; top:0; bottom:0; width:2px; margin-left:-1px; background:#f3f3f3;"></div>
+        <span data-sl="k" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:#f3f3f3; color:#111; display:flex; align-items:center; justify-content:center; font:600 16px/1 'Geist', sans-serif; box-shadow:0 6px 18px rgba(0,0,0,0.5);">⟷</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-label="3e · Two app windows" data-screen-label="3e Two app windows" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;">
+  <div style="width:1472px; display:flex; align-items:center; gap:18px;"><span style="padding:9px 14px; border-radius:8px; background:#bfe7c7; color:#16201a; font:600 24px/1 'Geist Mono', monospace;">3e</span><span style="font:500 36px/1.1 'Geist', sans-serif; letter-spacing:-0.02em;">Two app windows</span></div>
+  <div id="3e" data-om-raster="" style="position:relative; width:1472px; height:832px;">
+    <div style="position:absolute; left:0; top:0; width:920px; transform:scale(1.6); transform-origin:0 0;">
+      <div style="position:relative; height:520px; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;">
+        <div style="height:420px; border-radius:14px; background:#0f0f10; border:1px solid #232325; overflow:hidden; display:flex; flex-direction:column; transform:rotate(-1.5deg) translateY(14px); opacity:.8;" data-bob="">
+          <div style="height:38px; flex:none; display:flex; align-items:center; gap:7px; padding:0 14px; background:#131314; border-bottom:1px solid #232325;"><span style="width:10px; height:10px; border-radius:50%; background:#3a3a3e;"></span><span style="width:10px; height:10px; border-radius:50%; background:#3a3a3e;"></span><span style="width:10px; height:10px; border-radius:50%; background:#3a3a3e;"></span><span style="margin-left:auto; font:400 11px/1 'Geist Mono', monospace; color:#6a6a6e;">random-prep — 47 tabs open</span></div>
+          <div style="position:relative; flex:1; padding:20px;">
+            <span style="font:400 13px/1.7 'Geist Mono', monospace; color:#6a6a6e;">3,000 problems<br>→ pick whatever<br>→ hope it shows up</span>
+            <div style="position:absolute; left:30px; right:20px; top:110px; bottom:20px; opacity:.55;">
+              <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:110px; height:64px; transform:rotate({{ c.r }}deg) scale(.85); box-sizing:border-box; padding:9px; border-radius:9px; background:#1c1c1e; border:1px solid #2e2e32; display:flex; flex-direction:column; gap:6px;"><span style="font:500 9px/1 'Geist Mono', monospace; color:#8a8a8e;">Problem #{{ c.n }}</span><span style="height:5px; width:80%; border-radius:3px; background:#333338;"></span></div></sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="height:440px; border-radius:14px; background:#0f0f10; border:1px solid #2e2e32; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 40px 80px rgba(0,0,0,0.55);">
+          <div style="height:38px; flex:none; display:flex; align-items:center; gap:7px; padding:0 14px; background:#131314; border-bottom:1px solid #232325;"><span style="width:10px; height:10px; border-radius:50%; background:#f5baae;"></span><span style="width:10px; height:10px; border-radius:50%; background:#f3e9a8;"></span><span style="width:10px; height:10px; border-radius:50%; background:#bfe7c7;"></span><span style="margin-left:auto; font:400 11px/1 'Geist Mono', monospace; color:#a8a8ac;">oahelper — amazon · sde-1</span></div>
+          <div style="flex:1; padding:20px; display:flex; flex-direction:column; gap:18px;">
+            <span style="font:400 13px/1.7 'Geist Mono', monospace; color:#d8d8d8;"><span style="color:#bfe7c7;">~/oahelper $</span> <span data-type="oa open amazon">oa open amazon</span><br><span data-pop="1.2" style="display:inline-block;"><span style="color:#a8dcb4;">→</span> 12 questions · 3 new this week</span></span>
+            <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+              <div data-amz="" style="position:relative; width:240px; height:146px;">
+                <div style="position:absolute; inset:0; transform:translateY(14px) scale(.92); border-radius:16px; background:#1d1d1f; border:1px solid #2a2a2c;"></div>
+                <div style="position:absolute; inset:0; transform:translateY(7px) scale(.96); border-radius:16px; background:#27272a; border:1px solid #333336;"></div>
+                <div style="position:absolute; inset:0; border-radius:16px; background:#fbfaf7; box-shadow:0 22px 44px rgba(0,0,0,0.55); overflow:hidden; padding:6px 6px 10px; box-sizing:border-box; display:flex; flex-direction:column; color:#151515;">
+                  <div style="height:48px; flex:none; border-radius:11px; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62;"></div>
+                  <div style="display:flex; align-items:flex-end; gap:9px; margin:-20px 8px 0;"><span style="flex:none; width:40px; height:40px; border-radius:50%; background:#fff; border:2.5px solid #fbfaf7; box-shadow:0 3px 10px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:21px; height:21px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">Amazon</b><span style="font:400 8.5px/1 'Geist Mono', monospace; color:#7a776f; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:3px; padding:6px 10px; border-radius:999px; background:#151515; color:#fbfaf7; font:600 9.5px/1 'Geist', sans-serif;">Practise</span></div>
+                  <div style="margin:9px 8px 0; padding-top:8px; border-top:1px solid #e8e5de; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">12</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">3</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Practised</span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-label="3f · Cream paper, sticker language" data-screen-label="3f Cream paper, sticker language" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;">
+  <div style="width:1472px; display:flex; align-items:center; gap:18px;"><span style="padding:9px 14px; border-radius:8px; background:#bfe7c7; color:#16201a; font:600 24px/1 'Geist Mono', monospace;">3f</span><span style="font:500 36px/1.1 'Geist', sans-serif; letter-spacing:-0.02em;">Cream paper, sticker language</span></div>
+  <div id="3f" data-om-raster="" style="position:relative; width:1472px; height:832px;">
+    <div style="position:absolute; left:0; top:0; width:920px; transform:scale(1.6); transform-origin:0 0;">
+      <div style="position:relative; height:520px; border-radius:22px; background:#f3efe6; color:#151515; overflow:hidden; display:grid; grid-template-columns:1fr 1fr;">
+        <div style="position:relative; padding:36px;">
+          <span style="display:inline-flex; padding:7px 12px; border-radius:999px; border:1px dashed rgba(21,21,21,0.35); font:500 12px/1 'Geist Mono', monospace; color:#55534e;">/// Random prep</span>
+          <p style="margin:16px 0 0; font:400 14px/1.7 'Geist Mono', monospace; color:#7a776f;">3,000 problems<br>→ pick whatever<br>→ hope it shows up</p>
+          <div style="position:absolute; left:40px; right:30px; top:190px; bottom:30px;">
+            <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:116px; height:70px; transform:rotate({{ c.r }}deg) scale(.9); box-sizing:border-box; padding:10px; border-radius:6px; background:#e7e2d7; box-shadow:0 2px 0 rgba(21,21,21,0.12); display:flex; flex-direction:column; gap:7px;"><span style="font:500 9.5px/1 'Geist Mono', monospace; color:#9a958b;">Problem #{{ c.n }}</span><span style="height:5px; width:78%; border-radius:3px; background:#d6d0c3;"></span></div></sc-for>
+          </div>
+        </div>
+        <div style="position:relative; padding:36px; border-left:1.5px dashed rgba(21,21,21,0.2);">
+          <span style="display:inline-flex; padding:8px 14px; border-radius:999px; background:#bfe7c7; border:1.5px solid #151515; box-shadow:0 2px 0 #151515; font:600 12px/1 'Geist Mono', monospace;">OA Helper</span>
+          <p style="margin:16px 0 0; font:400 14px/1.7 'Geist Mono', monospace; color:#151515;">Your company<br>→ what it asked this season<br>→ the questions that matter</p>
+          <div style="position:absolute; left:0; right:0; top:200px; display:flex; flex-direction:column; align-items:center; gap:18px;">
+            <span data-pop="2.1" style="padding:9px 14px; border-radius:12px; background:#fff; border:1.5px solid #151515; box-shadow:0 3px 0 #151515; font:500 12.5px/1.3 'Geist', sans-serif; transform:rotate(-2deg);">Asked in last Tuesday's drive.</span>
+            <div data-amz="" style="position:relative; width:240px; height:146px; transform:rotate(2deg);">
+              <div style="position:absolute; inset:0; transform:translate(8px,8px) rotate(3deg); border-radius:16px; background:#c6dbf3; border:1.5px solid #151515;"></div>
+              <div style="position:absolute; inset:0; transform:translate(4px,4px) rotate(1.5deg); border-radius:16px; background:#d9cdf4; border:1.5px solid #151515;"></div>
+              <div style="position:absolute; inset:0; border-radius:16px; background:#fff; border:1.5px solid #151515; box-shadow:0 5px 0 #151515; overflow:hidden; padding:6px 6px 10px; box-sizing:border-box; display:flex; flex-direction:column;">
+                <div style="height:48px; flex:none; border-radius:11px; border:1.5px solid #151515; box-sizing:border-box; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), #f6ad62;"></div>
+                <div style="display:flex; align-items:flex-end; gap:9px; margin:-20px 8px 0;"><span style="flex:none; width:40px; height:40px; box-sizing:border-box; border-radius:50%; background:#fff; border:1.5px solid #151515; box-shadow:0 2px 0 #151515; display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:21px; height:21px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;"><b style="font:700 15px/1 'Geist', sans-serif;">Amazon</b><span style="font:400 8.5px/1 'Geist Mono', monospace; color:#55534e; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:3px; padding:6px 10px; border-radius:999px; background:#bfe7c7; border:1.5px solid #151515; font:700 9.5px/1 'Geist', sans-serif;">Practise</span></div>
+                <div style="margin:9px 8px 0; padding-top:8px; border-top:1.5px dashed rgba(21,21,21,0.25); display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:700 13px/1 'Geist', sans-serif;">12</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#55534e;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:700 13px/1 'Geist', sans-serif;">3</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#55534e;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:700 13px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#55534e;">Practised</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section data-label="3g · Borderless, floating with annotations" data-screen-label="3g Borderless, floating with annotations" style="background:#0b0b0b; color:#f2f2f2; font-family:'Geist', system-ui, sans-serif; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:36px;">
+  <div style="width:1472px; display:flex; align-items:center; gap:18px;"><span style="padding:9px 14px; border-radius:8px; background:#bfe7c7; color:#16201a; font:600 24px/1 'Geist Mono', monospace;">3g</span><span style="font:500 36px/1.1 'Geist', sans-serif; letter-spacing:-0.02em;">Borderless, floating with annotations</span></div>
+  <div id="3g" data-om-raster="" style="position:relative; width:1472px; height:832px;">
+    <div style="position:absolute; left:0; top:0; width:920px; transform:scale(1.6); transform-origin:0 0;">
+      <div style="position:relative; height:520px; background-color:#0b0b0b; background-image:radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.3px); background-size:22px 22px;">
+        <div style="position:absolute; left:20px; top:30px; display:flex; flex-direction:column; gap:10px;">
+          <span style="font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#6a6a6e;">RANDOM PREP</span>
+          <span style="font:400 14px/1.7 'Geist Mono', monospace; color:#6a6a6e;">3,000 problems → pick whatever → hope</span>
+        </div>
+        <div style="position:absolute; left:10px; width:400px; top:120px; height:360px; -webkit-mask-image:radial-gradient(70% 70% at 40% 50%, #000 30%, transparent 90%); mask-image:radial-gradient(70% 70% at 40% 50%, #000 30%, transparent 90%); opacity:.6;">
+          <sc-for list="{{ pile }}" as="c" hint-placeholder-count="11"><div data-pc="" style="position:absolute; left:{{ c.x }}%; top:{{ c.y }}px; width:124px; height:74px; transform:rotate({{ c.r }}deg); box-sizing:border-box; padding:10px; border-radius:10px; background:#1c1c1e; border:1px solid #2e2e32; display:flex; flex-direction:column; gap:7px;"><span style="font:500 9.5px/1 'Geist Mono', monospace; color:#8a8a8e;">Problem #{{ c.n }}</span><span style="height:5px; width:80%; border-radius:3px; background:#333338;"></span></div></sc-for>
+        </div>
+        <svg viewBox="0 0 120 40" style="position:absolute; left:420px; top:240px; width:120px; height:40px;" fill="none" stroke="#6a6a6e" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 5"><path data-dash="" d="M4 20 H108"></path><path d="M100 12 L110 20 L100 28" stroke-dasharray="0"></path></svg>
+        <div style="position:absolute; right:20px; top:30px; display:flex; flex-direction:column; align-items:flex-end; gap:10px; text-align:right;">
+          <span style="font:500 11px/1 'Geist Mono', monospace; letter-spacing:.12em; color:#bfe7c7;">OA HELPER</span>
+          <span style="font:400 14px/1.7 'Geist Mono', monospace; color:#d8d8d8;">Your company → what it asked this season</span>
+        </div>
+        <div style="position:absolute; left:600px; top:170px; width:240px; height:146px;">
+          <div style="position:absolute; left:-60px; right:-60px; top:10px; bottom:-40px; border-radius:50%; background:radial-gradient(closest-side, rgba(255,153,0,0.3), rgba(255,153,0,0)); filter:blur(16px);"></div>
+          <div style="position:absolute; inset:0; transform:translateY(14px) scale(.92); border-radius:16px; background:#1d1d1f; border:1px solid #2a2a2c;"></div>
+          <div style="position:absolute; inset:0; transform:translateY(7px) scale(.96); border-radius:16px; background:#27272a; border:1px solid #333336;"></div>
+          <div style="position:absolute; inset:0; border-radius:16px; background:#fbfaf7; box-shadow:0 22px 44px rgba(0,0,0,0.55); overflow:hidden; padding:6px 6px 10px; box-sizing:border-box; display:flex; flex-direction:column; color:#151515;">
+            <div style="height:48px; flex:none; border-radius:11px; background:radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62;"></div>
+            <div style="display:flex; align-items:flex-end; gap:9px; margin:-20px 8px 0;"><span style="flex:none; width:40px; height:40px; border-radius:50%; background:#fff; border:2.5px solid #fbfaf7; box-shadow:0 3px 10px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;"><img src="assets/logos/amazon.svg" alt="Amazon" style="width:21px; height:21px;"></span><span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;"><b style="font:600 15px/1 'Geist', sans-serif;">Amazon</b><span style="font:400 8.5px/1 'Geist Mono', monospace; color:#7a776f; white-space:nowrap;">SDE-1 · OA this season</span></span><span style="margin-bottom:3px; padding:6px 10px; border-radius:999px; background:#151515; color:#fbfaf7; font:600 9.5px/1 'Geist', sans-serif;">Practise</span></div>
+            <div style="margin:9px 8px 0; padding-top:8px; border-top:1px solid #e8e5de; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:6px;"><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">12</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Questions</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">3</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">This week</span></span><span style="display:flex; flex-direction:column; gap:3px;"><b style="font:600 13px/1 'Geist', sans-serif;">2.4k</b><span style="font:400 8.5px/1 'Geist', sans-serif; color:#7a776f;">Practised</span></span></div>
+          </div>
+        </div>
+        <div data-pop="2.3" style="position:absolute; left:560px; top:120px; display:flex; align-items:center; gap:8px; font:400 11px/1 'Geist Mono', monospace; color:#a8a8ac;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Asked in last Tuesday's drive</div>
+        <div style="position:absolute; left:600px; top:370px; display:flex; flex-direction:column; gap:10px; font:400 11px/1 'Geist Mono', monospace; color:#a8a8ac;">
+          <span data-pop="2.6" style="display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#6a6a6e;"></span>Shared by students the same night</span>
+          <span data-pop="2.9" style="display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#6a6a6e;"></span>Verified by 14 who sat it</span>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+</section>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.red = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const loop = now => { this.frame(now); this.raf = requestAnimationFrame(loop); };
+    this.raf = requestAnimationFrame(loop);
+  }
+  buildDecks() {
+    const root = document;
+    const CO = [
+      { n: 'Amazon', logo: 'amazon', sub: 'SDE-1 · OA this season', st: ['12', '3', '2.4k'], bg: 'radial-gradient(60% 110% at 18% 20%, #ff8f2e 0%, rgba(255,143,46,0) 62%), radial-gradient(70% 120% at 82% 80%, #ffd29a 0%, rgba(255,210,154,0) 64%), radial-gradient(45% 90% at 58% 0%, #e25a12 0%, rgba(226,90,18,0) 62%), #f6ad62' },
+      { n: 'Google', logo: 'google', sub: 'STEP · OA this season', st: ['9', '2', '3.1k'], bg: 'radial-gradient(55% 110% at 15% 25%, #7fb2ff 0%, rgba(127,178,255,0) 62%), radial-gradient(60% 120% at 85% 75%, #8fd8a4 0%, rgba(143,216,164,0) 64%), radial-gradient(40% 90% at 55% 0%, #ffd66e 0%, rgba(255,214,110,0) 60%), #a9c8f5' },
+      { n: 'Microsoft', logo: 'microsoft', sub: 'SWE Intern · OA', st: ['14', '4', '2.8k'], bg: 'radial-gradient(55% 110% at 20% 20%, #5cc4ff 0%, rgba(92,196,255,0) 62%), radial-gradient(60% 120% at 82% 80%, #b6e36a 0%, rgba(182,227,106,0) 64%), radial-gradient(40% 90% at 60% 0%, #ffcb52 0%, rgba(255,203,82,0) 60%), #9fd4f2' },
+      { n: 'Meta', logo: 'meta', sub: 'Rotational · OA', st: ['7', '1', '1.9k'], bg: 'radial-gradient(60% 110% at 18% 20%, #3d8bff 0%, rgba(61,139,255,0) 62%), radial-gradient(70% 120% at 82% 80%, #c8d9ff 0%, rgba(200,217,255,0) 64%), radial-gradient(45% 90% at 58% 0%, #0a4fc4 0%, rgba(10,79,196,0) 62%), #8fb4f7' },
+      { n: 'Uber', logo: 'uber', sub: 'SDE-1 · OA this season', st: ['8', '2', '1.2k'], bg: 'radial-gradient(60% 110% at 20% 20%, #5a5a60 0%, rgba(90,90,96,0) 62%), radial-gradient(70% 120% at 82% 80%, #c9c9cf 0%, rgba(201,201,207,0) 64%), #8c8c93' },
+    ];
+    root.querySelectorAll('[data-amz]').forEach(deck => {
+      if (deck._built) return; deck._built = true;
+      const top = deck.lastElementChild; if (!top) return;
+      const cards = [top];
+      CO.slice(1).forEach(co => {
+        const c = top.cloneNode(true), bs = c.querySelectorAll('b');
+        const ban = c.firstElementChild; if (ban) ban.style.background = co.bg;
+        const img = c.querySelector('img'); if (img) { img.src = 'assets/logos/' + co.logo + '.svg'; img.alt = co.n; }
+        if (bs[0]) bs[0].textContent = co.n;
+        const sub = Array.from(c.querySelectorAll('span')).find(sp => sp.textContent.indexOf('OA this season') >= 0 && !sp.querySelector('span'));
+        if (sub) sub.textContent = co.sub;
+        const n = bs.length; co.st.forEach((v, j) => { const el = bs[n - 3 + j]; if (el) el.textContent = v; });
+        deck.insertBefore(c, top); cards.unshift(c);
+      });
+      deck._cards = cards.reverse();
+    });
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  base(el) { if (el._b == null) el._b = el.style.transform || ''; return el._b; }
+  frame(now) {
+    const root = document; this.buildDecks();
+    const cl = v => v < 0 ? 0 : v > 1 ? 1 : v, e = t => 1 - Math.pow(1 - t, 3), io = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const back = t => { const c1 = 1.7, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+    const ds = document.querySelector('deck-stage'), T = now / 1000, P = 6.5, red = this.red || !!(ds && ds.hasAttribute('noscale'));
+    root.querySelectorAll('[id^="3"]').forEach((v, vi) => {
+      const f = red ? 4 : (T + vi * .35) % P;
+      const out = red ? 0 : cl((f - (P - .7)) / .6);
+      const is3b = v.id === '3b';
+      v.querySelectorAll('[data-pc]').forEach((c, i) => {
+        const b = this.base(c), t = red ? 1 : e(cl((f - .05 - i * .07) / .6));
+        const dr = Math.sin(T * .9 + i * 1.7) * 2.2, dy = Math.sin(T * 1.1 + i) * 3;
+        c.style.transform = 'translate(0,' + ((1 - t) * -70 + dy).toFixed(1) + 'px) ' + b + ' rotate(' + ((1 - t) * (i % 2 ? 24 : -24) + dr).toFixed(1) + 'deg)';
+        c.style.opacity = t * (1 - out);
+      });
+      v.querySelectorAll('[data-amz]').forEach(a => {
+        const b = this.base(a), t = red ? 1 : cl((f - 1.4) / .7), k = t > 0 ? back(t) : 0;
+        a.style.transform = b + ' translateY(' + ((1 - k) * 46 + out * 16).toFixed(1) + 'px) scale(' + (.9 + .1 * k).toFixed(3) + ')';
+        a.style.opacity = cl(t * 2) * (1 - out);
+        const cs = a._cards; if (!cs) return;
+        const nC = cs.length, dealT = red ? 0 : Math.max(0, f - 2.6), step = 1.05, dk = Math.floor(dealT / step), fr = e(cl((dealT % step) / .55));
+        cs.forEach((c, i) => {
+          const slot = ((i - dk) % nC + nC) % nC;
+          let x = 0, y = slot * 4, r = slot * (i % 2 ? 1.2 : -1.2), op = slot > 3 ? 0 : 1, z = nC - slot;
+          if (slot === nC - 1 && dk > 0) { const s = Math.sin(Math.PI * fr); x = s * 250; r = s * 14; y = slot * 4 * fr; z = fr < .5 ? nC + 1 : 0; op = fr < .5 ? 1 : 1 - (fr - .5) * 2; }
+          c.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + r.toFixed(2) + 'deg)';
+          c.style.opacity = op; c.style.zIndex = z;
+        });
+      });
+      v.querySelectorAll('[data-pop]').forEach(p => {
+        const at = +p.dataset.pop, t = red ? 1 : cl((f - at) / .45), k = t > 0 ? back(t) : 0;
+        p.style.opacity = t * (1 - out); p.style.transform = 'translateY(' + ((1 - k) * 10).toFixed(1) + 'px) scale(' + (.86 + .14 * k).toFixed(3) + ')';
+      });
+      const vs = v.querySelector('[data-vs]');
+      if (vs) { const t = cl((f - 1.1) / .5); vs.style.transform = 'translate(-50%,-50%) scale(' + (t > 0 ? back(t) : 0).toFixed(3) + ') rotate(' + ((1 - t) * -90).toFixed(0) + 'deg)'; }
+      if (is3b) {
+        const oa = red || f > 1.25;
+        v.querySelectorAll('[data-tg]').forEach(g => { const on = (g.dataset.tg === '1') === oa; g.style.background = on ? '#bfe7c7' : 'transparent'; g.style.color = on ? '#16201a' : '#6a6a6e'; });
+        const gh = v.querySelector('[data-ghost]'), t = red ? 1 : io(cl((f - 1.2) / .6));
+        if (gh) { gh.style.opacity = (1 - .78 * t).toFixed(3); gh.style.filter = 'blur(' + (1.5 * t).toFixed(2) + 'px)'; gh.style.transform = 'scale(' + (1.25 - .25 * t).toFixed(3) + ') translateX(' + ((1 - t) * 110).toFixed(0) + 'px)'; }
+      }
+      v.querySelectorAll('[data-cnt]').forEach(n => {
+        const to = +n.dataset.cnt, st = n.hasAttribute('data-strike') ? .2 : 1.4, t = red ? 1 : io(cl((f - st) / 1.1));
+        const val = Math.round(to * t), txt = val.toLocaleString('en-US'); if (n._t !== txt) { n._t = txt; n.textContent = txt; }
+        if (n.hasAttribute('data-strike')) { const k = red ? 1 : cl((f - 1.4) / .4); n.style.textDecorationColor = 'rgba(245,186,174,' + k + ')'; }
+      });
+      const L = v.querySelector('[data-sl="l"]');
+      if (L) {
+        const x = red ? .5 : .5 + .22 * Math.sin(T * .9);
+        L.style.width = (x * 100) + '%';
+        v.querySelector('[data-sl="r"]').style.width = ((1 - x) * 100) + '%';
+        v.querySelector('[data-sl="h"]').style.left = (x * 100) + '%';
+        v.querySelector('[data-sl="k"]').style.left = (x * 100) + '%';
+      }
+      v.querySelectorAll('[data-type]').forEach(tp => {
+        const full = tp.dataset.type, k = red ? full.length : Math.floor(cl((f - .3) / .8) * full.length);
+        const txt = full.slice(0, k) + (k < full.length && Math.floor(T * 2) % 2 ? '▍' : ''); if (tp._t !== txt) { tp._t = txt; tp.textContent = txt; }
+      });
+      v.querySelectorAll('[data-bob]').forEach(b => { b.style.transform = 'rotate(' + (-1.5 + .6 * Math.sin(T * .7)).toFixed(2) + 'deg) translateY(' + (14 + 4 * Math.sin(T * .9)).toFixed(1) + 'px)'; });
+      v.querySelectorAll('[data-dash]').forEach(d => { d.style.strokeDashoffset = (-(T * 18) % 8).toFixed(1); });
+    });
+  }
+  renderVals() {
+    const pile = [[4, 10, -12, 211], [38, 0, 7, 384], [18, 60, 14, 730], [52, 70, -8, 1249], [0, 120, -6, 1541], [30, 128, 18, 153], [60, 150, 9, 1768], [12, 190, -15, 2066], [44, 206, -4, 903], [66, 230, 11, 2233], [24, 250, 6, 2979]]
+      .map(([x, y, r, n]) => ({ x, y, r, n }));
+    return { pile };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0b0b0b;-webkit-font-smoothing:antialiased;}a{color:#bfe7c7;text-decoration:none;}a:hover{color:#f3f3f3;}</style>
+</helmet>
+<section style="padding:56px; display:flex; flex-direction:column; gap:36px; font-family:'Geist', system-ui, sans-serif; color:#f2f2f2; background:#0b0b0b;">
+  <div style="display:flex; flex-direction:column; gap:10px; max-width:760px;">
+    <span style="font:500 12px/1 'Geist Mono', monospace; color:#a8a8ac;">/// WhatsApp testimonials · card variations</span>
+    <h1 style="margin:0; font:400 44px/1.1 'Instrument Serif', serif; letter-spacing:-0.01em;">Real student chats, fitted to the 473 × 425 testimonial card</h1>
+    <p style="margin:0; font:400 15px/1.5 'Geist', sans-serif; color:#8a8a8e; text-wrap:pretty;">Phone numbers and contact names are hidden in every version. Message text is kept exactly as sent.</p>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:56px;">
+
+    <div id="1a" style="display:flex; flex-direction:column; gap:16px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1a · Rebuilt chat, dark</span>
+      <div style="display:flex; flex-wrap:wrap; gap:24px;">
+        <sc-for list="{{ items }}" as="v" hint-placeholder-count="3">
+          <div style="position:relative; width:473px; height:425px; box-sizing:border-box; border-radius:26px; overflow:hidden; background:#151515; border:1px solid #2a2a2c; box-shadow:0 40px 80px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:14px; padding:20px 22px 22px;">
+            <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px dashed rgba(255,255,255,0.14);">
+              <span style="flex:none; width:38px; height:38px; border-radius:50%; background:{{ v.accent }}; color:#151515; display:flex; align-items:center; justify-content:center; font:600 15px/1 'Geist', sans-serif;">{{ v.ini }}</span>
+              <span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">Student · {{ v.company }} OA</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">Number hidden · via WhatsApp</span></span>
+              <span style="margin-left:auto; flex:none; white-space:nowrap; display:flex; align-items:center; gap:6px; padding:7px 10px; border-radius:999px; border:1px solid #2f3a31; font:500 11px/1 'Geist Mono', monospace; color:#bfe7c7;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Real chat</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; min-height:0;">
+              <sc-for list="{{ v.msgs }}" as="m" hint-placeholder-count="3">
+                <sc-if value="{{ m.us }}" hint-placeholder-val="{{ false }}"><div style="align-self:flex-end; max-width:80%; padding:9px 12px 7px; border-radius:14px 4px 14px 14px; background:#bfe7c7; color:#151515; font:400 14px/1.4 'Geist', sans-serif; display:flex; flex-direction:column; gap:3px; white-space:pre-line;"><span>{{ m.t }}</span><span style="align-self:flex-end; font:500 10px/1 'Geist Mono', monospace; color:#4d6b54;">{{ m.time }} ✓✓</span></div></sc-if>
+                <sc-if value="{{ m.them }}" hint-placeholder-val="{{ true }}"><div style="align-self:flex-start; max-width:82%; padding:9px 12px 7px; border-radius:4px 14px 14px 14px; background:#232326; color:#ececec; font:400 14px/1.4 'Geist', sans-serif; display:flex; flex-direction:column; gap:3px;"><span>{{ m.t }}</span><span style="align-self:flex-end; font:500 10px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ m.time }}</span></div></sc-if>
+                <sc-if value="{{ m.key }}" hint-placeholder-val="{{ false }}"><div style="align-self:flex-start; max-width:86%; padding:10px 13px 8px; border-radius:4px 14px 14px 14px; background:#232326; color:#ffffff; box-shadow:0 0 0 1.5px {{ v.accent }}; font:500 15px/1.4 'Geist', sans-serif; display:flex; flex-direction:column; gap:3px;"><span>{{ m.t }}</span><span style="align-self:flex-end; font:500 10px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ m.time }}</span></div></sc-if>
+              </sc-for>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font:500 12px/1 'Geist Mono', monospace; color:#a8a8ac;"><span style="width:8px; height:8px; border-radius:50%; background:{{ v.accent }};"></span>{{ v.outcome }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1b" style="display:flex; flex-direction:column; gap:16px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1b · Pull quote with chat proof</span>
+      <div style="display:flex; flex-wrap:wrap; gap:24px;">
+        <sc-for list="{{ items }}" as="v" hint-placeholder-count="3">
+          <div style="position:relative; width:473px; height:425px; box-sizing:border-box; border-radius:26px; overflow:hidden; background:#151515; border:1px solid #2a2a2c; box-shadow:0 40px 80px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:20px; padding:32px 30px 26px;">
+            <span style="font:400 64px/0.6 'Instrument Serif', serif; color:{{ v.accent }}; height:26px;">“</span>
+            <p style="margin:0; font:400 34px/1.15 'Instrument Serif', serif; letter-spacing:-0.01em; color:#f3f3f3; text-wrap:pretty;">{{ v.quote }}</p>
+            <div style="margin-top:auto; display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:16px; background:#0e0e0f; border:1px solid #232326;">
+              <span style="font:500 10px/1 'Geist Mono', monospace; color:#6a6a6e; letter-spacing:0.04em;">FROM THE WHATSAPP CHAT</span>
+              <div style="align-self:flex-start; max-width:92%; padding:8px 11px 6px; border-radius:4px 12px 12px 12px; background:#232326; color:#ececec; font:400 13px/1.4 'Geist', sans-serif; display:flex; flex-direction:column; gap:3px;"><span>{{ v.proof }}</span><span style="align-self:flex-end; font:500 10px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ v.proofTime }}</span></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding-top:14px; border-top:1px dashed rgba(255,255,255,0.14);">
+              <span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">Student · {{ v.company }} OA</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ v.outcome }}</span></span>
+              <span style="margin-left:auto; flex:none; white-space:nowrap; display:flex; align-items:center; gap:6px; padding:7px 10px; border-radius:999px; border:1px solid #2f3a31; font:500 11px/1 'Geist Mono', monospace; color:#bfe7c7;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Real chat</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1c" style="display:flex; flex-direction:column; gap:16px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1c · Actual screenshot, cropped</span>
+      <div style="display:flex; flex-wrap:wrap; gap:24px;">
+        <sc-for list="{{ items }}" as="v" hint-placeholder-count="3">
+          <div style="position:relative; width:473px; height:425px; box-sizing:border-box; border-radius:26px; overflow:hidden; background:#151515; border:1px solid #2a2a2c; box-shadow:0 40px 80px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; padding:10px;">
+            <div style="position:relative; flex:none; height:236px; border-radius:18px; overflow:hidden; background:#efeae2;">
+              <img src="{{ v.shot }}" alt="WhatsApp chat from a {{ v.company }} OA student" style="display:block; width:100%; height:100%; object-fit:contain; object-position:50% 40%;">
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; gap:10px; padding:20px 16px 12px;">
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:10px;"><span style="font:400 26px/1.1 'Instrument Serif', serif; color:#f3f3f3; white-space:nowrap;">{{ v.outcome }}</span><span style="flex:none; white-space:nowrap; display:flex; align-items:center; gap:6px; padding:7px 10px; border-radius:999px; border:1px solid #2f3a31; font:500 11px/1 'Geist Mono', monospace; color:#bfe7c7;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Unedited</span></div>
+              <div style="margin-top:auto; display:flex; align-items:center; gap:12px; padding-top:14px; border-top:1px dashed rgba(255,255,255,0.14);">
+                <span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 15px/1 'Geist', sans-serif; color:#f3f3f3;">Student · {{ v.company }} OA</b><span style="font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;">Number hidden · via WhatsApp</span></span>
+                <span style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:1px solid #3a3a3e; display:flex; align-items:center; justify-content:center; color:#d8d8d8; font-size:13px;">↗</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1d" style="display:flex; flex-direction:column; gap:16px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1d · Result first</span>
+      <div style="display:flex; flex-wrap:wrap; gap:24px;">
+        <sc-for list="{{ items }}" as="v" hint-placeholder-count="3">
+          <div style="position:relative; width:473px; height:425px; box-sizing:border-box; border-radius:26px; overflow:hidden; background:#151515; border:1px solid #2a2a2c; box-shadow:0 40px 80px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:18px; padding:30px 30px 26px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <span style="padding:8px 12px; border-radius:999px; background:{{ v.accent }}; color:#151515; font:600 12px/1 'Geist Mono', monospace;">{{ v.company }}</span>
+              <span style="font:500 11px/1 'Geist Mono', monospace; color:#6a6a6e;">RESULT</span>
+            </div>
+            <span style="font:400 46px/1.02 'Instrument Serif', serif; letter-spacing:-0.015em; color:#f3f3f3; text-wrap:balance;">{{ v.outcome }}</span>
+            <div style="margin-top:auto; display:flex; flex-direction:column; gap:8px;">
+              <sc-for list="{{ v.proofs }}" as="m" hint-placeholder-count="2">
+                <div style="align-self:flex-start; max-width:90%; padding:9px 12px 7px; border-radius:4px 14px 14px 14px; background:#232326; color:#ececec; font:400 14px/1.4 'Geist', sans-serif; display:flex; flex-direction:column; gap:3px;"><span>{{ m.t }}</span><span style="align-self:flex-end; font:500 10px/1 'Geist Mono', monospace; color:#8a8a8e;">{{ m.time }}</span></div>
+              </sc-for>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding-top:14px; border-top:1px dashed rgba(255,255,255,0.14); font:400 12px/1 'Geist Mono', monospace; color:#8a8a8e;"><span style="width:6px; height:6px; border-radius:50%; background:#bfe7c7;"></span>Sent to the OAHelper team on WhatsApp · name withheld</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="1e" style="display:flex; flex-direction:column; gap:16px;">
+      <span style="font:500 13px/1 'Geist Mono', monospace; color:#bfe7c7;">1e · Light chat, looks like the phone</span>
+      <div style="display:flex; flex-wrap:wrap; gap:24px;">
+        <sc-for list="{{ items }}" as="v" hint-placeholder-count="3">
+          <div style="position:relative; width:473px; height:425px; box-sizing:border-box; border-radius:26px; overflow:hidden; background:#efeae2; border:1px solid #2a2a2c; box-shadow:0 40px 80px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column;">
+            <div style="flex:none; display:flex; align-items:center; gap:12px; padding:14px 18px; background:#ffffff; border-bottom:1px solid #e3ded6;">
+              <span style="flex:none; width:36px; height:36px; border-radius:50%; background:{{ v.accent }}; color:#151515; display:flex; align-items:center; justify-content:center; font:600 14px/1 'Geist', sans-serif;">{{ v.ini }}</span>
+              <span style="display:flex; flex-direction:column; gap:5px; min-width:0;"><b style="font:600 14px/1 'Geist', sans-serif; color:#151515;">+91 ••••• •••••</b><span style="font:400 11px/1 'Geist Mono', monospace; color:#6a6a6e;">{{ v.company }} OA student</span></span>
+              <span style="margin-left:auto; padding:6px 9px; border-radius:999px; background:#151515; font:500 10px/1 'Geist Mono', monospace; color:#bfe7c7;">Real chat</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:7px; padding:14px 16px 18px; min-height:0;">
+              <sc-for list="{{ v.msgs }}" as="m" hint-placeholder-count="3">
+                <sc-if value="{{ m.us }}" hint-placeholder-val="{{ false }}"><div style="align-self:flex-end; max-width:80%; padding:8px 11px 6px; border-radius:10px 3px 10px 10px; background:#d9fdd3; color:#111b21; font:400 14px/1.4 'Geist', sans-serif; box-shadow:0 1px 0.5px rgba(0,0,0,0.13); display:flex; flex-direction:column; gap:2px; white-space:pre-line;"><span>{{ m.t }}</span><span style="align-self:flex-end; font:400 10px/1 'Geist Mono', monospace; color:#667781;">{{ m.time }} ✓✓</span></div></sc-if>
+                <sc-if value="{{ m.them }}" hint-placeholder-val="{{ true }}"><div style="align-self:flex-start; max-width:82%; padding:8px 11px 6px; border-radius:3px 10px 10px 10px; background:#ffffff; color:#111b21; font:400 14px/1.4 'Geist', sans-serif; box-shadow:0 1px 0.5px rgba(0,0,0,0.13); display:flex; flex-direction:column; gap:2px;"><span>{{ m.t }}</span><span style="align-self:flex-end; font:400 10px/1 'Geist Mono', monospace; color:#667781;">{{ m.time }}</span></div></sc-if>
+                <sc-if value="{{ m.key }}" hint-placeholder-val="{{ false }}"><div style="align-self:flex-start; max-width:86%; padding:9px 12px 7px; border-radius:3px 10px 10px 10px; background:#ffffff; color:#111b21; font:500 15px/1.4 'Geist', sans-serif; box-shadow:0 0 0 2px #151515, 0 6px 16px rgba(0,0,0,0.12); display:flex; flex-direction:column; gap:2px;"><span>{{ m.t }}</span><span style="align-self:flex-end; font:400 10px/1 'Geist Mono', monospace; color:#667781;">{{ m.time }}</span></div></sc-if>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const T = (t, time) => ({ t, time, them: true }), U = (t, time) => ({ t, time, us: true }), K = (t, time) => ({ t, time, key: true });
+    const items = [
+      { company: 'eBay', ini: 'R', accent: '#c6dbf3', outcome: 'Interview shortlist at eBay', shot: 'assets/wa/ebay.png',
+        quote: 'Ur eBay questions clutched up for me', proof: 'Got interview shortlist for eBay right now', proofTime: '20:36',
+        msgs: [K('Ur eBay questions clutched up for me', '20:36'), T('Got interview shortlist for eBay right now', '20:36'), T('On 21 or 22', '20:36'), U('lessgoo\nso happy for you', '20:36')],
+        proofs: [T('Ur eBay questions clutched up for me', '20:36'), T('Got interview shortlist for eBay right now', '20:36')] },
+      { company: 'Visa', ini: 'T', accent: '#bfe7c7', outcome: 'Through to the Visa interview', shot: 'assets/wa/visa.png',
+        quote: 'It was great one question was repeated from your question set', proof: 'Wish me luck for the interview fam', proofTime: '19:17',
+        msgs: [U('How was your experience in the Visa OA? …', '18:45'), K('It was great one question was repeated from your question set', '19:17'), T('Glad i did it', '19:17'), T('Wish me luck for the interview fam', '19:17')],
+        proofs: [T('It was great one question was repeated from your question set', '19:17'), T('Wish me luck for the interview fam', '19:17')] },
+      { company: 'Amex', ini: 'A', accent: '#f7d3b5', outcome: 'Amex questions repeated in the OA', shot: 'assets/wa/amex.png',
+        quote: 'In Amex only the questions were repeated.', proof: 'I have got intern at Snabbit so they didn\'t allowed me to sit in Fastenal.', proofTime: '15:09',
+        msgs: [T('I have got intern at Snabbit so they didn\'t allowed me to sit in Fastenal.', '15:09'), U('Did Oahelper come in handy ?', '15:10'), K('Yes, for practice but real questions were different. In Amex only the questions were repeated.', '15:11')],
+        proofs: [T('I have got intern at Snabbit so they didn\'t allowed me to sit in Fastenal.', '15:09'), T('Yes, for practice but real questions were different. In Amex only the questions were repeated.', '15:11')] },
+    ];
+    return { items };
+  }
+}
+</script>
+</body>
+</html>

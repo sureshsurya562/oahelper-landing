@@ -1,4 +1,5 @@
 import AskAI from "./AskAI";
+import Team from "./Team";
 import ClosingFx from "./ClosingFx";
 import { CTA, LINKS } from "@/lib/config";
 
@@ -56,6 +57,8 @@ export default function Close() {
           </a>
         </div>
       </div>
+
+      <Team />
 
       <footer className="fw-foot">
         <div className="fw-in">

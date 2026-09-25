@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { LandingData } from "@/lib/types";
+import FeatureStack, { type StackCard } from "./FeatureStack";
 
 /**
  * See · Solve · Clear — ported from the "Cinematic OA Hero" design file.
@@ -13,36 +13,14 @@ import type { LandingData } from "@/lib/types";
  *            inner plate change face and colour on each step
  * 0.54–0.62  the words lift away
  * 0.62–0.76  the sticker caption lands
- * then the bento overlaps the tail of the stage and reveals card by card.
+ * then the feature stack overlaps the tail of the stage, one card per scroll step.
  */
-
-const COMPANIES: [string, string][] = [
-  ["Google", "#bfe7c7"],
-  ["Microsoft", "#c6dbf3"],
-  ["Amazon", "#f7d3b5"],
-  ["Meta", "#d9cdf4"],
-  ["Adobe", "#f5baae"],
-  ["Atlassian", "#b7dcf6"],
-  ["Uber", "#f3e9a8"],
-  ["Walmart", "#b4eae8"],
-  ["Deloitte", "#d7ee9f"],
-  ["Flipkart", "#c4c9f5"],
-  ["Goldman Sachs", "#d4e2f4"],
-  ["JPMorgan", "#e3d7f0"],
-];
 
 /** Where each word sits, in multiples of the object's size. */
 const WORD_SPOTS = [
   { x: -1.0, y: -0.62, r: -8 },
   { x: 1.1, y: -0.04, r: 6 },
   { x: -0.8, y: 0.74, r: -4 },
-];
-
-/** Resting offsets of the three fanned question cards. */
-const FAN_SPOTS = [
-  { x: -150, y: 26, r: -11 },
-  { x: 150, y: 22, r: 10 },
-  { x: 0, y: -6, r: -2 },
 ];
 
 /** The inner plate cross-fades through these as the screen changes face. */
@@ -61,43 +39,40 @@ const PLATE_KEYS = [0.08, 0.2, 0.34, 0.48];
 type Shot = { src: string; alt: string; tint: string };
 const SHOTS = {
   mock: { src: "/feature_cards_images/mockoa.png", alt: "Mock OA editor with a running timer and 3/3 tests passed", tint: "#edeef3" },
-  dsa: { src: "/feature_cards_images/60daydsa.png", alt: "DSA roadmap with Arrays and Sliding window done and today's topic highlighted", tint: "#e0ffeb" },
+  dsa: { src: "/feature_cards_images/DSA_roadmap.png", alt: "DSA roadmap as a planet path, on Arrays & Hashing at day 12 of 60, with Sliding window, Two pointers and Graphs next", tint: "#ebe0ec" },
   groups: { src: "/feature_cards_images/oagroups.png", alt: "Google OA group with 1.8k members and an invite button", tint: "#e5f3ff" },
   coins: { src: "/feature_cards_images/oacoins.png", alt: "OA Coins redeemable on Swiggy, Zomato and Amazon", tint: "#eae5d8" },
-  shots: { src: "/feature_cards_images/Real screenshots.png", alt: "Real Amazon, Google and Microsoft OA screens, shared 3h ago", tint: "#141515" },
-  rounds: { src: "/feature_cards_images/interiviews.png", alt: "Interview rounds from OA to HR, with write-ups from students at Google and Amazon", tint: "#151615" },
+  questions: { src: "/feature_cards_images/company wise questions.png", alt: "Company-wise questions: Google's graph shortest path, Microsoft's sliding window max, with Flipkart, Meta, PhonePe, Adobe, Amazon and more", tint: "#ffd7d8" },
+  college: { src: "/feature_cards_images/collegepage.png", alt: "IIT Hyderabad's college page: 24 drives, 312 placed, 86% offers, 8 live, and 128 batchmates", tint: "#e3f4e8" },
   calendar: { src: "/feature_cards_images/oacalendar2.png", alt: "OA calendar showing a Google OA on the 16th at 10:00 AM and 3 OAs this week", tint: "#f8f4ea" },
 } satisfies Record<string, Shot>;
 
-type Rail = { title: string; line: string; href: string; shot: Shot };
-
-function ShotArt({ shot, sizes, fit }: { shot: Shot; sizes: string; fit?: "contain" }) {
-  return (
-    <div className={`ss-art is-shot${fit ? " is-contain" : ""}`} style={{ backgroundColor: shot.tint }}>
-      <Image src={shot.src} alt={shot.alt} fill sizes={sizes} />
-    </div>
-  );
-}
-
-function buildRail(): Rail[] {
+function buildRail(): StackCard[] {
   return [
+    {
+      title: "Real OA Questions",
+      href: "https://www.oahelper.in/problems",
+      line: "9,000+ questions from 650+ companies, each tagged with the company, role and month it was asked.",
+      shot: SHOTS.questions,
+    },
+    {
+      title: "OA Calendar",
+      href: "https://www.oahelper.in/oa-calendar",
+      line: "Upcoming OAs for your campus in one calendar, with dates and timings.",
+      shot: { ...SHOTS.calendar, fit: "contain" },
+    },
+    {
+      title: "College Page",
+      href: "https://www.oahelper.in/companies",
+      line: "Drives, eligibility and cutoffs for your campus, updated by your own batch.",
+      // Transparent artwork: shown whole, inset a little, on its own mint well.
+      shot: { ...SHOTS.college, fit: "inset" },
+    },
     {
       title: "Timed Mock OAs",
       href: "https://www.oahelper.in/mock-oa",
       line: "Practice in an exam-style editor with a timer and hidden test cases.",
       shot: SHOTS.mock,
-    },
-    {
-      title: "Real Screenshots",
-      href: "https://www.oahelper.in/problems",
-      line: "The actual OA screen as students saw it, not somebody's rewrite.",
-      shot: SHOTS.shots,
-    },
-    {
-      title: "Interview Experiences",
-      href: "https://www.oahelper.in/interview-experiences",
-      line: "Round by round write-ups from students who already cleared it.",
-      shot: SHOTS.rounds,
     },
     {
       title: "60-Day DSA Roadmap",
@@ -123,7 +98,6 @@ function buildRail(): Rail[] {
 export default function Value({ data }: { data: LandingData }) {
   const root = useRef<HTMLElement>(null);
   const cards = buildRail();
-  const company = data.hero?.company ?? "Amazon";
 
   useEffect(() => {
     const el = root.current;
@@ -141,13 +115,8 @@ export default function Value({ data }: { data: LandingData }) {
       cap: q(".ss-cap"),
       bento: q(".ss-bento"),
       band: el.querySelector(".ss-band") as HTMLCanvasElement | null,
-      big: q(".ss-card.is-big"),
       faces: qa(".ss-face"),
       words: qa(".ss-word"),
-      slots: qa(".ss-slot"),
-      fan: qa(".ss-fan"),
-      fanbox: q(".ss-fanbox"),
-      marq: q(".ss-marq"),
     };
     if (!E.track || !E.stage || !E.obj || E.words.length !== 3) return;
 
@@ -222,14 +191,7 @@ export default function Value({ data }: { data: LandingData }) {
     const ro = new ResizeObserver(layout);
     ro.observe(E.stage);
 
-    let fanNow = 0;
-    let fanTo = 0;
-    const spread = () => (fanTo = 1);
-    const collapse = () => (fanTo = 0);
-    E.big.addEventListener("mouseenter", spread);
-    E.big.addEventListener("mouseleave", collapse);
 
-    let marq = 0;
     let bump = 0;
     let lastStep = 0;
     const faceOp = [1, 0, 0, 0];
@@ -317,31 +279,6 @@ export default function Value({ data }: { data: LandingData }) {
       E.cap.style.opacity = String(ca);
       E.cap.style.transform = `translate3d(0,${(1 - ca) * 26}px,0)`;
 
-      // Each tile reveals off its own position; grid tiles stagger by column.
-      const keys = E.slots.map((s, i) => {
-        const r = s.getBoundingClientRect();
-        const k = reduced ? 1 : sm(cl((vh - r.top - 20 - (i >= 2 ? ((i - 2) % 3) * 60 : i * 50)) / (vh * 0.3)));
-        s.style.opacity = String(k);
-        s.style.transform = `translate3d(0,${(1 - k) * 48}px,0)`;
-        return k;
-      });
-
-      fanNow += (fanTo - fanNow) * (1 - Math.exp(-dt * 6));
-      const fk = keys[0] ?? 1;
-      const fsc = Math.min(1, (E.fanbox.clientWidth || 600) / 640);
-      E.fan.forEach((f, i) => {
-        const s = FAN_SPOTS[i];
-        const sp = (0.25 + 0.75 * fk) * (1 + 0.22 * fanNow);
-        f.style.transform = `translate(-50%,-50%) translate3d(${s.x * sp * fsc}px,${
-          (s.y + (1 - fk) * 40 - (i === 2 ? 10 * fanNow : 0)) * fsc
-        }px,0) rotate(${s.r * sp}deg) scale(${fsc})`;
-      });
-
-      if (!reduced && E.marq) {
-        const half = E.marq.scrollWidth / 2;
-        marq = (marq + dt * 32) % (half || 1);
-        E.marq.style.transform = `translate3d(${-marq}px,0,0)`;
-      }
       raf = requestAnimationFrame(frame);
     };
 
@@ -349,8 +286,6 @@ export default function Value({ data }: { data: LandingData }) {
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      E.big.removeEventListener("mouseenter", spread);
-      E.big.removeEventListener("mouseleave", collapse);
       E.bento.classList.remove("is-armed");
     };
   }, []);
@@ -404,119 +339,7 @@ export default function Value({ data }: { data: LandingData }) {
       </div>
 
       <div className="ss-bento">
-        <div className="ss-top">
-          {/* The headline promise: real papers, stamped and dated. */}
-          <div className="ss-slot is-big">
-            <a className="ss-card is-big" href="https://www.oahelper.in/problems" data-cursor="Explore">
-              <div className="ss-fanbox">
-                <div className="ss-fan">
-                  <div className="ss-fan-row">
-                    <span className="ss-co" style={{ background: "#c6dbf3" }}>
-                      Microsoft
-                    </span>
-                    <span className="ss-when">SWE OA · Sep 2026</span>
-                  </div>
-                  <div className="ss-fan-q">Count Valid Substrings</div>
-                  <div className="ss-tags">
-                    <span className="t-easy">Easy</span>
-                    <span>Strings</span>
-                  </div>
-                </div>
-                <div className="ss-fan">
-                  <div className="ss-fan-row">
-                    <span className="ss-co" style={{ background: "#bfe7c7", color: "#16201a" }}>
-                      Google
-                    </span>
-                    <span className="ss-when">STEP OA · Jul 2026</span>
-                  </div>
-                  <div className="ss-fan-q">Minimum Cost Path in a Grid</div>
-                  <div className="ss-tags">
-                    <span className="t-hard">Hard</span>
-                    <span>DP</span>
-                  </div>
-                </div>
-                <div className="ss-fan is-front">
-                  <span className="ss-stamp">ASKED IN A REAL OA ✓</span>
-                  <div className="ss-fan-row">
-                    <span className="ss-co" style={{ background: "#f7d3b5", color: "#22190f" }}>
-                      {company}
-                    </span>
-                    <span className="ss-when">SDE-1 OA · Aug 2026</span>
-                  </div>
-                  <div className="ss-fan-q">Balance the Warehouses</div>
-                  <div className="ss-tags">
-                    <span className="t-med">Medium</span>
-                    <span>Arrays</span>
-                    <span>Prefix Sum</span>
-                  </div>
-                  <div className="ss-seen">
-                    <i />
-                    Seen in 14 OAs this season
-                  </div>
-                </div>
-              </div>
-
-              <div className="ss-big-foot">
-                <div className="ss-big-copy">
-                  <h3>Real OA Questions Actually Asked in Interviews</h3>
-                  <p>
-                    {data.stats
-                      ? `${data.stats.questions}+ questions from ${data.stats.companies}+ companies, each tagged with the company, role and month it was asked.`
-                      : "Every question comes from a real online assessment, tagged with the company, role and month it was asked."}
-                  </p>
-                  <span className="ss-cta">
-                    Explore <i aria-hidden>&rarr;</i>
-                  </span>
-                </div>
-                <div className="ss-marqbox" aria-hidden>
-                  <div className="ss-marq">
-                    {[...COMPANIES, ...COMPANIES].map(([name, color], i) => (
-                      <span key={`${name}-${i}`}>
-                        <i style={{ background: color }} />
-                        {name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div className="ss-slot is-side">
-            <a className="ss-card" href="https://www.oahelper.in/oa-calendar" data-cursor="Explore">
-              <ShotArt shot={SHOTS.calendar} sizes="(max-width: 900px) 92vw, 380px" fit="contain" />
-              <div className="ss-copy">
-                <h3>OA Calendar</h3>
-                <p>Upcoming OAs for your campus in one calendar, with dates and timings.</p>
-                <span className="ss-cta">
-                  Explore <i aria-hidden>→</i>
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div className="ss-morehead">
-          <h3>Everything else that has your back</h3>
-          <p>From your first mock to the final HR round, it&apos;s all in one place.</p>
-        </div>
-
-        <div className="ss-grid">
-          {cards.map((c) => (
-            <div className="ss-slot" key={c.title}>
-              <a className="ss-card" href={c.href} data-cursor="Explore">
-                <ShotArt shot={c.shot} sizes="(max-width: 640px) 92vw, (max-width: 900px) 46vw, 360px" />
-                <div className="ss-copy">
-                  <h3>{c.title}</h3>
-                  <p>{c.line}</p>
-                  <span className="ss-cta">
-                    Explore <i aria-hidden>→</i>
-                  </span>
-                </div>
-              </a>
-            </div>
-          ))}
-        </div>
+        <FeatureStack cards={cards} />
       </div>
 
     </section>
